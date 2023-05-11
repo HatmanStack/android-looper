@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Looper</string>
+    <string name="audio_text">Audio</string>
+    <string name="record_text">Record</string>
+    <string name="save_text">Save</string>
+    <string name="file_name_text">File Name</string>
+    <string name="track_text">Track </string>
+    <string name="stop_text">Stop</string>
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:id="@+id/top_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/start_recording"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/plain_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:tag="Single"
+            style="@style/ButtonTheme"
+            android:onClick="recordWavStart"
+            android:text="@string/record_text" />
+
+        <Button
+            android:id="@+id/stop_recording"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/plain_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            style="@style/ButtonTheme"
+            android:onClick="recordWavStop"
+            android:tag="Single"
+            android:text="@string/stop_text" />
+
+        <Button
+            style="@style/ButtonTheme"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/plain_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:onClick="listPersistent"
+            android:tag="Multi"
+            android:text="@string/audio_text" />
+
+        <Button
+            style="@style/ButtonTheme"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/plain_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:onClick="savePopUp"
+            android:tag="Multi"
+            android:text="@string/save_text" />
+
+    </LinearLayout>
+
+    <android.widget.ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_controls"
+        android:id="@+id/listview"
+        android:visibility="gone"
+        android:background="@color/colorPrimaryDark">
+    </android.widget.ListView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_controls"
+        android:id="@+id/recyclerview"
+        android:background="@color/colorPrimaryDark">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>
