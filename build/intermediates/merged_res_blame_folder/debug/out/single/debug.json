@@ -1,0 +1,166 @@
+[
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_gubbler_drum.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/gubbler_drum.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_white_pressed.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/white_pressed.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_pause_button.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/pause_button.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_plain_button.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/plain_button.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_white_disabled.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/white_disabled.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_red_scrubber_progress.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/red_scrubber_progress.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_white_rect.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/white_rect.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_whoosh.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/whoosh.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/layout_activity_main.xml.flat",
+        "source": "gemenie.looper.app-main-32:/layout/activity_main.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/layout-v23_sound_controls.xml.flat",
+        "source": "gemenie.looper.app-main-32:/layout-v23/sound_controls.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_delete_button.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/delete_button.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_white_normal.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/white_normal.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_thunder.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/thunder.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_robot_intro.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/robot_intro.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/layout-port_activity_main.xml.flat",
+        "source": "gemenie.looper.app-main-32:/layout-port/activity_main.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_white_focused.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/white_focused.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/layout_popup.xml.flat",
+        "source": "gemenie.looper.app-main-32:/layout/popup.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_boom_kick.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/boom_kick.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_play_button.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/play_button.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable_bg_gradient.xml.flat",
+        "source": "gemenie.looper.app-main-32:/drawable/bg_gradient.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/layout-land_activity_main.xml.flat",
+        "source": "gemenie.looper.app-main-32:/layout-land/activity_main.xml"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/drawable-mdpi_red_scrubber_track_holo_light.9.png.flat",
+        "source": "gemenie.looper.app-main-32:/drawable-mdpi/red_scrubber_track_holo_light.9.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_ready.wav.flat",
+        "source": "gemenie.looper.app-main-32:/raw/ready.wav"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "gemenie.looper.app-main-32:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "gemenie.looper.app-merged_res-30:/raw_nice_one.mp3.flat",
+        "source": "gemenie.looper.app-main-32:/raw/nice_one.mp3"
+    }
+]

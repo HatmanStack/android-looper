@@ -1,9 +1,0 @@
-*.iml
-.gradle/
-gradle/
-.idea/
-app/build/
-app/libs/
-app/release/
-app/proguard-rules.pro
-
