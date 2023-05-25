@@ -1,14 +1,10 @@
 # Looper
 
-This Android Java application allows users to record or import audio files, and then control the speed and volume of the files. Users can also mix multiple audio files together and save the results.
+This Android Java application allows users to record or import audio files. It adds the files to a list with independent controls for each track.  You can change the speed/volume of each track and loop them to play at the same time. Record and save the results.
 
 ## Demo
 
-Click [here](https://www.youtube.com/watch?v=Iq2uNJHoK88) to access the demo.
-
-## Download
-
-You can download the application from the Google Play Store by clicking [here](https://play.google.com/store/apps/details?id=gemenielabs.looper).
+Click [here](https://www.youtube.com/watch?v=Iq2uNJHoK88) for the Youtube demo. You can download the application from the Google Play Store by clicking [here](https://play.google.com/store/apps/details?id=gemenielabs.looper).
 
 ## Features
 
