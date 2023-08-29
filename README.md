@@ -12,16 +12,10 @@ Click [here](https://www.youtube.com/watch?v=Iq2uNJHoK88) for the Youtube demo. 
 * Control the speed and volume of the audio file
 * Mix the audio file with other recordings or audio files
 
-## Requirements
+## Technologies
 
-* Android 5.0 or higher
-* Java 8 or higher
-
-## Getting Started
-
-1. Clone the repository
-2. Open the project in Android Studio
-3. Build and run the project
+* Android SDK
+* Java
 
 ## Usage
 
