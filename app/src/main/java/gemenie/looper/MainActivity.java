@@ -154,9 +154,7 @@ public MediaRecorder initMediaRecorder(File file) throws IOException {
     recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
     recorder.setOutputFile(file);
     // Prepare the recorder for recording
-    try (recorder) {
-        recorder.prepare();
-    }
+    recorder.prepare();
     return recorder;
 }
 
@@ -165,7 +163,11 @@ public void recordWavStart(View v) {
     vibratePhone();
     getFile(); // Get file name
     // Start recording audio to file
-    mediaRecorder = initMediaRecorder(new File(String.valueOf(uriList.get(uriList.size() - 1))));
+    try {
+        mediaRecorder = initMediaRecorder(new File(String.valueOf(uriList.get(uriList.size() - 1))));
+    } catch (Error | IOException e){
+        e.printStackTrace();
+    }
     mediaRecorder.start();
     isRecording = true;
 }

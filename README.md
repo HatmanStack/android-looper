@@ -41,6 +41,13 @@ Click [here](https://www.youtube.com/watch?v=Iq2uNJHoK88) for the Youtube demo. 
   </tr>
 </table>
 
+## Building
+
+- Open Android Studio. From the Welcome screen, select Open an existing Android Studio project.
+- From the Open File or Project window that appears, navigate to and select the android-looper directory. Click OK.
+- If it asks you to do a Gradle Sync, click OK.
+- With your Android device/emulator connected to your computer and developer mode enabled, click on the green Run arrow in Android Studio.
+
 ## License
 
 This project is licensed under the MIT License.

@@ -75,7 +75,7 @@ public interface ButtonClickListener{
 
     class ViewHolder extends RecyclerView.ViewHolder
             implements SeekBar.OnSeekBarChangeListener,
-            View.OnClickListener{
+            View.OnClickListener {
 
         SeekBar seekBarVolume;
         SeekBar seekBarSpeed;
@@ -101,7 +101,7 @@ public interface ButtonClickListener{
             seekBarVolume.setOnSeekBarChangeListener(this);
             seekBarSpeed.setOnSeekBarChangeListener(this);
         }
-        
+
         @Override
         public void onClick(View view) {
             // Get the position of the clicked item in the adapter
@@ -111,7 +111,7 @@ public interface ButtonClickListener{
             // Respond to click events based on the tag of the clicked view
             Log.i(MainActivity.TAG, "adapterPosition: " + getAdapterPosition());
             if (tag.equals("play")) {
-                if(!music.isLooping()){
+                if (!music.isLooping()) {
                     music.setLooping(true);
                 }
                 music.start();
@@ -123,7 +123,7 @@ public interface ButtonClickListener{
                 buttonListener.onButtonClick(getAdapterPosition());
             }
         }
-        
+
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             // Get the position of the item whose seek bar is changed in the adapter
@@ -132,25 +132,25 @@ public interface ButtonClickListener{
             String tag = seekBar.getTag().toString();
             // Respond to seek bar changes based on the tag of the seek bar view
             if (tag.equals("volume")) {
-                if(progress > 0) {
+                if (progress > 0) {
                     // Update the volume text and set the media player volume
                     volumeText.setText(String.valueOf(progress));
                     final float volume = (float) (1 - (Math.log(MAX_VOLUME - progress) / Math.log(MAX_VOLUME)));
                     Log.i(MainActivity.TAG, "onProgressChanged: Volume: " + progress);
                     music.setVolume(volume, volume);
-                }else {
-                    music.setVolume(0,0);
+                } else {
+                    music.setVolume(0, 0);
                 }
             }
             if (tag.equals("speed")) {
-                if(progress > 2) {
+                if (progress > 2) {
                     // Update the speed text and set the media player playback speed
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         float speed = (float) progress / 41;
                         String holder = String.format("%.2f", speed);
-                        if(holder.equals("2.44")){
+                        if (holder.equals("2.44")) {
                             speedText.setText("2.50");
-                        }else {
+                        } else {
                             speedText.setText(holder);
                         }
                         Log.i(MainActivity.TAG, "onProgressChanged: Speed: " + holder);
@@ -159,5 +159,16 @@ public interface ButtonClickListener{
                 }
             }
         }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    }
         
 }
