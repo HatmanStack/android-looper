@@ -37,8 +37,6 @@ export const styles = StyleSheet.create({
   trackListContainer: {
     flex: 1,
     backgroundColor: '#1E1E1E', // Surface color from theme
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   button: {
     flex: 1,
@@ -46,9 +44,5 @@ export const styles = StyleSheet.create({
   },
   buttonContent: {
     paddingVertical: 8,
-  },
-  placeholderText: {
-    color: '#666',
-    fontSize: 16,
   },
 });

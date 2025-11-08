@@ -10,7 +10,7 @@ jest.mock('expo-status-bar', () => ({
 describe('App', () => {
   it('renders without crashing', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Track list will appear here/i)).toBeTruthy();
+    expect(getByText(/Record/i)).toBeTruthy();
   });
 
   it('renders top control buttons', () => {
@@ -25,8 +25,10 @@ describe('App', () => {
     expect(getByText(/Save/i)).toBeTruthy();
   });
 
-  it('renders track list placeholder', () => {
+  it('renders track list with mock tracks', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Track list will appear here/i)).toBeTruthy();
+    expect(getByText(/Track 1/i)).toBeTruthy();
+    expect(getByText(/Track 2/i)).toBeTruthy();
+    expect(getByText(/Track 3/i)).toBeTruthy();
   });
 });
