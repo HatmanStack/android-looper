@@ -5,6 +5,7 @@
 Implement audio recording and file import functionality with platform-specific implementations for web and native. Handle permissions, file storage, and audio format conversion. By the end of this phase, users can record audio or import existing audio files on all platforms.
 
 **Success Criteria:**
+
 - Record audio on web (MediaRecorder API)
 - Record audio on native (expo-av)
 - Import audio files from device/file system
@@ -30,6 +31,7 @@ Implement audio recording and file import functionality with platform-specific i
 **Goal:** Create web-specific audio recorder using MediaRecorder API.
 
 **Files to Create:**
+
 - `src/services/audio/WebAudioRecorder.ts` - Web recorder implementation
 - `src/utils/audioConversion.web.ts` - Web audio conversion utilities
 
@@ -45,10 +47,12 @@ Implement audio recording and file import functionality with platform-specific i
 8. Add error handling for unsupported browsers
 
 Reference Android recorder:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:150-159`
 - Use similar quality settings (adapt for web)
 
 **Verification Checklist:**
+
 - [ ] Recording works in Chrome, Firefox, Safari
 - [ ] Microphone permission requested
 - [ ] Recorded audio is playable
@@ -56,6 +60,7 @@ Reference Android recorder:
 - [ ] Errors handled gracefully
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement web audio recording with MediaRecorder
 
@@ -75,6 +80,7 @@ feat(audio): implement web audio recording with MediaRecorder
 **Goal:** Create native audio recorder using expo-av.
 
 **Files to Create:**
+
 - `src/services/audio/NativeAudioRecorder.ts` - Native recorder
 - `src/services/audio/NativeAudioRecorder.native.ts` - Platform-specific implementation
 
@@ -96,9 +102,11 @@ feat(audio): implement web audio recording with MediaRecorder
 6. Return file URI
 
 Reference Android:
+
 - Similar to `MainActivity.java:150-159` but using expo-av equivalents
 
 **Verification Checklist:**
+
 - [ ] Recording works on iOS
 - [ ] Recording works on Android
 - [ ] Permissions requested correctly
@@ -106,6 +114,7 @@ Reference Android:
 - [ ] Audio quality matches requirements
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement native audio recording with expo-av
 
@@ -125,13 +134,14 @@ feat(audio): implement native audio recording with expo-av
 **Goal:** Allow users to import audio files from their computer on web.
 
 **Files to Create:**
+
 - `src/services/audio/WebFileImporter.ts` - Web file import
 - `src/components/AudioFilePicker/AudioFilePicker.web.tsx` - File picker component
 
 **Implementation Steps:**
 
 1. Create file input element (HTML input type="file")
-2. Accept audio/* MIME types
+2. Accept audio/\* MIME types
 3. On file select, read file as blob or base64
 4. Validate file type (MP3, WAV, AAC, etc.)
 5. Convert to MP3 if necessary (using @ffmpeg/ffmpeg, or accept as-is for now)
@@ -140,6 +150,7 @@ feat(audio): implement native audio recording with expo-av
 8. Update UI with selected file
 
 **Verification Checklist:**
+
 - [ ] File picker opens on button click
 - [ ] Only audio files selectable
 - [ ] Selected file is readable
@@ -147,6 +158,7 @@ feat(audio): implement native audio recording with expo-av
 - [ ] Works in all browsers
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement audio file import for web
 
@@ -166,6 +178,7 @@ feat(audio): implement audio file import for web
 **Goal:** Allow users to import audio from device storage on iOS/Android.
 
 **Files to Create:**
+
 - `src/services/audio/NativeFileImporter.ts` - Native file import
 - `src/components/AudioFilePicker/AudioFilePicker.native.tsx` - Native picker
 
@@ -181,10 +194,12 @@ feat(audio): implement audio file import for web
 8. Handle permission denials
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:307-316`
 - Similar flow with expo equivalents
 
 **Verification Checklist:**
+
 - [ ] Document picker opens
 - [ ] Can browse device storage
 - [ ] Audio files are selectable
@@ -193,6 +208,7 @@ Reference Android:
 - [ ] Permissions handled
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement audio file import for native
 
@@ -212,6 +228,7 @@ feat(audio): implement audio file import for native
 **Goal:** Request and manage permissions for microphone and storage across platforms.
 
 **Files to Create:**
+
 - `src/utils/permissions.ts` - Permission utility
 - `src/utils/permissions.web.ts` - Web permissions
 - `src/utils/permissions.native.ts` - Native permissions
@@ -245,9 +262,11 @@ feat(audio): implement audio file import for native
    - iOS-specific settings redirect
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:108-127`
 
 **Verification Checklist:**
+
 - [ ] Permissions requested at right time
 - [ ] User can grant or deny
 - [ ] App handles denial gracefully
@@ -255,6 +274,7 @@ Reference Android:
 - [ ] Platform differences handled
 
 **Commit Message Template:**
+
 ```
 feat(permissions): implement cross-platform permission handling
 
@@ -274,6 +294,7 @@ feat(permissions): implement cross-platform permission handling
 **Goal:** Create utilities for storing, retrieving, and deleting audio files.
 
 **Files to Create:**
+
 - `src/services/storage/AudioFileManager.ts` - File manager interface
 - `src/services/storage/AudioFileManager.web.ts` - Web storage
 - `src/services/storage/AudioFileManager.native.ts` - Native storage
@@ -307,10 +328,12 @@ feat(permissions): implement cross-platform permission handling
    - Clean old temp files
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:186-191` (file naming)
 - `../app/src/main/java/gemenie/looper/MainActivity.java:250-280` (file operations)
 
 **Verification Checklist:**
+
 - [ ] Files saved correctly on all platforms
 - [ ] URIs are consistent and retrievable
 - [ ] Files can be deleted
@@ -318,6 +341,7 @@ Reference Android:
 - [ ] Temp files cleaned up
 
 **Commit Message Template:**
+
 ```
 feat(storage): implement audio file management
 
@@ -337,6 +361,7 @@ feat(storage): implement audio file management
 **Goal:** Set up basic audio format conversion utilities (full implementation in Phase 6).
 
 **Files to Create:**
+
 - `src/utils/audioConversion.ts` - Conversion interface
 - `src/utils/audioUtils.ts` - Audio utility functions
 
@@ -363,12 +388,14 @@ feat(storage): implement audio file management
    - Define quality settings
 
 **Verification Checklist:**
+
 - [ ] Metadata extraction works
 - [ ] Validation detects invalid files
 - [ ] Utilities are platform-agnostic
 - [ ] Conversion stubs are in place
 
 **Commit Message Template:**
+
 ```
 feat(audio): add audio utility functions and conversion stubs
 
@@ -387,6 +414,7 @@ feat(audio): add audio utility functions and conversion stubs
 **Goal:** Connect Phase 2 UI to real recording and import functionality.
 
 **Files to Modify:**
+
 - `src/screens/MainScreen/MainScreen.tsx`
 - `src/services/audio/AudioService.ts`
 
@@ -403,6 +431,7 @@ feat(audio): add audio utility functions and conversion stubs
 9. Update track list with new tracks
 
 **Verification Checklist:**
+
 - [ ] Record button starts recording
 - [ ] Stop button creates track with audio
 - [ ] Import button opens file picker
@@ -411,6 +440,7 @@ feat(audio): add audio utility functions and conversion stubs
 - [ ] Loading states displayed
 
 **Commit Message Template:**
+
 ```
 feat(integration): connect recording and import to UI
 
@@ -431,6 +461,7 @@ feat(integration): connect recording and import to UI
 **Goal:** Test recording and import functionality thoroughly.
 
 **Files to Create:**
+
 - `__tests__/unit/services/WebAudioRecorder.test.ts`
 - `__tests__/unit/services/NativeAudioRecorder.test.ts`
 - `__tests__/unit/services/AudioFileManager.test.ts`
@@ -467,6 +498,7 @@ feat(integration): connect recording and import to UI
    - Permission denial handling
 
 **Verification Checklist:**
+
 - [ ] All unit tests pass
 - [ ] Integration tests cover main flows
 - [ ] Mocks are realistic
@@ -474,6 +506,7 @@ feat(integration): connect recording and import to UI
 - [ ] Platform-specific tests isolated
 
 **Commit Message Template:**
+
 ```
 test(audio): add tests for recording and import
 
@@ -493,6 +526,7 @@ test(audio): add tests for recording and import
 **Goal:** Document recording and import features.
 
 **Files to Create:**
+
 - `docs/features/recording.md` - Recording documentation
 - `docs/features/import.md` - Import documentation
 
@@ -522,12 +556,14 @@ test(audio): add tests for recording and import
    - Common issues and solutions
 
 **Verification Checklist:**
+
 - [ ] Documentation is comprehensive
 - [ ] Examples are accurate
 - [ ] Platform differences noted
 - [ ] Troubleshooting guide included
 
 **Commit Message Template:**
+
 ```
 docs(audio): document recording and import features
 

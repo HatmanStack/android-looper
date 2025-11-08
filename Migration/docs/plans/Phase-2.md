@@ -5,6 +5,7 @@
 Build the user interface components for the Looper app, matching the Material Design aesthetic of the Android app. Create reusable components for the track list, track controls, action buttons, and modals. Establish responsive layouts that work on web, mobile, and tablet screen sizes.
 
 **Success Criteria:**
+
 - Main screen layout renders correctly on all platforms
 - Track list displays multiple tracks with scrolling
 - Track control components respond to user interactions (non-functional audio operations)
@@ -19,9 +20,11 @@ Build the user interface components for the Looper app, matching the Material De
 ## Prerequisites
 
 ### Phase Dependencies
+
 - **Phase 1 completed:** Project setup, dependencies installed, theme configured
 
 ### External Dependencies
+
 - React Native Paper installed and configured
 - Theme set up from Phase 1
 - Platform utilities available
@@ -35,11 +38,13 @@ Build the user interface components for the Looper app, matching the Material De
 **Goal:** Build the main screen layout with header controls, track list area, and bottom controls.
 
 **Files to Create:**
+
 - `src/screens/MainScreen/MainScreen.tsx` - Main screen component
 - `src/screens/MainScreen/MainScreen.styles.ts` - StyleSheet for main screen
 - `src/screens/MainScreen/index.ts` - Barrel export
 
 **Prerequisites:**
+
 - Phase 1 completed
 
 **Implementation Steps:**
@@ -70,6 +75,7 @@ Build the user interface components for the Looper app, matching the Material De
    - Button sizing and alignment
 
 **Verification Checklist:**
+
 - [ ] Main screen renders on web, iOS, and Android
 - [ ] Three sections (top, middle, bottom) are visible
 - [ ] Buttons are styled with Paper theme
@@ -77,12 +83,14 @@ Build the user interface components for the Looper app, matching the Material De
 - [ ] Dark theme is applied correctly
 
 **Testing Instructions:**
+
 - Render MainScreen and verify all sections appear
 - Test on different screen sizes (resize web browser)
 - Verify buttons are touchable (add console.log to onPress)
 - Check spacing and alignment on all platforms
 
 **Commit Message Template:**
+
 ```
 feat(ui): create main screen layout structure
 
@@ -101,25 +109,28 @@ feat(ui): create main screen layout structure
 **Goal:** Create a reusable component for individual track items in the list.
 
 **Files to Create:**
+
 - `src/components/TrackListItem/TrackListItem.tsx` - Track item component
 - `src/components/TrackListItem/TrackListItem.styles.ts` - StyleSheet
 - `src/components/TrackListItem/index.ts` - Barrel export
 - `src/types/Track.ts` - TypeScript type for Track data
 
 **Prerequisites:**
+
 - Task 1 completed
 
 **Implementation Steps:**
 
 1. Create Track type definition:
+
    ```typescript
    interface Track {
      id: string;
      name: string;
      uri: string;
      duration: number;
-     speed: number;    // 0.05 - 2.50
-     volume: number;   // 0 - 100
+     speed: number; // 0.05 - 2.50
+     volume: number; // 0 - 100
      isPlaying: boolean;
      createdAt: number;
    }
@@ -149,6 +160,7 @@ feat(ui): create main screen layout structure
    - Proper spacing and padding
 
 **Verification Checklist:**
+
 - [ ] TrackListItem renders with all elements
 - [ ] Buttons are pressable (log events for now)
 - [ ] Layout matches Android track control design
@@ -156,12 +168,14 @@ feat(ui): create main screen layout structure
 - [ ] Playing state shows visual feedback
 
 **Testing Instructions:**
+
 - Render TrackListItem with mock Track data
 - Verify all buttons render and are clickable
 - Test with different track names and lengths
 - Check layout on different screen widths
 
 **Commit Message Template:**
+
 ```
 feat(ui): create TrackListItem component
 
@@ -181,11 +195,13 @@ feat(ui): create TrackListItem component
 **Goal:** Create a scrollable list of tracks using React Native FlatList.
 
 **Files to Create:**
+
 - `src/components/TrackList/TrackList.tsx` - Track list component
 - `src/components/TrackList/TrackList.styles.ts` - StyleSheet
 - `src/components/TrackList/index.ts` - Barrel export
 
 **Prerequisites:**
+
 - Task 2 completed
 
 **Implementation Steps:**
@@ -218,6 +234,7 @@ feat(ui): create TrackListItem component
    - Verify scrolling works with many tracks
 
 **Verification Checklist:**
+
 - [ ] FlatList renders list of tracks
 - [ ] Empty state shows when no tracks
 - [ ] List scrolls smoothly with many items
@@ -225,12 +242,14 @@ feat(ui): create TrackListItem component
 - [ ] Performance is acceptable (no lag)
 
 **Testing Instructions:**
+
 - Test with empty array (should show empty state)
 - Test with 1 track (should render one item)
 - Test with 10+ tracks (should scroll)
 - Measure performance (should maintain 60fps while scrolling)
 
 **Commit Message Template:**
+
 ```
 feat(ui): implement track list with FlatList
 
@@ -249,12 +268,14 @@ feat(ui): implement track list with FlatList
 **Goal:** Build custom slider components for volume and speed control with Material Design styling.
 
 **Files to Create:**
+
 - `src/components/VolumeSlider/VolumeSlider.tsx` - Volume slider
 - `src/components/SpeedSlider/SpeedSlider.tsx` - Speed slider
 - `src/components/Slider/Slider.tsx` - Base slider component (shared)
 - `src/components/Slider/Slider.styles.ts` - Slider styles
 
 **Prerequisites:**
+
 - Task 2 completed
 
 **Implementation Steps:**
@@ -290,6 +311,7 @@ feat(ui): implement track list with FlatList
    - Add labels showing current values
 
 **Verification Checklist:**
+
 - [ ] Sliders are draggable and responsive
 - [ ] Volume slider shows 0-100 range
 - [ ] Speed slider shows formatted value (0.05x - 2.50x)
@@ -297,12 +319,14 @@ feat(ui): implement track list with FlatList
 - [ ] onValueChange callbacks work correctly
 
 **Testing Instructions:**
+
 - Drag volume slider and verify value updates
 - Drag speed slider and verify formatted display (e.g., "1.50")
 - Test on touch (mobile) and mouse (web)
 - Verify thumb is grabbable and visible
 
 **Commit Message Template:**
+
 ```
 feat(ui): create custom volume and speed sliders
 
@@ -322,11 +346,13 @@ feat(ui): create custom volume and speed sliders
 **Goal:** Create styled action buttons for Record, Stop, Import, and Save operations.
 
 **Files to Create:**
+
 - `src/components/ActionButton/ActionButton.tsx` - Reusable action button
 - `src/components/ActionButton/ActionButton.styles.ts` - Button styles
 - `src/components/ActionButton/index.ts` - Barrel export
 
 **Prerequisites:**
+
 - Task 1 completed
 
 **Implementation Steps:**
@@ -360,6 +386,7 @@ feat(ui): create custom volume and speed sliders
    - Position according to Android layout
 
 **Verification Checklist:**
+
 - [ ] Buttons render with icons
 - [ ] onPress handlers fire correctly
 - [ ] Disabled state prevents interaction
@@ -367,12 +394,14 @@ feat(ui): create custom volume and speed sliders
 - [ ] Touch targets are adequate (44x44 min)
 
 **Testing Instructions:**
+
 - Press each button and verify console logs
 - Test disabled state (button should not respond)
 - Verify visual feedback on press (ripple effect)
 - Check button sizing on different screen sizes
 
 **Commit Message Template:**
+
 ```
 feat(ui): create action buttons with icons
 
@@ -392,11 +421,13 @@ feat(ui): create action buttons with icons
 **Goal:** Create a modal dialog for saving tracks with a name input field.
 
 **Files to Create:**
+
 - `src/components/SaveModal/SaveModal.tsx` - Save modal component
 - `src/components/SaveModal/SaveModal.styles.ts` - Modal styles
 - `src/components/SaveModal/index.ts` - Barrel export
 
 **Prerequisites:**
+
 - Task 5 completed
 
 **Implementation Steps:**
@@ -436,6 +467,7 @@ feat(ui): create action buttons with icons
    - Keyboard-aware (dismiss on submit)
 
 **Verification Checklist:**
+
 - [ ] Modal opens when Save button pressed
 - [ ] Modal closes on Cancel or backdrop press
 - [ ] TextInput allows filename entry
@@ -444,6 +476,7 @@ feat(ui): create action buttons with icons
 - [ ] Modal styling matches theme
 
 **Testing Instructions:**
+
 - Open modal and verify it appears centered
 - Enter a filename and press Save
 - Try saving with empty filename (should show error or disable Save)
@@ -451,6 +484,7 @@ feat(ui): create action buttons with icons
 - Test keyboard behavior on mobile
 
 **Commit Message Template:**
+
 ```
 feat(ui): implement save modal dialog
 
@@ -470,9 +504,11 @@ feat(ui): implement save modal dialog
 **Goal:** Implement play, pause, and delete icon buttons for each track with proper icons and styling.
 
 **Files to Modify:**
+
 - `src/components/TrackListItem/TrackListItem.tsx` - Add icon buttons
 
 **Prerequisites:**
+
 - Task 2 completed
 
 **Implementation Steps:**
@@ -508,6 +544,7 @@ feat(ui): implement save modal dialog
    - Visual cue for active track
 
 **Verification Checklist:**
+
 - [ ] Icon buttons render correctly
 - [ ] Icons are recognizable and appropriate
 - [ ] Buttons fire onPress callbacks
@@ -516,6 +553,7 @@ feat(ui): implement save modal dialog
 - [ ] Styling matches Android design
 
 **Testing Instructions:**
+
 - Press Play button and verify callback
 - Press Pause button and verify callback
 - Press Delete button and verify callback
@@ -523,6 +561,7 @@ feat(ui): implement save modal dialog
 - Verify icon visibility on dark background
 
 **Commit Message Template:**
+
 ```
 feat(ui): add icon buttons for track controls
 
@@ -542,10 +581,12 @@ feat(ui): add icon buttons for track controls
 **Goal:** Ensure the UI adapts gracefully to different screen sizes and orientations.
 
 **Files to Modify:**
+
 - `src/screens/MainScreen/MainScreen.tsx` - Add responsive layout
 - `src/components/TrackListItem/TrackListItem.tsx` - Adjust for different widths
 
 **Prerequisites:**
+
 - Tasks 1-7 completed
 
 **Implementation Steps:**
@@ -582,6 +623,7 @@ feat(ui): add icon buttons for track controls
    - Test on iPhone X+ and Android devices with notches
 
 **Verification Checklist:**
+
 - [ ] Layout adapts to screen width changes
 - [ ] All content is accessible on small screens
 - [ ] UI is optimized for larger screens
@@ -589,12 +631,14 @@ feat(ui): add icon buttons for track controls
 - [ ] Safe areas are respected on notched devices
 
 **Testing Instructions:**
+
 - Resize web browser window and verify layout adapts
 - Test on physical devices with different screen sizes
 - Rotate device and check both orientations
 - Verify no content is cut off or overlapping
 
 **Commit Message Template:**
+
 ```
 feat(ui): implement responsive layout for all screen sizes
 
@@ -614,6 +658,7 @@ feat(ui): implement responsive layout for all screen sizes
 **Goal:** Write unit and integration tests for all UI components created in Phase 2.
 
 **Files to Create:**
+
 - `__tests__/unit/components/TrackListItem.test.tsx` - TrackListItem tests
 - `__tests__/unit/components/TrackList.test.tsx` - TrackList tests
 - `__tests__/unit/components/SaveModal.test.tsx` - SaveModal tests
@@ -622,6 +667,7 @@ feat(ui): implement responsive layout for all screen sizes
 - `__tests__/integration/screens/MainScreen.test.tsx` - MainScreen integration test
 
 **Prerequisites:**
+
 - All component tasks (1-8) completed
 
 **Implementation Steps:**
@@ -675,6 +721,7 @@ feat(ui): implement responsive layout for all screen sizes
    - Test accessibility (labels, roles)
 
 **Verification Checklist:**
+
 - [ ] All component tests pass
 - [ ] Integration test for MainScreen passes
 - [ ] Code coverage meets 80% threshold
@@ -682,12 +729,14 @@ feat(ui): implement responsive layout for all screen sizes
 - [ ] No console errors or warnings in tests
 
 **Testing Instructions:**
+
 - Run `npm test` and verify all tests pass
 - Run `npm run test:coverage` and check coverage report
 - Identify any uncovered lines and add tests
 - Verify tests fail when components are broken (intentionally break something)
 
 **Commit Message Template:**
+
 ```
 test(ui): add comprehensive tests for Phase 2 components
 
@@ -707,11 +756,13 @@ test(ui): add comprehensive tests for Phase 2 components
 **Goal:** Document all UI components and optionally set up Storybook for component development.
 
 **Files to Create:**
+
 - `src/components/README.md` - Component documentation
 - `.storybook/` - Storybook configuration (optional)
 - Component story files (optional)
 
 **Prerequisites:**
+
 - Tasks 1-9 completed
 
 **Implementation Steps:**
@@ -743,17 +794,20 @@ test(ui): add comprehensive tests for Phase 2 components
    - Use for future comparison
 
 **Verification Checklist:**
+
 - [ ] Component README is comprehensive
 - [ ] All components have JSDoc comments
 - [ ] (Optional) Storybook runs and shows components
 - [ ] Documentation is committed to git
 
 **Testing Instructions:**
+
 - Read component README and verify it's accurate
 - (Optional) Run Storybook and verify components render
 - Check that JSDoc comments appear in IDE tooltips
 
 **Commit Message Template:**
+
 ```
 docs(ui): document Phase 2 UI components
 

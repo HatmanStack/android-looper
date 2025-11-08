@@ -5,6 +5,7 @@
 Implement comprehensive state management using Zustand and add data persistence so tracks, settings, and app state survive app restarts. Handle app lifecycle events and ensure data integrity across sessions.
 
 **Success Criteria:**
+
 - Zustand stores implemented for tracks, playback, UI state
 - State persists to storage (AsyncStorage/localStorage)
 - State restored on app launch
@@ -29,11 +30,13 @@ Implement comprehensive state management using Zustand and add data persistence 
 **Goal:** Implement Zustand store for managing track data.
 
 **Files to Create:**
+
 - `src/store/useTrackStore.ts` - Track state management
 
 **Implementation Steps:**
 
 1. Define track store interface:
+
    ```typescript
    interface TrackStore {
      tracks: Track[];
@@ -60,12 +63,14 @@ Implement comprehensive state management using Zustand and add data persistence 
    - Use store hooks in TrackList, MainScreen
 
 **Verification Checklist:**
+
 - [ ] Store created successfully
 - [ ] CRUD operations work
 - [ ] State updates trigger re-renders
 - [ ] No state mutations
 
 **Commit Message Template:**
+
 ```
 feat(state): create track store with Zustand
 
@@ -84,11 +89,13 @@ feat(state): create track store with Zustand
 **Goal:** Manage playback state separately from track data.
 
 **Files to Create:**
+
 - `src/store/usePlaybackStore.ts` - Playback state
 
 **Implementation Steps:**
 
 1. Define playback store:
+
    ```typescript
    interface PlaybackStore {
      playingTracks: Set<string>;
@@ -105,12 +112,14 @@ feat(state): create track store with Zustand
 4. Connect to TrackListItem controls
 
 **Verification Checklist:**
+
 - [ ] Playback state tracked per track
 - [ ] Settings persisted per track
 - [ ] UI reflects playback state
 - [ ] Audio service synced
 
 **Commit Message Template:**
+
 ```
 feat(state): create playback store for audio state
 
@@ -129,11 +138,13 @@ feat(state): create playback store for audio state
 **Goal:** Manage UI-specific state (modals, dialogs, loading).
 
 **Files to Create:**
+
 - `src/store/useUIStore.ts` - UI state management
 
 **Implementation Steps:**
 
 1. Define UI store:
+
    ```typescript
    interface UIStore {
      saveModalVisible: boolean;
@@ -151,12 +162,14 @@ feat(state): create playback store for audio state
 4. Handle loading states
 
 **Verification Checklist:**
+
 - [ ] UI state centralized
 - [ ] Modals controlled by store
 - [ ] Loading states managed
 - [ ] Error state handled
 
 **Commit Message Template:**
+
 ```
 feat(state): create UI state store
 
@@ -175,6 +188,7 @@ feat(state): create UI state store
 **Goal:** Persist state to storage using Zustand middleware.
 
 **Files to Modify:**
+
 - `src/store/useTrackStore.ts`
 - `src/store/usePlaybackStore.ts`
 - `src/store/useUIStore.ts`
@@ -185,12 +199,15 @@ feat(state): create UI state store
    - `@react-native-async-storage/async-storage`
 
 2. Add persist middleware to stores:
+
    ```typescript
    import { persist } from 'zustand/middleware';
 
    const useTrackStore = create(
      persist(
-       (set) => ({ /* store */ }),
+       (set) => ({
+         /* store */
+       }),
        {
          name: 'looper-tracks',
          storage: createJSONStorage(() => AsyncStorage),
@@ -215,9 +232,11 @@ feat(state): create UI state store
    - Clean invalid data on load
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:360-378` (save instance state)
 
 **Verification Checklist:**
+
 - [ ] State persists across app restarts
 - [ ] Tracks restored correctly
 - [ ] Playback settings restored
@@ -225,6 +244,7 @@ Reference Android:
 - [ ] Hydration doesn't block UI
 
 **Commit Message Template:**
+
 ```
 feat(state): add persistence with Zustand middleware
 
@@ -244,6 +264,7 @@ feat(state): add persistence with Zustand middleware
 **Goal:** Properly handle app pause, resume, and background states.
 
 **Files to Create:**
+
 - `src/hooks/useAppLifecycle.ts` - Lifecycle hook
 - `src/services/lifecycle/LifecycleManager.ts` - Lifecycle manager
 
@@ -274,15 +295,18 @@ feat(state): add persistence with Zustand middleware
    - Pause audio when tab hidden
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:381-389` (onDestroy)
 
 **Verification Checklist:**
+
 - [ ] Playback pauses when backgrounded
 - [ ] State saved on background
 - [ ] Audio resources released
 - [ ] Works on all platforms
 
 **Commit Message Template:**
+
 ```
 feat(lifecycle): handle app lifecycle events
 
@@ -302,12 +326,14 @@ feat(lifecycle): handle app lifecycle events
 **Goal:** Handle data schema changes across app versions.
 
 **Files to Create:**
+
 - `src/store/migrations/` - Migration utilities
 - `src/store/migrations/trackMigrations.ts` - Track data migrations
 
 **Implementation Steps:**
 
 1. Add version to persisted state:
+
    ```typescript
    {
      version: 1,
@@ -336,12 +362,14 @@ feat(lifecycle): handle app lifecycle events
    - Warn on validation failures
 
 **Verification Checklist:**
+
 - [ ] Migrations run on version mismatch
 - [ ] Data preserved after migration
 - [ ] Failed migrations handled
 - [ ] Schema validation works
 
 **Commit Message Template:**
+
 ```
 feat(state): implement data migration and versioning
 
@@ -360,6 +388,7 @@ feat(state): implement data migration and versioning
 **Goal:** Ensure state management doesn't cause performance issues.
 
 **Files to Modify:**
+
 - All store files
 
 **Implementation Steps:**
@@ -390,12 +419,14 @@ feat(state): implement data migration and versioning
    - Identify bottlenecks
 
 **Verification Checklist:**
+
 - [ ] No unnecessary re-renders
 - [ ] Memory usage acceptable
 - [ ] UI remains responsive
 - [ ] Large state handled efficiently
 
 **Commit Message Template:**
+
 ```
 perf(state): optimize state management performance
 
@@ -414,6 +445,7 @@ perf(state): optimize state management performance
 **Goal:** Add tools for debugging state management.
 
 **Files to Create:**
+
 - `src/store/devtools.ts` - DevTools integration
 
 **Implementation Steps:**
@@ -439,12 +471,14 @@ perf(state): optimize state management performance
    - Useful for testing
 
 **Verification Checklist:**
+
 - [ ] DevTools work in development
 - [ ] State changes visible
 - [ ] Logging helps debugging
 - [ ] Only enabled in dev mode
 
 **Commit Message Template:**
+
 ```
 dev(state): add state devtools and debugging
 
@@ -463,6 +497,7 @@ dev(state): add state devtools and debugging
 **Goal:** Comprehensively test stores and persistence.
 
 **Files to Create:**
+
 - `__tests__/unit/store/useTrackStore.test.ts`
 - `__tests__/unit/store/usePlaybackStore.test.ts`
 - `__tests__/unit/store/useUIStore.test.ts`
@@ -497,12 +532,14 @@ dev(state): add state devtools and debugging
    - App lifecycle scenarios
 
 **Verification Checklist:**
+
 - [ ] All unit tests pass
 - [ ] Integration tests cover main flows
 - [ ] Coverage >80%
 - [ ] Persistence tested
 
 **Commit Message Template:**
+
 ```
 test(state): add comprehensive state management tests
 
@@ -521,6 +558,7 @@ test(state): add comprehensive state management tests
 **Goal:** Document state management architecture.
 
 **Files to Create:**
+
 - `docs/architecture/state-management.md`
 - `docs/guides/state-persistence.md`
 
@@ -533,11 +571,13 @@ test(state): add comprehensive state management tests
 5. Add migration guide
 
 **Verification Checklist:**
+
 - [ ] Documentation complete
 - [ ] Examples accurate
 - [ ] Migration process documented
 
 **Commit Message Template:**
+
 ```
 docs(state): document state management architecture
 

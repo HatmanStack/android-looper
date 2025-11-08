@@ -5,6 +5,7 @@
 Configure production builds for all platforms (web, Android, iOS), set up deployment pipelines, create app store assets, and deploy the application. Prepare for production release with proper configuration, optimization, and documentation.
 
 **Success Criteria:**
+
 - Production web build deployed
 - Android APK/AAB built and ready for Play Store
 - iOS IPA built and ready for App Store
@@ -32,6 +33,7 @@ Configure production builds for all platforms (web, Android, iOS), set up deploy
 **Goal:** Set up environment configuration for production builds.
 
 **Files to Create:**
+
 - `.env.production` - Production environment variables
 - `app.config.ts` - Dynamic app configuration
 - `eas.json` - EAS Build configuration
@@ -50,6 +52,7 @@ Configure production builds for all platforms (web, Android, iOS), set up deploy
    - Set app version and build number
 
 3. Create eas.json:
+
    ```json
    {
      "build": {
@@ -78,12 +81,14 @@ Configure production builds for all platforms (web, Android, iOS), set up deploy
    - Android versionCode
 
 **Verification Checklist:**
+
 - [ ] Environment configs created
 - [ ] app.config.ts dynamic configuration works
 - [ ] eas.json configured correctly
 - [ ] Version numbers set
 
 **Commit Message Template:**
+
 ```
 chore(config): configure production environment
 
@@ -102,6 +107,7 @@ chore(config): configure production environment
 **Goal:** Create optimized production build for web.
 
 **Files to Create:**
+
 - `webpack.config.js` - Custom webpack config (if needed)
 - Build optimization scripts
 
@@ -139,6 +145,7 @@ chore(config): configure production environment
    - Optimize imports
 
 **Verification Checklist:**
+
 - [ ] Production build completes
 - [ ] Bundle size optimized
 - [ ] All features work in prod build
@@ -146,6 +153,7 @@ chore(config): configure production environment
 - [ ] PWA configured (if applicable)
 
 **Commit Message Template:**
+
 ```
 build(web): optimize production web build
 
@@ -165,6 +173,7 @@ build(web): optimize production web build
 **Goal:** Create production Android builds using EAS Build.
 
 **Files to Modify:**
+
 - `app.json` - Android-specific configuration
 - `eas.json` - Android build profile
 
@@ -188,6 +197,7 @@ build(web): optimize production web build
    - Test on devices
 
 4. Create production build profile:
+
    ```json
    "production": {
      "android": {
@@ -209,6 +219,7 @@ build(web): optimize production web build
    - Check performance
 
 **Verification Checklist:**
+
 - [ ] Build completes successfully
 - [ ] APK/AAB signed correctly
 - [ ] All features work on device
@@ -216,6 +227,7 @@ build(web): optimize production web build
 - [ ] Performance acceptable
 
 **Commit Message Template:**
+
 ```
 build(android): configure and create production Android build
 
@@ -235,6 +247,7 @@ build(android): configure and create production Android build
 **Goal:** Create production iOS build using EAS Build.
 
 **Files to Modify:**
+
 - `app.json` - iOS-specific configuration
 - `eas.json` - iOS build profile
 
@@ -258,6 +271,7 @@ build(android): configure and create production Android build
    - Test on devices
 
 4. Create production build profile:
+
    ```json
    "production": {
      "ios": {
@@ -278,6 +292,7 @@ build(android): configure and create production Android build
    - Check performance
 
 **Verification Checklist:**
+
 - [ ] Build completes successfully
 - [ ] IPA signed correctly
 - [ ] All features work on device
@@ -285,6 +300,7 @@ build(android): configure and create production Android build
 - [ ] Performance acceptable
 
 **Commit Message Template:**
+
 ```
 build(ios): configure and create production iOS build
 
@@ -304,6 +320,7 @@ build(ios): configure and create production iOS build
 **Goal:** Prepare all assets needed for app store submissions.
 
 **Files to Create:**
+
 - `assets/store/` - App store assets directory
 - App icons, splash screens, screenshots
 
@@ -344,6 +361,7 @@ build(ios): configure and create production iOS build
    - Data collection disclosure
 
 **Verification Checklist:**
+
 - [ ] All icon sizes created
 - [ ] Splash screens for all platforms
 - [ ] Screenshots taken for all devices
@@ -351,6 +369,7 @@ build(ios): configure and create production iOS build
 - [ ] Privacy policy prepared
 
 **Commit Message Template:**
+
 ```
 chore(assets): create app store assets and listings
 
@@ -370,6 +389,7 @@ chore(assets): create app store assets and listings
 **Goal:** Deploy web build to hosting platform.
 
 **Files to Create:**
+
 - Deployment configuration files
 
 **Implementation Steps:**
@@ -407,6 +427,7 @@ chore(assets): create app store assets and listings
    - Check performance
 
 **Verification Checklist:**
+
 - [ ] Web app deployed successfully
 - [ ] Custom domain configured (if applicable)
 - [ ] HTTPS enabled
@@ -414,6 +435,7 @@ chore(assets): create app store assets and listings
 - [ ] Continuous deployment configured
 
 **Commit Message Template:**
+
 ```
 deploy(web): set up web hosting and deployment
 
@@ -471,6 +493,7 @@ deploy(web): set up web hosting and deployment
    - Wait for approval (can take days)
 
 **Verification Checklist:**
+
 - [ ] App created in Play Console
 - [ ] All details filled
 - [ ] Screenshots and graphics uploaded
@@ -479,6 +502,7 @@ deploy(web): set up web hosting and deployment
 - [ ] Submitted for review
 
 **Commit Message Template:**
+
 ```
 chore(release): submit Android app to Google Play Store
 
@@ -542,6 +566,7 @@ chore(release): submit Android app to Google Play Store
    - Wait for approval (can take days/weeks)
 
 **Verification Checklist:**
+
 - [ ] App created in App Store Connect
 - [ ] Build uploaded and processed
 - [ ] All details filled
@@ -550,6 +575,7 @@ chore(release): submit Android app to Google Play Store
 - [ ] Submitted for review
 
 **Commit Message Template:**
+
 ```
 chore(release): submit iOS app to Apple App Store
 
@@ -569,6 +595,7 @@ chore(release): submit iOS app to Apple App Store
 **Goal:** Automate builds and deployments with CI/CD.
 
 **Files to Create:**
+
 - `.github/workflows/` - GitHub Actions workflows
 - Or equivalent for other CI platforms
 
@@ -607,6 +634,7 @@ chore(release): submit iOS app to Apple App Store
    - Deployment status
 
 **Verification Checklist:**
+
 - [ ] CI/CD pipeline configured
 - [ ] Tests run automatically
 - [ ] Web deploys automatically
@@ -614,6 +642,7 @@ chore(release): submit iOS app to Apple App Store
 - [ ] Secrets configured securely
 
 **Commit Message Template:**
+
 ```
 ci: set up CI/CD pipeline with GitHub Actions
 
@@ -633,6 +662,7 @@ ci: set up CI/CD pipeline with GitHub Actions
 **Goal:** Complete all documentation and launch the app.
 
 **Files to Create:**
+
 - `Migration/README.md` - Main project README
 - `docs/user-guide.md` - User guide
 - `docs/developer-guide.md` - Developer documentation
@@ -681,6 +711,7 @@ ci: set up CI/CD pipeline with GitHub Actions
    - Fix critical issues quickly
 
 **Verification Checklist:**
+
 - [ ] README complete
 - [ ] User guide written
 - [ ] Developer docs complete
@@ -689,6 +720,7 @@ ci: set up CI/CD pipeline with GitHub Actions
 - [ ] Monitoring set up
 
 **Commit Message Template:**
+
 ```
 docs: complete final documentation and prepare for launch
 
@@ -763,6 +795,7 @@ Congratulations! The Looper app has been successfully migrated from Android (Jav
 ## Future Enhancements
 
 Consider for future versions:
+
 - Real-time mixing preview
 - Additional audio effects (reverb, EQ)
 - Cloud storage integration

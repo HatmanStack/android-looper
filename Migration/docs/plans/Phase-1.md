@@ -5,6 +5,7 @@
 Initialize a React Native project with Expo, configure TypeScript, set up development tools (linting, formatting, testing), and establish the foundational project structure. By the end of this phase, you'll have a working development environment with all necessary dependencies installed and configured.
 
 **Success Criteria:**
+
 - Expo project runs successfully on web, iOS simulator, and Android emulator
 - TypeScript compiles without errors in strict mode
 - ESLint and Prettier are configured and working
@@ -50,6 +51,7 @@ Before starting, ensure you have:
 **Goal:** Create a new Expo project in the `Migration/` directory using TypeScript template with Expo Dev Client support.
 
 **Files to Create:**
+
 - `Migration/package.json` - Project dependencies and scripts
 - `Migration/app.json` - Expo configuration
 - `Migration/App.tsx` - Root React component
@@ -58,6 +60,7 @@ Before starting, ensure you have:
 - `Migration/.gitignore` - Git ignore rules
 
 **Prerequisites:**
+
 - None (first task)
 
 **Implementation Steps:**
@@ -89,18 +92,21 @@ Before starting, ensure you have:
    - Configure `platforms`: ["ios", "android", "web"]
 
 **Verification Checklist:**
+
 - [ ] `expo start` runs without errors
 - [ ] Project opens in web browser (press `w` in terminal)
 - [ ] TypeScript compilation succeeds (`npx tsc --noEmit`)
 - [ ] All generated files are committed to git
 
 **Testing Instructions:**
+
 - Run `expo start` and verify the app loads in a web browser
 - Open the app in iOS Simulator (press `i`) and verify it loads
 - Open the app in Android Emulator (press `a`) and verify it loads
 - Check that hot reload works (edit `App.tsx` and save)
 
 **Commit Message Template:**
+
 ```
 feat(setup): initialize Expo project with TypeScript
 
@@ -119,10 +125,12 @@ feat(setup): initialize Expo project with TypeScript
 **Goal:** Set up Expo Dev Client to support custom native modules (required for FFmpeg integration in later phases).
 
 **Files to Modify/Create:**
+
 - `Migration/app.json` - Add dev client configuration
 - `Migration/package.json` - Add expo-dev-client dependency
 
 **Prerequisites:**
+
 - Task 1 completed
 
 **Implementation Steps:**
@@ -145,16 +153,19 @@ feat(setup): initialize Expo project with TypeScript
    - Prepare for EAS Build setup (can defer actual builds until Phase 6)
 
 **Verification Checklist:**
+
 - [ ] `expo-dev-client` is in package.json dependencies
 - [ ] App still runs with `expo start`
 - [ ] No errors in terminal or browser console
 
 **Testing Instructions:**
+
 - Run `npm install` or `yarn install` to install the new dependency
 - Start the app with `expo start --dev-client` (should work even without custom build yet)
 - Verify app still loads in web browser
 
 **Commit Message Template:**
+
 ```
 feat(setup): configure Expo Dev Client for native modules
 
@@ -172,10 +183,12 @@ feat(setup): configure Expo Dev Client for native modules
 **Goal:** Install all core dependencies required for the migration, including React Native Paper, navigation, and utility libraries.
 
 **Files to Modify:**
+
 - `Migration/package.json` - Add dependencies
 - `Migration/app.json` - Configure icon/splash (if needed for Paper)
 
 **Prerequisites:**
+
 - Task 2 completed
 
 **Implementation Steps:**
@@ -206,18 +219,21 @@ feat(setup): configure Expo Dev Client for native modules
    - Check for any platform-specific installation issues
 
 **Verification Checklist:**
+
 - [ ] All packages install without errors
 - [ ] No peer dependency warnings
 - [ ] `npm list` or `yarn list` shows no conflicts
 - [ ] App still runs after installing all packages
 
 **Testing Instructions:**
+
 - Run `npm install` or `yarn install`
 - Check for any errors or warnings during installation
 - Run `expo start` and verify app still loads
 - Import React Native Paper in App.tsx to verify it's available
 
 **Commit Message Template:**
+
 ```
 feat(deps): install core dependencies for UI and navigation
 
@@ -236,11 +252,13 @@ feat(deps): install core dependencies for UI and navigation
 **Goal:** Set up code linting and formatting to enforce code quality and consistency as defined in Phase 0.
 
 **Files to Create:**
+
 - `Migration/.eslintrc.js` - ESLint configuration
 - `Migration/.prettierrc.js` - Prettier configuration
 - `Migration/.prettierignore` - Files to ignore for formatting
 
 **Prerequisites:**
+
 - Task 3 completed
 
 **Implementation Steps:**
@@ -283,18 +301,21 @@ feat(deps): install core dependencies for UI and navigation
    - Manually resolve remaining issues
 
 **Verification Checklist:**
+
 - [ ] `npm run lint` runs without errors
 - [ ] `npm run format:check` passes
 - [ ] VS Code shows linting errors inline (if extension installed)
 - [ ] Prettier formats code on save (if configured in editor)
 
 **Testing Instructions:**
+
 - Run `npm run lint` and verify no errors (or only expected ones)
 - Intentionally create a linting error (e.g., unused variable) and verify it's caught
 - Run `npm run format` and verify code is formatted consistently
 - Save a file in VS Code and verify it auto-formats
 
 **Commit Message Template:**
+
 ```
 chore(tooling): configure ESLint and Prettier for code quality
 
@@ -313,11 +334,13 @@ chore(tooling): configure ESLint and Prettier for code quality
 **Goal:** Configure Jest and React Native Testing Library for unit and integration testing.
 
 **Files to Create:**
+
 - `Migration/jest.config.js` - Jest configuration
 - `Migration/__tests__/App.test.tsx` - Sample test
 - `Migration/jest.setup.js` - Test setup file
 
 **Prerequisites:**
+
 - Task 4 completed
 
 **Implementation Steps:**
@@ -358,18 +381,21 @@ chore(tooling): configure ESLint and Prettier for code quality
    - statements: 80
 
 **Verification Checklist:**
+
 - [ ] `npm test` runs and passes
 - [ ] Sample test for App component passes
 - [ ] `npm run test:coverage` generates coverage report
 - [ ] Coverage thresholds are configured
 
 **Testing Instructions:**
+
 - Run `npm test` and verify the sample test passes
 - Run `npm run test:coverage` and review the coverage report
 - Intentionally break the test (e.g., change assertion) and verify it fails
 - Fix the test and verify it passes again
 
 **Commit Message Template:**
+
 ```
 test(setup): configure Jest and React Native Testing Library
 
@@ -389,6 +415,7 @@ test(setup): configure Jest and React Native Testing Library
 **Goal:** Set up the project directory structure as defined in Phase 0 ADR-008.
 
 **Files/Directories to Create:**
+
 - `Migration/src/` - Source code root
 - `Migration/src/components/` - Reusable UI components
 - `Migration/src/screens/` - Screen components
@@ -404,6 +431,7 @@ test(setup): configure Jest and React Native Testing Library
 - `Migration/__tests__/e2e/` - E2E tests (placeholder for Phase 8)
 
 **Prerequisites:**
+
 - Task 5 completed
 
 **Implementation Steps:**
@@ -423,6 +451,7 @@ test(setup): configure Jest and React Native Testing Library
    - `src/store/README.md` - Describe state management approach
 
 4. Update `tsconfig.json` with path aliases (optional but recommended):
+
    ```json
    "paths": {
      "@components/*": ["src/components/*"],
@@ -444,18 +473,21 @@ test(setup): configure Jest and React Native Testing Library
    - Add common patterns (node_modules, build, coverage, .expo, etc.)
 
 **Verification Checklist:**
+
 - [ ] All directories exist
 - [ ] Path aliases work (test with a dummy import)
 - [ ] README files provide context for each directory
 - [ ] Git only tracks necessary files (.gitignore working)
 
 **Testing Instructions:**
+
 - List the directory structure and verify all folders exist
 - Try importing from a path alias (e.g., `import from '@components/...'`)
 - Run TypeScript compiler and verify no path resolution errors
 - Verify git status shows only intended files
 
 **Commit Message Template:**
+
 ```
 feat(structure): create project directory structure
 
@@ -474,10 +506,12 @@ feat(structure): create project directory structure
 **Goal:** Configure React Native Paper with a dark Material Design theme matching the original Android app aesthetic.
 
 **Files to Create:**
+
 - `Migration/src/theme/paperTheme.ts` - Paper theme configuration
 - `Migration/App.tsx` - Wrap app with PaperProvider
 
 **Prerequisites:**
+
 - Task 6 completed
 
 **Implementation Steps:**
@@ -513,18 +547,21 @@ feat(structure): create project directory structure
    - Note any platform-specific theme considerations
 
 **Verification Checklist:**
+
 - [ ] PaperProvider wraps the app
 - [ ] Custom theme is applied
 - [ ] Paper components render with correct colors
 - [ ] Dark mode aesthetic matches Android app
 
 **Testing Instructions:**
+
 - Run the app and verify dark background
 - Add a Paper Button and verify it's purple (#BB86FC)
 - Add a Paper Card and verify surface color (#1E1E1E)
 - Compare visually with Android app screenshots
 
 **Commit Message Template:**
+
 ```
 feat(theme): configure React Native Paper with dark theme
 
@@ -543,10 +580,12 @@ feat(theme): configure React Native Paper with dark theme
 **Goal:** Set up platform detection and prepare for platform-specific file loading (web vs native).
 
 **Files to Create:**
+
 - `Migration/src/utils/platform.ts` - Platform utility functions
 - `Migration/src/constants/platform.ts` - Platform constants
 
 **Prerequisites:**
+
 - Task 7 completed
 
 **Implementation Steps:**
@@ -579,18 +618,21 @@ feat(theme): configure React Native Paper with dark theme
    - Import `logger` without extension and verify correct version loads
 
 **Verification Checklist:**
+
 - [ ] Platform utility functions work correctly
 - [ ] Platform constants are accessible
 - [ ] Platform-specific file loading works (test with example)
 - [ ] Documentation explains platform file patterns
 
 **Testing Instructions:**
+
 - Import `isWeb` and log the result on web (should be true)
 - Import `isWeb` and log the result on iOS/Android (should be false)
 - Import the platform-specific logger and verify correct implementation loads
 - Verify Metro bundles the correct platform file (check bundle output)
 
 **Commit Message Template:**
+
 ```
 feat(platform): configure platform detection and file loading
 
@@ -609,10 +651,12 @@ feat(platform): configure platform detection and file loading
 **Goal:** Ensure the Migration/ directory is properly version controlled with a clean git history.
 
 **Files to Modify:**
+
 - `Migration/.gitignore` - Ensure all necessary files are ignored
 - Git repository initialization
 
 **Prerequisites:**
+
 - All previous tasks completed
 
 **Implementation Steps:**
@@ -649,6 +693,7 @@ feat(platform): configure platform detection and file loading
    - Push to origin
 
 **Verification Checklist:**
+
 - [ ] `.gitignore` properly configured
 - [ ] No sensitive data in tracked files
 - [ ] All source and config files committed
@@ -656,12 +701,14 @@ feat(platform): configure platform detection and file loading
 - [ ] Pushed to correct branch
 
 **Testing Instructions:**
+
 - Run `git status` and verify working tree is clean
 - Clone the repository to a new location and verify project works
 - Run `npm install` and `expo start` in fresh clone
 - Verify all functionality works in clean environment
 
 **Commit Message Template:**
+
 ```
 feat(setup): complete Phase 1 project setup and tooling
 
@@ -685,9 +732,11 @@ Project is ready for Phase 2 (Core UI Components)
 **Goal:** Document what was accomplished in Phase 1 and verify all requirements are met.
 
 **Files to Create:**
+
 - `Migration/docs/phase-completions/Phase-1-Completion.md` - Summary of work done
 
 **Prerequisites:**
+
 - All previous tasks completed
 
 **Implementation Steps:**
@@ -718,17 +767,20 @@ Project is ready for Phase 2 (Core UI Components)
    - Any performance benchmarks (app start time, etc.)
 
 **Verification Checklist:**
+
 - [ ] Completion document is comprehensive
 - [ ] All tasks from Phase 1 are documented
 - [ ] Verification steps are clear and actionable
 - [ ] Document is committed to git
 
 **Testing Instructions:**
+
 - Review the completion document for accuracy
 - Follow the verification steps to ensure everything works
 - Have another developer review the document for clarity
 
 **Commit Message Template:**
+
 ```
 docs(phase-1): add Phase 1 completion documentation
 
@@ -749,6 +801,7 @@ docs(phase-1): add Phase 1 completion documentation
 Run through this checklist to ensure Phase 1 is fully complete:
 
 1. **Project Runs on All Platforms:**
+
    ```bash
    expo start
    # Press 'w' for web - should open in browser
@@ -757,24 +810,28 @@ Run through this checklist to ensure Phase 1 is fully complete:
    ```
 
 2. **TypeScript Compilation:**
+
    ```bash
    npx tsc --noEmit
    # Should complete with no errors
    ```
 
 3. **Linting:**
+
    ```bash
    npm run lint
    # Should complete with no errors
    ```
 
 4. **Formatting:**
+
    ```bash
    npm run format:check
    # Should pass with no files needing formatting
    ```
 
 5. **Testing:**
+
    ```bash
    npm test
    # All tests should pass
@@ -783,6 +840,7 @@ Run through this checklist to ensure Phase 1 is fully complete:
    ```
 
 6. **Directory Structure:**
+
    ```bash
    ls -R src/
    # Should show: components, screens, services, store, utils, types, constants, theme
@@ -797,6 +855,7 @@ Run through this checklist to ensure Phase 1 is fully complete:
    - Paper components should use purple primary color (#BB86FC)
 
 9. **Git:**
+
    ```bash
    git status
    # Should show clean working tree
@@ -829,24 +888,31 @@ Document any issues to be addressed in future phases:
 ## Common Issues and Solutions
 
 ### Issue: Expo CLI not found
+
 **Solution:** Install globally with `npm install -g expo-cli`
 
 ### Issue: TypeScript errors on first compile
+
 **Solution:** Ensure all `@types/*` packages are installed, restart TS server
 
 ### Issue: Metro bundler cache issues
+
 **Solution:** Clear cache with `expo start -c`
 
 ### Issue: Platform-specific files not loading
+
 **Solution:** Restart Metro bundler, verify file extensions are correct
 
 ### Issue: React Native Paper components not styled
+
 **Solution:** Ensure PaperProvider wraps the app, verify theme is passed
 
 ### Issue: ESLint conflicts with Prettier
+
 **Solution:** Ensure `eslint-config-prettier` is in extends array (last)
 
 ### Issue: Tests failing with module resolution errors
+
 **Solution:** Update `jest.config.js` moduleNameMapper, verify jest.setup.js imports
 
 ---
@@ -856,6 +922,7 @@ Document any issues to be addressed in future phases:
 **Total estimated tokens for Phase 1:** ~80,000
 
 **Time estimates (solo developer):**
+
 - Task 1: 1-2 hours (initialize project)
 - Task 2: 30 min (dev client setup)
 - Task 3: 1 hour (install dependencies)
@@ -876,6 +943,7 @@ Document any issues to be addressed in future phases:
 Once Phase 1 is complete and verified, proceed to **[Phase 2: Core UI Components](./Phase-2.md)**.
 
 Phase 2 will build on this foundation to create:
+
 - Main screen layout
 - Track list component with FlatList
 - Track control component (play/pause/delete, sliders)
@@ -883,6 +951,7 @@ Phase 2 will build on this foundation to create:
 - Responsive layout for web and mobile
 
 **Prerequisites for Phase 2:**
+
 - All Phase 1 tasks completed
 - Project runs successfully on all target platforms
 - Development environment fully configured

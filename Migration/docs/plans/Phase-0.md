@@ -15,6 +15,7 @@ This phase establishes the architectural foundation, design decisions, and techn
 **Location:** `../app/src/main/java/gemenie/looper/`
 
 **Files Analyzed:**
+
 - `MainActivity.java` (489 lines) - Main activity, audio recording, file management
 - `SoundControlsAdapter.java` (174 lines) - RecyclerView adapter, playback controls
 
@@ -50,6 +51,7 @@ This phase establishes the architectural foundation, design decisions, and techn
    - Save operation: Simple file copy (no mixing/rendering)
 
 **UI Structure:**
+
 - RecyclerView with custom adapter for track list
 - Each track item: Play/Pause/Delete buttons, Volume/Speed sliders
 - Top controls: Record/Stop buttons
@@ -57,10 +59,12 @@ This phase establishes the architectural foundation, design decisions, and techn
 - Material Design theme with dark mode
 
 **Dependencies:**
+
 - Standard Android SDK only (no external audio libraries)
 - AndroidX: AppCompat, Material, RecyclerView, ConstraintLayout
 
 **Key Limitations Identified:**
+
 - ❌ No true audio mixing (just simultaneous playback)
 - ❌ Cannot export mixed audio file
 - ❌ Speed control requires API 23+
@@ -80,6 +84,7 @@ True audio mixing requires custom native modules that aren't available in standa
 **Decision:** Use **Expo Dev Client** with custom development builds.
 
 **Rationale:**
+
 - Maintains Expo ecosystem benefits (EAS Build, OTA updates, unified configuration)
 - Allows native modules via config plugins or custom native code
 - Easier to maintain than bare workflow
@@ -87,20 +92,19 @@ True audio mixing requires custom native modules that aren't available in standa
 - Can still use all Expo libraries and services
 
 **Consequences:**
+
 - Need to create custom development client builds (cannot use Expo Go)
 - Requires EAS Build or local builds with expo-dev-client
 - Slightly more complex setup than managed workflow
 - Still much simpler than bare workflow maintenance
 
 **Implementation:**
+
 ```json
 // app.json
 {
   "expo": {
-    "plugins": [
-      "expo-av",
-      ["react-native-ffmpeg", { "package": "min" }]
-    ]
+    "plugins": ["expo-av", ["react-native-ffmpeg", { "package": "min" }]]
   }
 }
 ```
@@ -113,6 +117,7 @@ True audio mixing requires custom native modules that aren't available in standa
 
 **Context:**
 We need true audio mixing capabilities with speed/pitch control and volume adjustment. Options considered:
+
 1. FFmpeg (command-line audio processing)
 2. Native Audio APIs (AudioTrack/AVAudioEngine)
 3. Web Audio API (web only)
@@ -121,10 +126,12 @@ We need true audio mixing capabilities with speed/pitch control and volume adjus
 **Decision:** Use **FFmpeg for all platforms** with platform-specific binaries.
 
 **Platform-Specific Implementations:**
+
 - **Web:** `@ffmpeg/ffmpeg` (WebAssembly version)
 - **Native:** `react-native-ffmpeg` via Expo config plugin (or ffmpeg-kit)
 
 **Rationale:**
+
 - FFmpeg provides complete audio processing pipeline (decode, process, mix, encode)
 - Handles format conversion automatically
 - Battle-tested for audio manipulation
@@ -132,12 +139,14 @@ We need true audio mixing capabilities with speed/pitch control and volume adjus
 - Supports all required operations: speed (atempo), volume, mixing (amix)
 
 **Consequences:**
+
 - Large binary size (~30-50MB depending on build)
 - Learning curve for FFmpeg filter syntax
 - Processing is offline/batch (not real-time)
 - Need separate real-time playback solution
 
 **Trade-offs Accepted:**
+
 - Size increase for reliability and feature completeness
 - Batch processing acceptable since mixing only happens on export
 
@@ -153,6 +162,7 @@ The app must run on Web (primary), Android, and iOS. Each platform has different
 **Decision:** Implement **platform-specific audio layers** with unified interfaces.
 
 **Architecture:**
+
 ```
 ┌─────────────────────────────────────┐
 │   UI Layer (Shared)                 │
@@ -178,6 +188,7 @@ The app must run on Web (primary), Android, and iOS. Each platform has different
 ```
 
 **Platform Detection:**
+
 ```typescript
 import { Platform } from 'react-native';
 
@@ -188,12 +199,14 @@ const audioService = Platform.select({
 ```
 
 **Rationale:**
+
 - Optimized performance for each platform
 - Leverage platform-specific strengths (Web Audio API vs native audio)
 - Better user experience (faster processing on native)
 - Flexibility to use best tools per platform
 
 **Consequences:**
+
 - More code to maintain (~15-20% duplication)
 - Need comprehensive testing on all platforms
 - Shared interfaces must accommodate all platform capabilities
@@ -211,6 +224,7 @@ Need cross-platform UI components that work on Web, Android, and iOS. Current An
 **Decision:** Use **React Native Paper** (Material Design for React Native).
 
 **Rationale:**
+
 - Material Design maintains visual consistency with current Android app
 - Works across all platforms (Web via React Native Web, native)
 - Comprehensive component library (buttons, sliders, cards, modals)
@@ -219,6 +233,7 @@ Need cross-platform UI components that work on Web, Android, and iOS. Current An
 - Native feel on Android, acceptable on iOS/Web
 
 **Components We'll Use:**
+
 - `Button` - Action buttons (Record, Stop, Save, Import)
 - `IconButton` - Track controls (Play, Pause, Delete)
 - `Card` - Track list items
@@ -227,6 +242,7 @@ Need cross-platform UI components that work on Web, Android, and iOS. Current An
 - Custom slider components (Paper's Slider may not meet needs)
 
 **Theming:**
+
 ```typescript
 const theme = {
   ...MD3DarkTheme,
@@ -240,6 +256,7 @@ const theme = {
 ```
 
 **Consequences:**
+
 - Dependency on React Native Paper library
 - Bundle size increase (~200KB)
 - May need custom components for sliders (volume/speed)
@@ -253,6 +270,7 @@ const theme = {
 
 **Context:**
 Need to manage complex state:
+
 - List of audio tracks (URIs, metadata)
 - Playback states (playing, paused, stopped)
 - Track settings (speed, volume)
@@ -262,6 +280,7 @@ Need to manage complex state:
 **Decision:** Use **Zustand** for global state management.
 
 **Rationale:**
+
 - Simpler than Redux, less boilerplate
 - TypeScript-first design
 - No Provider wrapping needed
@@ -271,6 +290,7 @@ Need to manage complex state:
 - Works well with React hooks
 
 **Store Structure:**
+
 ```typescript
 interface LooperStore {
   // Track management
@@ -295,23 +315,28 @@ interface LooperStore {
 ```
 
 **Persistence:**
+
 ```typescript
 import { persist } from 'zustand/middleware';
 
 const useStore = create(
   persist(
-    (set) => ({ /* store */ }),
+    (set) => ({
+      /* store */
+    }),
     { name: 'looper-storage' }
   )
 );
 ```
 
 **Consequences:**
+
 - Need to learn Zustand API
 - State serialization requirements for persistence
 - Must handle platform-specific storage backends
 
 **Alternative Considered:** React Context API
+
 - Rejected: Too many re-renders for frequently changing audio state
 - Rejected: More complex to persist
 
@@ -349,6 +374,7 @@ Complex audio processing logic, platform-specific implementations, and critical 
    - Platform-specific: Run on iOS Simulator, Android Emulator, Chrome/Firefox
 
 **Mock Strategy:**
+
 ```typescript
 // __mocks__/expo-av.ts
 export const Audio = {
@@ -361,17 +387,20 @@ export const Audio = {
 ```
 
 **FFmpeg Testing:**
+
 - Unit test command generation (don't run actual FFmpeg)
 - Integration tests with small audio fixtures
 - E2E tests verify actual mixed output
 
 **Rationale:**
+
 - Jest: Standard React Native testing, fast, good mocking
 - RTL: Best practices for component testing, accessible queries
 - Detox: Most mature E2E for React Native
 - Playwright: Better web E2E than Selenium/Cypress for RN Web
 
 **Consequences:**
+
 - Significant test setup time (Phase 8)
 - Need test fixtures (small audio files)
 - E2E tests slower, run on CI only
@@ -389,12 +418,14 @@ Need consistent audio formats for recording, playback, and export. Current Andro
 **Decision:** Standardize on **MP3 (MPEG-1 Audio Layer 3)** for all audio operations.
 
 **Specifications:**
+
 - **Format:** MP3
 - **Sample Rate:** 44.1 kHz (CD quality)
 - **Bit Rate:** 128 kbps (good quality/size balance)
 - **Channels:** Stereo (2 channels)
 
 **Rationale:**
+
 - Universal browser support (Web Audio API)
 - Native support on all platforms
 - Good compression (smaller files than WAV)
@@ -402,21 +433,25 @@ Need consistent audio formats for recording, playback, and export. Current Andro
 - User familiarity (widely recognized format)
 
 **Platform-Specific Recording:**
+
 - **Web:** MediaRecorder API with `audio/webm` or `audio/mp4`, convert to MP3 via FFmpeg
 - **Native:** expo-av with MP3 output directly
 
 **FFmpeg Encoding Parameters:**
+
 ```bash
 -codec:a libmp3lame -b:a 128k -ar 44100
 ```
 
 **Consequences:**
+
 - Potential conversion step for web recordings
 - Lossy compression (acceptable for looper use case)
 - Slightly larger than AMR-NB but better quality
 - Need FFmpeg build with libmp3lame support
 
 **Alternative Considered:** AAC
+
 - Rejected: Better quality but less universal support in older browsers
 
 ---
@@ -431,6 +466,7 @@ Need clear, scalable project structure for React Native + Expo project with plat
 **Decision:** Feature-based structure with platform folders.
 
 **Directory Structure:**
+
 ```
 Migration/
 ├── src/
@@ -475,12 +511,14 @@ Migration/
 ```
 
 **Platform-Specific File Extensions:**
+
 - `.web.ts` - Web-only implementation
 - `.native.ts` - iOS/Android implementation
 - `.ios.ts` / `.android.ts` - Platform-specific overrides
 - `.ts` - Shared across all platforms
 
 **Import Resolution:**
+
 ```typescript
 // Automatically resolves to correct platform file
 import AudioService from './services/audio/AudioService';
@@ -488,6 +526,7 @@ import AudioService from './services/audio/AudioService';
 ```
 
 **Rationale:**
+
 - Clear separation of concerns
 - Easy to find related code (feature-based)
 - Platform-specific code isolated but discoverable
@@ -495,6 +534,7 @@ import AudioService from './services/audio/AudioService';
 - Standard React Native/Expo patterns
 
 **Consequences:**
+
 - More files (platform-specific duplicates)
 - Need to maintain parallel implementations
 - Import resolution requires proper bundler config
@@ -506,6 +546,7 @@ import AudioService from './services/audio/AudioService';
 ### 1. TypeScript Usage
 
 **Strict Mode Enabled:**
+
 ```json
 // tsconfig.json
 {
@@ -518,6 +559,7 @@ import AudioService from './services/audio/AudioService';
 ```
 
 **Type Definitions:**
+
 ```typescript
 // src/types/index.ts
 export interface Track {
@@ -525,8 +567,8 @@ export interface Track {
   uri: string;
   name: string;
   duration: number;
-  speed: number;      // 0.05 - 2.50
-  volume: number;     // 0 - 100
+  speed: number; // 0.05 - 2.50
+  volume: number; // 0 - 100
   isPlaying: boolean;
   createdAt: number;
 }
@@ -553,6 +595,7 @@ export interface MixerOptions {
 ### 2. Error Handling Pattern
 
 **Consistent Error Boundaries:**
+
 ```typescript
 // All async operations use try-catch
 try {
@@ -568,6 +611,7 @@ try {
 ```
 
 **Error Types:**
+
 ```typescript
 class AudioError extends Error {
   constructor(
@@ -590,6 +634,7 @@ enum AudioErrorCode {
 ### 3. Logging & Debugging
 
 **Console Logging Pattern:**
+
 ```typescript
 const DEBUG = __DEV__;
 
@@ -610,6 +655,7 @@ log.debug('AudioService', 'Starting recording', { uri });
 ### 4. Async/Await Standards
 
 **Always use async/await over promises:**
+
 ```typescript
 // ✅ Good
 async function loadTrack(uri: string) {
@@ -620,8 +666,8 @@ async function loadTrack(uri: string) {
 
 // ❌ Avoid
 function loadTrack(uri: string) {
-  return fetchMetadata(uri).then(metadata => {
-    return getDuration(uri).then(duration => {
+  return fetchMetadata(uri).then((metadata) => {
+    return getDuration(uri).then((duration) => {
       return { metadata, duration };
     });
   });
@@ -631,6 +677,7 @@ function loadTrack(uri: string) {
 ### 5. Component Composition
 
 **Small, focused components:**
+
 ```typescript
 // ✅ Good - Single responsibility
 const PlayButton = ({ trackId, onPlay }) => (
@@ -649,6 +696,7 @@ const TrackControl = ({ track }) => (
 ### 6. Performance Optimization
 
 **Memoization for expensive operations:**
+
 ```typescript
 import { useMemo, useCallback } from 'react';
 
@@ -675,6 +723,7 @@ const TrackList = ({ tracks }) => {
 ### 1. Platform Detection Anti-Patterns
 
 **❌ Don't check Platform.OS repeatedly:**
+
 ```typescript
 // Bad
 function playAudio() {
@@ -687,31 +736,40 @@ function playAudio() {
 ```
 
 **✅ Use platform-specific files:**
+
 ```typescript
 // AudioService.web.ts
-export class AudioService { /* web implementation */ }
+export class AudioService {
+  /* web implementation */
+}
 
 // AudioService.native.ts
-export class AudioService { /* native implementation */ }
+export class AudioService {
+  /* native implementation */
+}
 ```
 
 ### 2. FFmpeg Command Building
 
 **❌ Don't concatenate strings:**
+
 ```typescript
 // Bad
 const cmd = '-i ' + input + ' -filter:a atempo=' + speed;
 ```
 
 **✅ Use array and join:**
+
 ```typescript
 // Good
 const buildCommand = (input: string, speed: number) => {
   const args = [
-    '-i', input,
-    '-filter:a', `atempo=${speed}`,
+    '-i',
+    input,
+    '-filter:a',
+    `atempo=${speed}`,
     '-y', // Overwrite output
-    output
+    output,
   ];
   return args;
 };
@@ -720,6 +778,7 @@ const buildCommand = (input: string, speed: number) => {
 ### 3. State Management
 
 **❌ Don't mutate state directly:**
+
 ```typescript
 // Bad
 const addTrack = (track) => {
@@ -728,11 +787,12 @@ const addTrack = (track) => {
 ```
 
 **✅ Use immutable updates:**
+
 ```typescript
 // Good
 const addTrack = (track) => {
   set((state) => ({
-    tracks: [...state.tracks, track]
+    tracks: [...state.tracks, track],
   }));
 };
 ```
@@ -740,6 +800,7 @@ const addTrack = (track) => {
 ### 4. Audio Resource Cleanup
 
 **❌ Don't forget to release resources:**
+
 ```typescript
 // Bad
 async function playTrack(uri) {
@@ -751,6 +812,7 @@ async function playTrack(uri) {
 ```
 
 **✅ Always cleanup in finally or effect cleanup:**
+
 ```typescript
 // Good
 useEffect(() => {
@@ -773,6 +835,7 @@ useEffect(() => {
 ### 5. FFmpeg Processing
 
 **❌ Don't block UI thread:**
+
 ```typescript
 // Bad
 const mixTracks = async () => {
@@ -783,6 +846,7 @@ const mixTracks = async () => {
 ```
 
 **✅ Show progress, use background processing:**
+
 ```typescript
 // Good
 const mixTracks = async () => {
@@ -800,12 +864,14 @@ const mixTracks = async () => {
 ## Technology Stack Summary
 
 ### Core Framework
+
 - **React Native:** 0.72+
 - **Expo SDK:** 49+
 - **Expo Dev Client:** For custom native modules
 - **TypeScript:** 5.x
 
 ### UI Framework
+
 - **React Native Paper:** Material Design components
 - **React Native Reanimated:** Smooth animations (sliders)
 - **React Native Gesture Handler:** Touch interactions
@@ -813,26 +879,31 @@ const mixTracks = async () => {
 ### Audio Libraries
 
 **Web:**
+
 - `@ffmpeg/ffmpeg` - WebAssembly FFmpeg
 - `@ffmpeg/core` - FFmpeg core
 - Native Web APIs: MediaRecorder, Web Audio API
 
 **Native:**
+
 - `expo-av` - Recording and playback
 - `react-native-ffmpeg` or `ffmpeg-kit-react-native` - Audio processing
 - `expo-file-system` - File management
 
 ### State Management
+
 - **Zustand** - Global state
 - **zustand/middleware** - Persistence
 
 ### File & Permissions
+
 - `expo-file-system` - File operations
 - `expo-document-picker` - Import audio
 - `expo-media-library` - Save to device
 - `expo-permissions` - Runtime permissions
 
 ### Development Tools
+
 - **ESLint** - Linting
 - **Prettier** - Code formatting
 - **TypeScript** - Type checking
@@ -842,6 +913,7 @@ const mixTracks = async () => {
 - **Playwright** - E2E testing (web)
 
 ### Build & Deployment
+
 - **EAS Build** - Cloud builds
 - **EAS Submit** - App store submission
 - **expo-dev-client** - Custom development builds
@@ -909,6 +981,7 @@ Phase 3: Audio Abstraction Layer
 ```
 
 **Parallelization Opportunities:**
+
 - Phases 4 and 5 can be developed in parallel after Phase 3
 - Platform-specific implementations within each phase can be parallel
 - UI work (Phase 2) can overlap with audio abstraction (Phase 3)

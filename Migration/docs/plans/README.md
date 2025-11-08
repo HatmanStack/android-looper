@@ -7,6 +7,7 @@ This document outlines the comprehensive migration plan for porting the **Looper
 ### What is Looper?
 
 Looper is an audio manipulation application that allows users to:
+
 - Record audio or import audio files from their device
 - Play multiple audio tracks simultaneously with independent controls
 - Adjust playback speed (0.05x - 2.50x) and volume (0-100) for each track independently
@@ -17,6 +18,7 @@ Looper is an audio manipulation application that allows users to:
 ### Current State (Android)
 
 **Technology:** Native Android app built with Java and Android SDK
+
 - **Recording:** MediaRecorder (THREE_GPP format, AMR_NB codec)
 - **Playback:** Multiple MediaPlayer instances running simultaneously
 - **Audio Processing:** MediaPlayer.setPlaybackParams() for speed, setVolume() for volume
@@ -24,12 +26,14 @@ Looper is an audio manipulation application that allows users to:
 - **Limitation:** No true audio mixing—only simultaneous playback, cannot export mixed audio
 
 **Source Code:** `../app/src/main/java/gemenie/looper/`
+
 - `MainActivity.java` (489 lines)
 - `SoundControlsAdapter.java` (174 lines)
 
 ### Target State (React Native + Expo)
 
 **Technology:** React Native with Expo Dev Client
+
 - **Platforms:** Web (primary), Android, iOS
 - **Audio Processing:** FFmpeg for true audio mixing and processing
 - **Playback:** Platform-specific (Web Audio API for web, expo-av for native)
@@ -54,6 +58,7 @@ Before starting this migration, ensure you have:
 ### Development Environment
 
 **Required:**
+
 - Node.js 18+ and npm/yarn
 - Git (for version control)
 - Code editor (VS Code recommended)
@@ -61,11 +66,13 @@ Before starting this migration, ensure you have:
 - EAS CLI: `npm install -g eas-cli`
 
 **For Native Development:**
+
 - **Android:** Android Studio, Android SDK, Java 11+
 - **iOS:** macOS with Xcode 14+, CocoaPods
 - Physical devices or emulators for testing
 
 **For Web Development:**
+
 - Modern web browsers (Chrome, Firefox, Safari)
 - Web debugging tools
 
@@ -79,12 +86,14 @@ Before starting this migration, ensure you have:
 ### Knowledge Requirements
 
 **Essential:**
+
 - React and React Hooks
 - TypeScript basics
 - Async/await and Promises
 - Git version control
 
 **Helpful:**
+
 - React Native fundamentals
 - Expo ecosystem
 - Audio processing concepts
@@ -97,23 +106,24 @@ Before starting this migration, ensure you have:
 
 The migration is divided into 9 sequential phases, each designed to fit within a ~100,000 token context window for efficient implementation.
 
-| Phase | Goal | Estimated Tokens | Dependencies |
-|-------|------|------------------|--------------|
-| [Phase 0](./Phase-0.md) | **Foundation & Architecture Decisions** | ~10,000 | None (reference doc) |
-| [Phase 1](./Phase-1.md) | **Project Setup & Tooling** | ~80,000 | Phase 0 |
-| [Phase 2](./Phase-2.md) | **Core UI Components** | ~100,000 | Phase 1 |
-| [Phase 3](./Phase-3.md) | **Audio Abstraction Layer** | ~90,000 | Phase 2 |
-| [Phase 4](./Phase-4.md) | **Recording & Import (Platform-Specific)** | ~105,000 | Phase 3 |
-| [Phase 5](./Phase-5.md) | **Playback & Controls (Platform-Specific)** | ~110,000 | Phase 3 |
-| [Phase 6](./Phase-6.md) | **FFmpeg Integration & Mixing Engine** | ~120,000 | Phases 4 & 5 |
-| [Phase 7](./Phase-7.md) | **State Management & Persistence** | ~95,000 | Phase 6 |
-| [Phase 8](./Phase-8.md) | **Testing & Quality Assurance** | ~105,000 | Phase 7 |
-| [Phase 9](./Phase-9.md) | **Build Configuration & Deployment** | ~85,000 | Phase 8 |
-| **Total** | | **~900,000** | |
+| Phase                   | Goal                                        | Estimated Tokens | Dependencies         |
+| ----------------------- | ------------------------------------------- | ---------------- | -------------------- |
+| [Phase 0](./Phase-0.md) | **Foundation & Architecture Decisions**     | ~10,000          | None (reference doc) |
+| [Phase 1](./Phase-1.md) | **Project Setup & Tooling**                 | ~80,000          | Phase 0              |
+| [Phase 2](./Phase-2.md) | **Core UI Components**                      | ~100,000         | Phase 1              |
+| [Phase 3](./Phase-3.md) | **Audio Abstraction Layer**                 | ~90,000          | Phase 2              |
+| [Phase 4](./Phase-4.md) | **Recording & Import (Platform-Specific)**  | ~105,000         | Phase 3              |
+| [Phase 5](./Phase-5.md) | **Playback & Controls (Platform-Specific)** | ~110,000         | Phase 3              |
+| [Phase 6](./Phase-6.md) | **FFmpeg Integration & Mixing Engine**      | ~120,000         | Phases 4 & 5         |
+| [Phase 7](./Phase-7.md) | **State Management & Persistence**          | ~95,000          | Phase 6              |
+| [Phase 8](./Phase-8.md) | **Testing & Quality Assurance**             | ~105,000         | Phase 7              |
+| [Phase 9](./Phase-9.md) | **Build Configuration & Deployment**        | ~85,000          | Phase 8              |
+| **Total**               |                                             | **~900,000**     |                      |
 
 ### Phase Descriptions
 
 **Phase 0: Foundation & Architecture Decisions**
+
 - Analysis of current Android implementation
 - Architecture Decision Records (ADRs) for key technical choices
 - Technology stack selection
@@ -121,6 +131,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Not an implementation phase—reference document for all other phases
 
 **Phase 1: Project Setup & Tooling**
+
 - Initialize Expo project with TypeScript
 - Configure Expo Dev Client for custom native modules
 - Set up development tools (ESLint, Prettier, TypeScript)
@@ -129,6 +140,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Project structure creation
 
 **Phase 2: Core UI Components**
+
 - Implement main screen layout
 - Build reusable UI components (buttons, cards, modals)
 - Create track list with FlatList
@@ -137,6 +149,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Responsive layout for web and mobile
 
 **Phase 3: Audio Abstraction Layer**
+
 - Define TypeScript interfaces for audio services
 - Create abstract base classes for platform-specific implementations
 - Set up platform detection and dependency injection
@@ -144,6 +157,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Establish error handling patterns for audio operations
 
 **Phase 4: Recording & Import (Platform-Specific)**
+
 - **Web:** MediaRecorder API integration for recording
 - **Native:** expo-av Audio.Recording implementation
 - File picker integration (expo-document-picker for native, File API for web)
@@ -152,6 +166,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - File system management (expo-file-system)
 
 **Phase 5: Playback & Controls (Platform-Specific)**
+
 - **Web:** Web Audio API for multi-track playback with speed/volume control
 - **Native:** expo-av Audio.Sound for multi-track playback
 - Speed control implementation (0.05x - 2.50x range)
@@ -160,6 +175,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Synchronized playback of multiple tracks
 
 **Phase 6: FFmpeg Integration & Mixing Engine**
+
 - **Web:** @ffmpeg/ffmpeg (WebAssembly) integration
 - **Native:** react-native-ffmpeg or ffmpeg-kit integration via Expo config plugin
 - FFmpeg command builder for audio processing
@@ -170,6 +186,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Export mixed audio to file
 
 **Phase 7: State Management & Persistence**
+
 - Zustand store implementation for tracks, playback state, UI state
 - Track CRUD operations (create, read, update, delete)
 - Persistent storage (AsyncStorage with zustand/middleware)
@@ -178,6 +195,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Migration of state from old storage formats if applicable
 
 **Phase 8: Testing & Quality Assurance**
+
 - Unit tests for audio services, utilities, state management
 - Integration tests for component-service interactions
 - E2E tests for critical user flows (record, play, mix, save)
@@ -187,6 +205,7 @@ The migration is divided into 9 sequential phases, each designed to fit within a
 - Accessibility testing
 
 **Phase 9: Build Configuration & Deployment**
+
 - EAS Build configuration for Android and iOS
 - Expo config plugin setup for FFmpeg
 - Web build optimization (code splitting, lazy loading)
@@ -219,18 +238,21 @@ While phases are generally sequential, some work can be parallelized:
 ### Estimation & Timeline
 
 **Token estimates** are approximate and based on:
+
 - Complexity of implementation
 - Amount of platform-specific code
 - Testing requirements
 - Documentation needs
 
 **Timeline estimation** depends on:
+
 - Team size (1 developer vs multiple)
 - Developer experience with React Native/Expo
 - Availability of testing devices/environments
 - Parallelization of tasks
 
 **Rough timeline for a solo developer:**
+
 - Phase 1: 2-3 days
 - Phase 2: 4-5 days
 - Phase 3: 3-4 days
@@ -249,6 +271,7 @@ While phases are generally sequential, some work can be parallelized:
 The migration will be considered complete when:
 
 ### Functional Requirements
+
 - ✅ All features from Android app work in React Native version
 - ✅ Audio recording with quality matching or exceeding Android app
 - ✅ Multi-track simultaneous playback
@@ -258,12 +281,14 @@ The migration will be considered complete when:
 - ✅ Save individual and mixed tracks
 
 ### Platform Requirements
+
 - ✅ Runs in web browsers (Chrome, Firefox, Safari latest versions)
 - ✅ Builds successfully for Android (APK/AAB)
 - ✅ Builds successfully for iOS (IPA)
 - ✅ Responsive UI on mobile and desktop web
 
 ### Quality Requirements
+
 - ✅ TypeScript strict mode with no errors
 - ✅ 80%+ code coverage for core logic
 - ✅ All E2E test flows passing
@@ -272,6 +297,7 @@ The migration will be considered complete when:
 - ✅ No memory leaks (audio resources properly released)
 
 ### User Experience Requirements
+
 - ✅ Material Design aesthetic matching Android app
 - ✅ Intuitive controls and workflows
 - ✅ Clear error messages and user feedback
@@ -350,15 +376,18 @@ Migration/
 ## Navigation
 
 **Start Here:**
+
 1. Read [Phase 0: Foundation & Architecture Decisions](./Phase-0.md)
 2. Understand all ADRs and technology choices
 3. Proceed to [Phase 1: Project Setup & Tooling](./Phase-1.md)
 
 **Reference Documents:**
+
 - [Phase 0](./Phase-0.md) - Architecture decisions, patterns, technology stack
 - Android Source Code - `../app/src/main/java/gemenie/looper/` (for reference)
 
 **Implementation Phases:**
+
 - [Phase 1: Project Setup & Tooling](./Phase-1.md)
 - [Phase 2: Core UI Components](./Phase-2.md)
 - [Phase 3: Audio Abstraction Layer](./Phase-3.md)

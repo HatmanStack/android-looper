@@ -5,6 +5,7 @@
 Implement multi-track audio playback with independent speed and volume controls for each track. Create platform-specific implementations using Web Audio API (web) and expo-av (native). Enable looping and synchronized playback of multiple tracks simultaneously.
 
 **Success Criteria:**
+
 - Play multiple tracks simultaneously
 - Independent speed control (0.05x - 2.50x) per track
 - Independent volume control (0-100) per track
@@ -30,6 +31,7 @@ Implement multi-track audio playback with independent speed and volume controls 
 **Goal:** Create web audio player using Web Audio API with AudioContext.
 
 **Files to Create:**
+
 - `src/services/audio/WebAudioPlayer.ts` - Web player implementation
 - `src/utils/webAudioUtils.ts` - Web Audio API utilities
 
@@ -46,9 +48,11 @@ Implement multi-track audio playback with independent speed and volume controls 
 9. Add state management (playing, paused, stopped)
 
 Reference Android playback:
+
 - `../app/src/main/java/gemenie/looper/SoundControlsAdapter.java:106-125`
 
 **Verification Checklist:**
+
 - [ ] Audio plays in browsers
 - [ ] Multiple tracks play simultaneously
 - [ ] Speed and volume controls work
@@ -56,6 +60,7 @@ Reference Android playback:
 - [ ] No audio glitches or clicks
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement web audio playback with Web Audio API
 
@@ -75,6 +80,7 @@ feat(audio): implement web audio playback with Web Audio API
 **Goal:** Create native audio player using expo-av Audio.Sound.
 
 **Files to Create:**
+
 - `src/services/audio/NativeAudioPlayer.ts` - Native player
 - `src/services/audio/NativeAudioPlayer.native.ts` - Platform-specific
 
@@ -98,10 +104,12 @@ feat(audio): implement web audio playback with Web Audio API
 8. Manage multiple Sound instances (one per track)
 
 Reference Android:
+
 - Speed: `../app/src/main/java/gemenie/looper/SoundControlsAdapter.java:145-159`
 - Volume: `../app/src/main/java/gemenie/looper/SoundControlsAdapter.java:134-143`
 
 **Verification Checklist:**
+
 - [ ] Playback works on iOS
 - [ ] Playback works on Android
 - [ ] Multiple tracks play simultaneously
@@ -110,6 +118,7 @@ Reference Android:
 - [ ] Looping enabled
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement native audio playback with expo-av
 
@@ -129,6 +138,7 @@ feat(audio): implement native audio playback with expo-av
 **Goal:** Create speed control that matches Android behavior.
 
 **Files to Modify:**
+
 - `src/services/audio/WebAudioPlayer.ts`
 - `src/services/audio/NativeAudioPlayer.ts`
 - `src/components/SpeedSlider/SpeedSlider.tsx`
@@ -149,6 +159,7 @@ feat(audio): implement native audio playback with expo-av
 8. Handle edge cases (very slow/fast playback)
 
 **Verification Checklist:**
+
 - [ ] Speed range matches Android (0.05 - 2.50)
 - [ ] Slider mapping is identical
 - [ ] Display formatting correct
@@ -156,6 +167,7 @@ feat(audio): implement native audio playback with expo-av
 - [ ] Speed changes while playing work smoothly
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement speed control matching Android
 
@@ -174,6 +186,7 @@ feat(audio): implement speed control matching Android
 **Goal:** Create volume control with logarithmic scaling.
 
 **Files to Modify:**
+
 - `src/services/audio/WebAudioPlayer.ts`
 - `src/services/audio/NativeAudioPlayer.ts`
 - `src/components/VolumeSlider/VolumeSlider.tsx`
@@ -192,6 +205,7 @@ feat(audio): implement speed control matching Android
 6. Display linear value to user (0-100)
 
 **Verification Checklist:**
+
 - [ ] Volume range 0-100
 - [ ] Logarithmic scaling applied
 - [ ] Volume perception feels natural
@@ -199,6 +213,7 @@ feat(audio): implement speed control matching Android
 - [ ] Matches Android volume behavior
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement volume control with logarithmic scaling
 
@@ -217,6 +232,7 @@ feat(audio): implement volume control with logarithmic scaling
 **Goal:** Ensure multiple tracks play in sync.
 
 **Files to Create:**
+
 - `src/services/audio/MultiTrackManager.ts` - Manages synchronized playback
 
 **Implementation Steps:**
@@ -249,6 +265,7 @@ feat(audio): implement volume control with logarithmic scaling
    - Log sync issues for debugging
 
 **Verification Checklist:**
+
 - [ ] Multiple tracks start simultaneously
 - [ ] Tracks stay in sync during playback
 - [ ] Global pause/resume works
@@ -256,6 +273,7 @@ feat(audio): implement volume control with logarithmic scaling
 - [ ] Minimal audio drift
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement multi-track synchronization
 
@@ -274,6 +292,7 @@ feat(audio): implement multi-track synchronization
 **Goal:** Enable continuous looping for all tracks.
 
 **Files to Modify:**
+
 - `src/services/audio/WebAudioPlayer.ts`
 - `src/services/audio/NativeAudioPlayer.ts`
 
@@ -301,15 +320,18 @@ feat(audio): implement multi-track synchronization
    - Adjust if necessary
 
 Reference Android:
+
 - `../app/src/main/java/gemenie/looper/SoundControlsAdapter.java:114-116`
 
 **Verification Checklist:**
+
 - [ ] Looping enabled for all tracks
 - [ ] Loops are seamless (no gap or click)
 - [ ] Speed/volume changes work while looping
 - [ ] Behavior matches Android app
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement seamless looping
 
@@ -328,6 +350,7 @@ feat(audio): implement seamless looping
 **Goal:** Connect UI controls to audio playback.
 
 **Files to Modify:**
+
 - `src/components/TrackListItem/TrackListItem.tsx`
 - `src/screens/MainScreen/MainScreen.tsx`
 - `src/services/audio/AudioService.ts`
@@ -365,6 +388,7 @@ feat(audio): implement seamless looping
    - Platform limitations
 
 **Verification Checklist:**
+
 - [ ] Play button starts playback
 - [ ] Pause button stops playback
 - [ ] Speed slider affects playback speed
@@ -373,6 +397,7 @@ feat(audio): implement seamless looping
 - [ ] UI updates reflect playback state
 
 **Commit Message Template:**
+
 ```
 feat(integration): connect playback controls to UI
 
@@ -392,6 +417,7 @@ feat(integration): connect playback controls to UI
 **Goal:** Track playback state for all tracks.
 
 **Files to Create:**
+
 - `src/store/usePlaybackStore.ts` - Zustand store for playback state
 
 **Implementation Steps:**
@@ -402,6 +428,7 @@ feat(integration): connect playback controls to UI
    - Track global playback state
 
 2. Store structure:
+
    ```typescript
    {
      playingTracks: Set<string>,
@@ -427,12 +454,14 @@ feat(integration): connect playback controls to UI
    - UI auto-updates on state change
 
 **Verification Checklist:**
+
 - [ ] Playback state persisted in store
 - [ ] UI reflects accurate state
 - [ ] State updates when audio changes
 - [ ] Store actions work correctly
 
 **Commit Message Template:**
+
 ```
 feat(state): add playback state management with Zustand
 
@@ -451,6 +480,7 @@ feat(state): add playback state management with Zustand
 **Goal:** Test playback functionality thoroughly.
 
 **Files to Create:**
+
 - `__tests__/unit/services/WebAudioPlayer.test.ts`
 - `__tests__/unit/services/NativeAudioPlayer.test.ts`
 - `__tests__/unit/services/MultiTrackManager.test.ts`
@@ -483,6 +513,7 @@ feat(state): add playback state management with Zustand
    - Loop transitions
 
 **Verification Checklist:**
+
 - [ ] All unit tests pass
 - [ ] Integration tests cover main flows
 - [ ] Edge cases tested
@@ -490,6 +521,7 @@ feat(state): add playback state management with Zustand
 - [ ] Platform-specific tests isolated
 
 **Commit Message Template:**
+
 ```
 test(audio): add tests for playback functionality
 
@@ -509,6 +541,7 @@ test(audio): add tests for playback functionality
 **Goal:** Document playback features and controls.
 
 **Files to Create:**
+
 - `docs/features/playback.md` - Playback documentation
 - `docs/architecture/multi-track-sync.md` - Synchronization details
 
@@ -536,12 +569,14 @@ test(audio): add tests for playback functionality
    - Expected behavior
 
 **Verification Checklist:**
+
 - [ ] Documentation complete
 - [ ] Examples accurate
 - [ ] Platform differences noted
 - [ ] Troubleshooting helpful
 
 **Commit Message Template:**
+
 ```
 docs(audio): document playback and controls
 

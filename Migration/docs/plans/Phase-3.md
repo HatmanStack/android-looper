@@ -5,6 +5,7 @@
 Design and implement platform-agnostic interfaces for audio operations (recording, playback, mixing). Create abstract base classes that will be implemented differently for web and native platforms in Phases 4-6. Establish error handling, logging, and dependency injection patterns for audio services.
 
 **Success Criteria:**
+
 - TypeScript interfaces defined for all audio operations
 - Abstract service classes created
 - Platform detection working correctly
@@ -30,6 +31,7 @@ Design and implement platform-agnostic interfaces for audio operations (recordin
 **Goal:** Create TypeScript interfaces for all audio operations.
 
 **Files to Create:**
+
 - `src/services/audio/interfaces/IAudioRecorder.ts` - Recording interface
 - `src/services/audio/interfaces/IAudioPlayer.ts` - Playback interface
 - `src/services/audio/interfaces/IAudioMixer.ts` - Mixing interface
@@ -65,12 +67,14 @@ Design and implement platform-agnostic interfaces for audio operations (recordin
    - `AudioFormat`, `AudioQuality`, `MixerTrackInput`, `RecordingOptions`, `PlaybackOptions`
 
 **Verification Checklist:**
+
 - [ ] All interfaces have complete method signatures
 - [ ] Return types use Promise for async operations
 - [ ] Types are exported and importable
 - [ ] JSDoc comments explain each method
 
 **Commit Message Template:**
+
 ```
 feat(audio): define audio service interfaces
 
@@ -89,6 +93,7 @@ feat(audio): define audio service interfaces
 **Goal:** Implement abstract base classes with common logic.
 
 **Files to Create:**
+
 - `src/services/audio/AudioService.ts` - Main audio service orchestrator
 - `src/services/audio/BaseAudioRecorder.ts` - Abstract recorder
 - `src/services/audio/BaseAudioPlayer.ts` - Abstract player
@@ -121,12 +126,14 @@ feat(audio): define audio service interfaces
    - Platform detection and service instantiation
 
 **Verification Checklist:**
+
 - [ ] Abstract classes implement interfaces
 - [ ] Common logic is not duplicated
 - [ ] Abstract methods are clearly defined
 - [ ] Error handling is consistent
 
 **Commit Message Template:**
+
 ```
 feat(audio): create abstract audio service base classes
 
@@ -145,6 +152,7 @@ feat(audio): create abstract audio service base classes
 **Goal:** Create factory pattern for instantiating platform-specific audio services.
 
 **Files to Create:**
+
 - `src/services/audio/AudioServiceFactory.ts` - Factory for creating services
 - `src/services/audio/PlatformAudioConfig.ts` - Platform-specific configuration
 
@@ -172,12 +180,14 @@ feat(audio): create abstract audio service base classes
    - Resource release
 
 **Verification Checklist:**
+
 - [ ] Factory returns correct service for each platform
 - [ ] Services are singletons where appropriate
 - [ ] Configuration is loaded correctly
 - [ ] Errors are handled if service unavailable
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement platform detection and service factory
 
@@ -196,6 +206,7 @@ feat(audio): implement platform detection and service factory
 **Goal:** Implement mock/stub versions of audio services for UI testing.
 
 **Files to Create:**
+
 - `src/services/audio/mock/MockAudioRecorder.ts` - Mock recorder
 - `src/services/audio/mock/MockAudioPlayer.ts` - Mock player
 - `src/services/audio/mock/MockAudioMixer.ts` - Mock mixer
@@ -225,16 +236,18 @@ feat(audio): implement platform detection and service factory
    - Sample audio metadata
 
 5. Register mocks in factory (for test environment):
-   - Use __DEV__ or process.env.NODE_ENV
+   - Use **DEV** or process.env.NODE_ENV
    - Allow switching between mock and real services
 
 **Verification Checklist:**
+
 - [ ] Mocks implement full interfaces
 - [ ] UI works with mock services
 - [ ] Mocks are only used in development/test
 - [ ] Mock behavior is predictable
 
 **Commit Message Template:**
+
 ```
 test(audio): create mock audio services for UI testing
 
@@ -253,6 +266,7 @@ test(audio): create mock audio services for UI testing
 **Goal:** Create consistent error handling and logging for audio operations.
 
 **Files to Create:**
+
 - `src/services/audio/AudioError.ts` - Custom error class
 - `src/utils/logger.ts` - Logging utility
 - `src/utils/logger.web.ts` - Web logging
@@ -284,12 +298,14 @@ test(audio): create mock audio services for UI testing
    - Platform errors → fallback or notify user
 
 **Verification Checklist:**
+
 - [ ] AudioError has all necessary fields
 - [ ] Logging works on all platforms
 - [ ] Errors are caught and handled
 - [ ] User sees helpful error messages
 
 **Commit Message Template:**
+
 ```
 feat(audio): implement error handling and logging
 
@@ -308,6 +324,7 @@ feat(audio): implement error handling and logging
 **Goal:** Connect Phase 2 UI components to audio service abstraction.
 
 **Files to Modify:**
+
 - `src/screens/MainScreen/MainScreen.tsx` - Wire up audio service
 - `src/components/TrackListItem/TrackListItem.tsx` - Connect controls
 
@@ -341,6 +358,7 @@ feat(audio): implement error handling and logging
    - Handle concurrent operations
 
 **Verification Checklist:**
+
 - [ ] Record button starts mock recording
 - [ ] Stop button creates track in list
 - [ ] Play/Pause buttons update state
@@ -348,6 +366,7 @@ feat(audio): implement error handling and logging
 - [ ] Errors show user feedback
 
 **Commit Message Template:**
+
 ```
 feat(integration): connect UI to audio services
 
@@ -367,6 +386,7 @@ feat(integration): connect UI to audio services
 **Goal:** Test all audio service interfaces and base classes.
 
 **Files to Create:**
+
 - `__tests__/unit/services/AudioService.test.ts`
 - `__tests__/unit/services/AudioServiceFactory.test.ts`
 - `__tests__/unit/services/mock/MockAudioServices.test.ts`
@@ -394,12 +414,14 @@ feat(integration): connect UI to audio services
    - Multiple instances handled correctly
 
 **Verification Checklist:**
+
 - [ ] All tests pass
 - [ ] Coverage >80% for audio services
 - [ ] Mocks tested independently
 - [ ] Platform detection tested
 
 **Commit Message Template:**
+
 ```
 test(audio): add unit tests for audio abstractions
 
@@ -418,6 +440,7 @@ test(audio): add unit tests for audio abstractions
 **Goal:** Create comprehensive documentation for audio service architecture.
 
 **Files to Create:**
+
 - `src/services/audio/README.md` - Architecture documentation
 - `docs/architecture/audio-services.md` - Detailed architecture doc
 
@@ -444,12 +467,14 @@ test(audio): add unit tests for audio abstractions
    - Testing platform-specific code
 
 **Verification Checklist:**
+
 - [ ] Documentation is clear and comprehensive
 - [ ] Diagrams are included
 - [ ] Examples are accurate
 - [ ] New developers can understand architecture
 
 **Commit Message Template:**
+
 ```
 docs(audio): document audio service architecture
 
@@ -491,6 +516,7 @@ docs(audio): document audio service architecture
 ### Integration Points for Phases 4-5
 
 Phase 3 provides foundation for:
+
 - Phase 4: Implement IAudioRecorder for web and native
 - Phase 5: Implement IAudioPlayer for web and native
 - Phase 6: Implement IAudioMixer for web and native

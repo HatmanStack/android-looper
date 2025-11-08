@@ -5,6 +5,7 @@
 Integrate FFmpeg for both web (@ffmpeg/ffmpeg) and native (react-native-ffmpeg or ffmpeg-kit) platforms to enable true audio mixing. Implement the mixing engine that combines multiple tracks with their speed and volume adjustments into a single output file. This is the core new feature that doesn't exist in the Android app.
 
 **Success Criteria:**
+
 - FFmpeg integrated on web (WebAssembly)
 - FFmpeg integrated on native (Android/iOS)
 - Mix multiple tracks into single MP3 file
@@ -32,6 +33,7 @@ Integrate FFmpeg for both web (@ffmpeg/ffmpeg) and native (react-native-ffmpeg o
 **Goal:** Set up @ffmpeg/ffmpeg (WebAssembly) for web platform.
 
 **Files to Create:**
+
 - `src/services/ffmpeg/FFmpegService.web.ts` - Web FFmpeg service
 - `src/utils/ffmpegLoader.web.ts` - FFmpeg loader utility
 
@@ -42,6 +44,7 @@ Integrate FFmpeg for both web (@ffmpeg/ffmpeg) and native (react-native-ffmpeg o
    - `@ffmpeg/core` - FFmpeg core (wasm files)
 
 2. Initialize FFmpeg:
+
    ```typescript
    import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
    const ffmpeg = createFFmpeg({ log: true });
@@ -64,12 +67,14 @@ Integrate FFmpeg for both web (@ffmpeg/ffmpeg) and native (react-native-ffmpeg o
    - Memory limitations
 
 **Verification Checklist:**
+
 - [ ] FFmpeg loads in modern browsers
 - [ ] Loading progress shown to user
 - [ ] Errors handled gracefully
 - [ ] Works in Chrome, Firefox, Safari
 
 **Commit Message Template:**
+
 ```
 feat(ffmpeg): integrate FFmpeg WebAssembly for web
 
@@ -88,6 +93,7 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 **Goal:** Set up react-native-ffmpeg or ffmpeg-kit for iOS/Android.
 
 **Files to Create:**
+
 - `src/services/ffmpeg/FFmpegService.native.ts` - Native FFmpeg service
 - Expo config plugin configuration
 
@@ -117,12 +123,14 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
    - Binary size optimization
 
 **Verification Checklist:**
+
 - [ ] FFmpeg builds successfully for Android
 - [ ] FFmpeg builds successfully for iOS
 - [ ] Custom dev client installs on devices
 - [ ] FFmpeg commands can execute
 
 **Commit Message Template:**
+
 ```
 feat(ffmpeg): integrate FFmpeg for native platforms
 
@@ -141,12 +149,14 @@ feat(ffmpeg): integrate FFmpeg for native platforms
 **Goal:** Create utility to build FFmpeg filter commands for audio mixing.
 
 **Files to Create:**
+
 - `src/services/ffmpeg/FFmpegCommandBuilder.ts` - Command builder
 - `src/services/ffmpeg/filters/` - Filter utilities
 
 **Implementation Steps:**
 
 1. Understand FFmpeg filter syntax:
+
    ```bash
    ffmpeg -i input1.mp3 -i input2.mp3 \
      -filter_complex "[0:a]atempo=1.5[a0];[1:a]volume=0.5[a1];[a0][a1]amix=inputs=2" \
@@ -187,6 +197,7 @@ feat(ffmpeg): integrate FFmpeg for native platforms
    - Overwrite flag `-y`
 
 **Verification Checklist:**
+
 - [ ] Commands generated correctly
 - [ ] atempo handles full speed range
 - [ ] volume applied correctly
@@ -194,6 +205,7 @@ feat(ffmpeg): integrate FFmpeg for native platforms
 - [ ] Output format is MP3
 
 **Commit Message Template:**
+
 ```
 feat(ffmpeg): create FFmpeg command builder
 
@@ -213,11 +225,13 @@ feat(ffmpeg): create FFmpeg command builder
 **Goal:** Use @ffmpeg/ffmpeg to mix audio tracks on web.
 
 **Files to Modify:**
+
 - `src/services/ffmpeg/FFmpegService.web.ts`
 
 **Implementation Steps:**
 
 1. Load audio files into FFmpeg virtual file system:
+
    ```typescript
    ffmpeg.FS('writeFile', 'input1.mp3', await fetchFile(uri1));
    ffmpeg.FS('writeFile', 'input2.mp3', await fetchFile(uri2));
@@ -225,6 +239,7 @@ feat(ffmpeg): create FFmpeg command builder
 
 2. Build FFmpeg command using CommandBuilder
 3. Execute FFmpeg:
+
    ```typescript
    await ffmpeg.run(...commandArgs);
    ```
@@ -235,6 +250,7 @@ feat(ffmpeg): create FFmpeg command builder
    - Update UI progress bar
 
 5. Read output file:
+
    ```typescript
    const data = ffmpeg.FS('readFile', 'output.mp3');
    const blob = new Blob([data.buffer], { type: 'audio/mp3' });
@@ -252,6 +268,7 @@ feat(ffmpeg): create FFmpeg command builder
    - Unsupported codecs
 
 **Verification Checklist:**
+
 - [ ] Mixing works with 2 tracks
 - [ ] Mixing works with 5+ tracks
 - [ ] Progress updates correctly
@@ -259,6 +276,7 @@ feat(ffmpeg): create FFmpeg command builder
 - [ ] Speed/volume applied correctly
 
 **Commit Message Template:**
+
 ```
 feat(ffmpeg): implement audio mixing on web
 
@@ -278,6 +296,7 @@ feat(ffmpeg): implement audio mixing on web
 **Goal:** Use FFmpegKit to mix audio on iOS/Android.
 
 **Files to Modify:**
+
 - `src/services/ffmpeg/FFmpegService.native.ts`
 
 **Implementation Steps:**
@@ -288,6 +307,7 @@ feat(ffmpeg): implement audio mixing on web
 
 2. Build FFmpeg command using CommandBuilder
 3. Execute FFmpegKit:
+
    ```typescript
    import { FFmpegKit } from 'ffmpeg-kit-react-native';
    const session = await FFmpegKit.execute(command);
@@ -310,6 +330,7 @@ feat(ffmpeg): implement audio mixing on web
 7. Clean up temporary files
 
 **Verification Checklist:**
+
 - [ ] Mixing works on Android
 - [ ] Mixing works on iOS
 - [ ] Progress tracking works
@@ -317,6 +338,7 @@ feat(ffmpeg): implement audio mixing on web
 - [ ] Speed/volume applied
 
 **Commit Message Template:**
+
 ```
 feat(ffmpeg): implement audio mixing on native
 
@@ -336,6 +358,7 @@ feat(ffmpeg): implement audio mixing on native
 **Goal:** Add UI for mixing operation with progress feedback.
 
 **Files to Create:**
+
 - `src/components/MixingProgress/MixingProgress.tsx` - Progress modal
 - `src/screens/MainScreen/MixingController.tsx` - Mixing logic
 
@@ -370,6 +393,7 @@ feat(ffmpeg): implement audio mixing on native
    - On cancel: clean up partial output
 
 **Verification Checklist:**
+
 - [ ] Mix button appears
 - [ ] Progress modal shows during mixing
 - [ ] Progress updates smoothly
@@ -377,6 +401,7 @@ feat(ffmpeg): implement audio mixing on native
 - [ ] Success/error handled
 
 **Commit Message Template:**
+
 ```
 feat(ui): add mixing UI and progress indicator
 
@@ -396,6 +421,7 @@ feat(ui): add mixing UI and progress indicator
 **Goal:** Save mixed audio to device storage or downloads.
 
 **Files to Create:**
+
 - `src/services/export/AudioExporter.ts` - Export service
 - `src/services/export/AudioExporter.web.ts` - Web export
 - `src/services/export/AudioExporter.native.ts` - Native export
@@ -430,9 +456,11 @@ feat(ui): add mixing UI and progress indicator
    - Log for debugging
 
 Reference Android save:
+
 - `../app/src/main/java/gemenie/looper/MainActivity.java:225-247`
 
 **Verification Checklist:**
+
 - [ ] Export works on web (downloads file)
 - [ ] Export works on native (saves to device)
 - [ ] Permissions handled
@@ -440,6 +468,7 @@ Reference Android save:
 - [ ] Success/error messages shown
 
 **Commit Message Template:**
+
 ```
 feat(export): implement audio export and save
 
@@ -459,6 +488,7 @@ feat(export): implement audio export and save
 **Goal:** Improve mixing performance and handle large files.
 
 **Files to Modify:**
+
 - `src/services/ffmpeg/FFmpegService.web.ts`
 - `src/services/ffmpeg/FFmpegService.native.ts`
 - `src/services/ffmpeg/FFmpegCommandBuilder.ts`
@@ -496,6 +526,7 @@ feat(export): implement audio export and save
    - Update frequently but not excessively
 
 **Verification Checklist:**
+
 - [ ] Mixing completes in reasonable time
 - [ ] Large files handled gracefully
 - [ ] Cancellation works
@@ -503,6 +534,7 @@ feat(export): implement audio export and save
 - [ ] Progress is accurate
 
 **Commit Message Template:**
+
 ```
 perf(ffmpeg): optimize mixing performance
 
@@ -522,6 +554,7 @@ perf(ffmpeg): optimize mixing performance
 **Goal:** Test FFmpeg integration and mixing functionality.
 
 **Files to Create:**
+
 - `__tests__/unit/services/FFmpegCommandBuilder.test.ts`
 - `__tests__/unit/services/FFmpegService.test.ts`
 - `__tests__/integration/mixing.test.ts`
@@ -558,6 +591,7 @@ perf(ffmpeg): optimize mixing performance
    - Verify speed/volume applied
 
 **Verification Checklist:**
+
 - [ ] Command builder tests pass
 - [ ] FFmpeg service tests pass
 - [ ] Integration tests cover main flows
@@ -565,6 +599,7 @@ perf(ffmpeg): optimize mixing performance
 - [ ] Coverage >80%
 
 **Commit Message Template:**
+
 ```
 test(ffmpeg): add tests for mixing functionality
 
@@ -584,6 +619,7 @@ test(ffmpeg): add tests for mixing functionality
 **Goal:** Document FFmpeg integration and mixing feature.
 
 **Files to Create:**
+
 - `docs/features/mixing.md` - Mixing documentation
 - `docs/architecture/ffmpeg-integration.md` - FFmpeg architecture
 - `docs/guides/ffmpeg-commands.md` - FFmpeg command reference
@@ -614,12 +650,14 @@ test(ffmpeg): add tests for mixing functionality
    - Limitations (file size, track count)
 
 **Verification Checklist:**
+
 - [ ] Documentation comprehensive
 - [ ] Examples accurate
 - [ ] Platform differences explained
 - [ ] Troubleshooting helpful
 
 **Commit Message Template:**
+
 ```
 docs(ffmpeg): document mixing and FFmpeg integration
 

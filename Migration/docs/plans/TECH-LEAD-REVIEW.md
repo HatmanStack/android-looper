@@ -20,6 +20,7 @@ The migration plan is comprehensive, well-structured, and ready for implementati
 ### ✅ Plan Structure (PASSED)
 
 **Strengths:**
+
 - Complete structure with README, Phase-0 (foundation), and 9 implementation phases
 - Clear navigation and cross-references between phases
 - Logical progression from setup → UI → abstraction → features → integration → testing → deployment
@@ -27,6 +28,7 @@ The migration plan is comprehensive, well-structured, and ready for implementati
 - Phase-0 provides excellent architectural foundation with 8 ADRs
 
 **Verification:**
+
 - [x] README.md exists with overview, prerequisites, phase summary
 - [x] Phase-0.md exists with architecture decisions, shared patterns, testing strategy
 - [x] Phase files numbered sequentially (Phase-1 through Phase-9)
@@ -37,6 +39,7 @@ The migration plan is comprehensive, well-structured, and ready for implementati
 ### ✅ Phase Ordering & Dependencies (PASSED)
 
 **Strengths:**
+
 - Dependencies flow logically: Foundation → Setup → UI → Audio Abstraction → Recording/Playback → Mixing → State → Testing → Deployment
 - README.md clearly documents dependencies in table format
 - Each phase lists prerequisites explicitly
@@ -44,6 +47,7 @@ The migration plan is comprehensive, well-structured, and ready for implementati
 - No circular dependencies detected
 
 **Dependency Chain:**
+
 ```
 Phase 0 (Foundation - Reference Only)
     ↓
@@ -65,6 +69,7 @@ Phase 9 (Build & Deployment)
 ```
 
 **Verification:**
+
 - [x] Phases follow logical sequence
 - [x] Dependencies between phases are explicit and clear
 - [x] No circular dependencies
@@ -76,24 +81,27 @@ Phase 9 (Build & Deployment)
 ### ✅ Scope & Token Estimates (PASSED)
 
 **Token Distribution:**
+
 - Phase 1: ~80,000 tokens (Project Setup)
 - Phase 2: ~100,000 tokens (Core UI)
 - Phase 3: ~90,000 tokens (Audio Abstraction)
 - Phase 4: ~105,000 tokens (Recording & Import)
 - Phase 5: ~110,000 tokens (Playback & Controls)
-- Phase 6: ~120,000 tokens (FFmpeg & Mixing) ⚠️ *Highest complexity*
+- Phase 6: ~120,000 tokens (FFmpeg & Mixing) ⚠️ _Highest complexity_
 - Phase 7: ~95,000 tokens (State Management)
 - Phase 8: ~105,000 tokens (Testing & QA)
 - Phase 9: ~85,000 tokens (Build & Deployment)
 - **Total: ~900,000 tokens**
 
 **Analysis:**
+
 - ✅ All phases fit within context window with room for conversation
 - ✅ No phases too small (<50k) or too large (>150k)
 - ✅ Largest phase (Phase 6) appropriately sized for FFmpeg complexity
 - ✅ Token estimates include per-task breakdown (97 task estimates found)
 
 **Verification:**
+
 - [x] Each phase is ~100k tokens (80k-120k range)
 - [x] Not too small (no phases < 50k)
 - [x] Not too large (no phases > 150k)
@@ -105,6 +113,7 @@ Phase 9 (Build & Deployment)
 ### ✅ Task Clarity (PASSED)
 
 **Strengths:**
+
 - **88 verification checklists** across 9 phases (one per task)
 - **88 commit message templates** (conventional commits format)
 - **97 token estimates** at task level
@@ -114,6 +123,7 @@ Phase 9 (Build & Deployment)
 - Platform-specific guidance (web vs native) clearly delineated
 
 **Sample Task Quality (Phase 6, Task 3):**
+
 ```
 ✅ Goal statement: "Create utility to build FFmpeg filter commands"
 ✅ Files listed: FFmpegCommandBuilder.ts, filters/
@@ -125,6 +135,7 @@ Phase 9 (Build & Deployment)
 ```
 
 **Verification:**
+
 - [x] Each task has clear goal statement
 - [x] Files to modify/create explicitly listed with paths
 - [x] Implementation steps provide architectural guidance
@@ -137,6 +148,7 @@ Phase 9 (Build & Deployment)
 ### ✅ Verification Criteria (PASSED)
 
 **Strengths:**
+
 - Every task has "Verification Checklist" section
 - Criteria are specific (e.g., "FFmpeg loads in Chrome, Firefox, Safari")
 - Objective and testable (e.g., "Coverage >80%", "Cold start <3s")
@@ -144,6 +156,7 @@ Phase 9 (Build & Deployment)
 - Testing instructions complement verification checklists
 
 **Example Quality (Phase 8, Task 1):**
+
 ```
 ✅ Coverage >80% overall
 ✅ Critical paths 100% covered
@@ -152,6 +165,7 @@ Phase 9 (Build & Deployment)
 ```
 
 **Verification:**
+
 - [x] Each task has specific, testable verification checklist
 - [x] Verification criteria are objective
 - [x] Criteria can be checked programmatically when possible
@@ -162,6 +176,7 @@ Phase 9 (Build & Deployment)
 ### ✅ Test Coverage Strategy (PASSED)
 
 **Strengths:**
+
 - Comprehensive testing strategy defined in Phase 0 ADR-006
 - Multi-layered approach: Unit (Jest) → Integration (RTL) → E2E (Detox/Playwright)
 - Phase 8 dedicated entirely to testing (105k tokens)
@@ -170,11 +185,13 @@ Phase 9 (Build & Deployment)
 - Test fixtures and mocking strategies documented
 
 **Testing Layers:**
+
 1. **Unit Tests (Jest)** - 80%+ coverage target
 2. **Integration Tests (React Native Testing Library)** - Component-service interactions
 3. **E2E Tests** - Detox (native), Playwright (web)
 
 **Phase 8 Task Breakdown:**
+
 - Task 1: Complete unit test coverage
 - Task 2: Create integration tests
 - Task 3: Set up E2E infrastructure
@@ -187,6 +204,7 @@ Phase 9 (Build & Deployment)
 - Task 10: Final QA and release prep
 
 **Verification:**
+
 - [x] Testing approach described (unit, integration, e2e)
 - [x] Test patterns specified (mocking, fixtures)
 - [x] Coverage expectations realistic (80%)
@@ -198,6 +216,7 @@ Phase 9 (Build & Deployment)
 ### ✅ Commit Strategy (PASSED)
 
 **Strengths:**
+
 - Every task includes "Commit Message Template" section (88 templates)
 - Follows conventional commits format: `feat(scope): description`
 - Commit types used appropriately: `feat`, `fix`, `test`, `chore`, `docs`, `perf`, `a11y`
@@ -205,6 +224,7 @@ Phase 9 (Build & Deployment)
 - Multi-line descriptions provide context
 
 **Example:**
+
 ```
 feat(ffmpeg): integrate FFmpeg WebAssembly for web
 
@@ -215,6 +235,7 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 ```
 
 **Verification:**
+
 - [x] Commit message templates follow conventional commits
 - [x] Commit granularity is appropriate (atomic changes)
 - [x] Commits are tied to specific milestones in tasks
@@ -224,6 +245,7 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 ### ✅ Completeness (PASSED WITH RECOMMENDATIONS)
 
 **What's Covered Comprehensively:**
+
 - ✅ All features from Android app (recording, playback, speed/volume control, looping)
 - ✅ New mixing feature (FFmpeg-based audio mixing)
 - ✅ Platform-specific implementations (web, iOS, Android)
@@ -235,6 +257,7 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 - ✅ Cross-platform testing (Phase 8, Task 7)
 
 **Edge Cases Considered:**
+
 - ✅ Permission handling (microphone, storage)
 - ✅ Platform differences (iOS vs Android vs Web)
 - ✅ Large files and memory constraints
@@ -244,6 +267,7 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 - ✅ Network failures (retry logic in git instructions)
 
 **Verification:**
+
 - [x] All aspects of brainstormed feature covered
 - [x] Documentation updates mentioned
 - [x] Error handling addressed
@@ -257,9 +281,11 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 ### 🟡 Suggestions (Nice to Have)
 
 #### 1. **EAS Build Cost Clarification**
+
 **Location:** README.md Prerequisites, Phase 9
 **Issue:** README states "Expo account (free tier sufficient)" but Phase 9 requires EAS Build which may need paid tier for custom dev clients.
 **Recommendation:** Clarify in README Prerequisites:
+
 ```markdown
 - Expo account with EAS Build access (may require paid tier for FFmpeg custom builds)
 - Estimated cost: ~$29/month for Expo EAS during development
@@ -267,31 +293,40 @@ feat(ffmpeg): integrate FFmpeg WebAssembly for web
 ```
 
 #### 2. **FFmpeg Library Decision in Phase 6**
+
 **Location:** Phase 6, Task 2
 **Issue:** Task says "Choose FFmpeg library: Option A (react-native-ffmpeg) or Option B (ffmpeg-kit-react-native)" without making a decision.
 **Recommendation:** Make a decision in Phase 0 ADR-002 or Task 2:
+
 ```markdown
 **Decision:** Use ffmpeg-kit-react-native (recommended, newer, better maintained)
 **Rationale:**
+
 - More actively maintained than react-native-ffmpeg
 - Better Expo support via config plugins
 - Smaller binary sizes with modular packages
 ```
 
 #### 3. **Android Source Code Extraction**
+
 **Location:** Multiple phases reference Android code
 **Issue:** Plan references `MainActivity.java:150-159` but doesn't extract the actual implementation details. A zero-context engineer would need to open those files.
 **Recommendation:** In Phase 0, extract key code snippets:
-```markdown
+
+````markdown
 **Android Recording Implementation (MainActivity.java:150-159):**
+
 ```java
 mediaRecorder = new MediaRecorder();
 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 ```
+````
+
 This helps engineers understand the Android patterns without switching files.
-```
+
+````
 
 #### 4. **atempo Filter Chaining Formula**
 **Location:** Phase 6, Task 3
@@ -308,14 +343,17 @@ Examples:
 - 0.25x speed: atempo=0.5,atempo=0.5 (0.5 × 0.5 = 0.25)
 - 4.0x speed: atempo=2.0,atempo=2.0 (2.0 × 2.0 = 4.0)
 - 0.05x speed: atempo=0.5,atempo=0.5,atempo=0.5,atempo=0.5 (0.5^4 = 0.0625 ≈ 0.05)
-```
+````
 
 #### 5. **Phase Completion Documentation Template**
+
 **Location:** Phase 1, Task 10 mentions it; missing from other phases
 **Issue:** Only Phase 1 has a completion documentation task. This pattern should be consistent.
 **Recommendation:** Add Task N (final task) to each phase:
+
 ```markdown
 ### Task N: Create Phase X Completion Documentation
+
 - Document what was accomplished
 - List deviations from plan
 - Note issues and resolutions
@@ -324,11 +362,14 @@ Examples:
 ```
 
 #### 6. **Testing Fixture Preparation**
+
 **Location:** Phase 8 mentions "test fixtures (small audio files)" but doesn't specify where to get them
 **Issue:** Engineer won't know what audio files to use for testing.
 **Recommendation:** Add to Phase 8, Task 2 or create earlier:
+
 ```markdown
 **Test Fixture Preparation:**
+
 1. Create `__tests__/fixtures/audio/` directory
 2. Include sample files:
    - `short-beep.mp3` (1 second, simple tone)
@@ -342,11 +383,14 @@ Examples:
 ```
 
 #### 7. **CI/CD Pipeline Specifics**
+
 **Location:** Phase 9 mentions CI/CD but doesn't specify tools
 **Issue:** "CI/CD pipeline setup (optional)" is vague.
 **Recommendation:** Either remove "optional" or provide specific guidance:
+
 ```markdown
 **Recommended CI/CD Setup:**
+
 - Platform: GitHub Actions (free for open source)
 - Pipeline jobs:
   1. Lint & TypeScript check
@@ -379,11 +423,13 @@ Examples:
 ## Recommendations Summary
 
 ### Immediate Actions (Before Implementation Starts)
+
 1. ✏️ Clarify EAS Build cost requirements in README Prerequisites
 2. ✏️ Make FFmpeg library decision in Phase 6, Task 2 (recommend ffmpeg-kit-react-native)
 3. ✏️ Add atempo chaining formula to Phase 6, Task 3
 
 ### Enhancement Opportunities (Can be done during implementation)
+
 4. 📝 Extract key Android code snippets into Phase 0 for easier reference
 5. 📝 Add consistent completion documentation task to all phases
 6. 📝 Specify test fixture requirements in Phase 8
@@ -398,6 +444,7 @@ Examples:
 **Confidence Level:** High (95%)
 
 **Reasoning:**
+
 - Plan is comprehensive, detailed, and well-structured
 - All critical elements are present and well-documented
 - Token estimates are realistic and achievable
@@ -412,6 +459,7 @@ Examples:
 **Estimated Timeline (Solo Developer):** 6-8 weeks full-time as stated in README
 
 **Risk Assessment:**
+
 - Low risk for Phases 1-5 (standard React Native patterns)
 - Medium risk for Phase 6 (FFmpeg integration - well mitigated with detailed plan)
 - Low risk for Phases 7-9 (standard deployment patterns)

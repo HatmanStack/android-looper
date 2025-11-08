@@ -5,6 +5,7 @@
 Establish comprehensive testing coverage with unit, integration, and end-to-end tests. Ensure code quality, accessibility, and performance standards are met. Fix bugs and optimize based on test results.
 
 **Success Criteria:**
+
 - 80%+ code coverage
 - All E2E test flows passing
 - No critical bugs
@@ -30,6 +31,7 @@ Establish comprehensive testing coverage with unit, integration, and end-to-end 
 **Goal:** Achieve 80%+ unit test coverage for all modules.
 
 **Files to Create:**
+
 - Additional test files for uncovered modules
 
 **Implementation Steps:**
@@ -57,12 +59,14 @@ Establish comprehensive testing coverage with unit, integration, and end-to-end 
    - Better mocks
 
 **Verification Checklist:**
+
 - [ ] Coverage >80% overall
 - [ ] Critical paths 100% covered
 - [ ] All public APIs tested
 - [ ] Edge cases covered
 
 **Commit Message Template:**
+
 ```
 test: achieve 80%+ unit test coverage
 
@@ -81,6 +85,7 @@ test: achieve 80%+ unit test coverage
 **Goal:** Test interactions between modules and full feature flows.
 
 **Files to Create:**
+
 - `__tests__/integration/recordingFlow.test.ts`
 - `__tests__/integration/playbackFlow.test.ts`
 - `__tests__/integration/mixingFlow.test.ts`
@@ -106,12 +111,14 @@ test: achieve 80%+ unit test coverage
    - Simulate user interactions
 
 **Verification Checklist:**
+
 - [ ] All major flows tested
 - [ ] Integration points verified
 - [ ] Tests run reliably
 - [ ] Fixtures are realistic
 
 **Commit Message Template:**
+
 ```
 test: add integration tests for major workflows
 
@@ -131,6 +138,7 @@ test: add integration tests for major workflows
 **Goal:** Configure E2E testing for native (Detox) and web (Playwright).
 
 **Files to Create:**
+
 - `.detoxrc.js` - Detox configuration
 - `e2e/` - E2E test directory
 - `playwright.config.ts` - Playwright configuration
@@ -158,12 +166,14 @@ test: add integration tests for major workflows
    - Parallel execution
 
 **Verification Checklist:**
+
 - [ ] Detox configured for iOS/Android
 - [ ] Playwright configured for web
 - [ ] Sample E2E test runs successfully
 - [ ] CI integration works
 
 **Commit Message Template:**
+
 ```
 test: set up E2E testing infrastructure
 
@@ -182,6 +192,7 @@ test: set up E2E testing infrastructure
 **Goal:** Test complete user journeys end-to-end.
 
 **Files to Create:**
+
 - `e2e/recording.e2e.ts`
 - `e2e/import.e2e.ts`
 - `e2e/playback.e2e.ts`
@@ -224,12 +235,14 @@ test: set up E2E testing infrastructure
    - Error handling works
 
 **Verification Checklist:**
+
 - [ ] All critical paths tested
 - [ ] Tests pass on all platforms
 - [ ] Tests are reliable (no flakiness)
 - [ ] Failures provide clear errors
 
 **Commit Message Template:**
+
 ```
 test(e2e): add end-to-end tests for critical user flows
 
@@ -249,6 +262,7 @@ test(e2e): add end-to-end tests for critical user flows
 **Goal:** Ensure app meets WCAG 2.1 Level AA accessibility standards.
 
 **Files to Modify:**
+
 - Various UI components
 
 **Implementation Steps:**
@@ -284,6 +298,7 @@ test(e2e): add end-to-end tests for critical user flows
    - Lighthouse accessibility audit
 
 **Verification Checklist:**
+
 - [ ] All interactive elements labeled
 - [ ] Screen reader navigation works
 - [ ] Color contrast meets standards
@@ -292,6 +307,7 @@ test(e2e): add end-to-end tests for critical user flows
 - [ ] Automated tests pass
 
 **Commit Message Template:**
+
 ```
 a11y: improve accessibility to meet WCAG 2.1 Level AA
 
@@ -311,6 +327,7 @@ a11y: improve accessibility to meet WCAG 2.1 Level AA
 **Goal:** Meet performance targets and optimize bottlenecks.
 
 **Files to Modify:**
+
 - Various components and services
 
 **Implementation Steps:**
@@ -350,6 +367,7 @@ a11y: improve accessibility to meet WCAG 2.1 Level AA
    - Memory leaks
 
 **Verification Checklist:**
+
 - [ ] Cold start <3s
 - [ ] Interactions <100ms
 - [ ] Smooth 60fps scrolling
@@ -357,6 +375,7 @@ a11y: improve accessibility to meet WCAG 2.1 Level AA
 - [ ] Works with 10+ tracks
 
 **Commit Message Template:**
+
 ```
 perf: optimize performance to meet targets
 
@@ -376,6 +395,7 @@ perf: optimize performance to meet targets
 **Goal:** Thoroughly test on all target platforms and devices.
 
 **Files to Create:**
+
 - `docs/testing/device-matrix.md` - Device test matrix
 
 **Implementation Steps:**
@@ -413,6 +433,7 @@ perf: optimize performance to meet targets
    - Interruptions (calls, notifications)
 
 **Verification Checklist:**
+
 - [ ] Tested on all target platforms
 - [ ] Device matrix documented
 - [ ] Platform differences noted
@@ -420,6 +441,7 @@ perf: optimize performance to meet targets
 - [ ] No critical platform-specific bugs
 
 **Commit Message Template:**
+
 ```
 test: complete cross-platform testing
 
@@ -470,12 +492,14 @@ test: complete cross-platform testing
    - Update tests for bug fixes
 
 **Verification Checklist:**
+
 - [ ] Zero critical bugs
 - [ ] All high-priority bugs fixed
 - [ ] Regression tests pass
 - [ ] Known issues documented
 
 **Commit Message Template:**
+
 ```
 fix: resolve critical and high-priority bugs
 
@@ -526,6 +550,7 @@ fix: resolve critical and high-priority bugs
    - Race conditions
 
 **Verification Checklist:**
+
 - [ ] Large files handled
 - [ ] Many tracks supported
 - [ ] Long sessions stable
@@ -533,6 +558,7 @@ fix: resolve critical and high-priority bugs
 - [ ] Rapid interactions handled
 
 **Commit Message Template:**
+
 ```
 test: add load and stress testing
 
@@ -592,6 +618,7 @@ test: add load and stress testing
    - Compare to Android app
 
 **Verification Checklist:**
+
 - [ ] All tests passing
 - [ ] Manual QA complete
 - [ ] Performance verified
@@ -599,6 +626,7 @@ test: add load and stress testing
 - [ ] Demo video created
 
 **Commit Message Template:**
+
 ```
 chore: complete final QA and prepare for release
 
