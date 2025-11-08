@@ -46,17 +46,4 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 8,
   },
-  sliderSection: {
-    marginVertical: 4,
-  },
-  sliderLabel: {
-    color: '#CACACA',
-    fontSize: 12,
-    marginBottom: 2,
-  },
-  sliderPlaceholder: {
-    height: 8,
-    backgroundColor: '#666',
-    borderRadius: 4,
-  },
 });

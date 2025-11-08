@@ -4,12 +4,14 @@
  * Displays an individual track with controls:
  * - Track name
  * - Play, Pause, Delete buttons
- * - Volume and Speed sliders (placeholders for now)
+ * - Volume and Speed sliders
  */
 
 import React from 'react';
 import { View, Text } from 'react-native';
 import { IconButton } from 'react-native-paper';
+import { VolumeSlider } from '../VolumeSlider';
+import { SpeedSlider } from '../SpeedSlider';
 import type { Track } from '../../types';
 import { styles } from './TrackListItem.styles';
 
@@ -27,8 +29,8 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
   onPlay,
   onPause,
   onDelete,
-  onVolumeChange: _onVolumeChange,
-  onSpeedChange: _onSpeedChange,
+  onVolumeChange,
+  onSpeedChange,
 }) => {
   const handlePlay = () => {
     console.log(`Play track: ${track.id}`);
@@ -43,6 +45,14 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
   const handleDelete = () => {
     console.log(`Delete track: ${track.id}`);
     onDelete?.(track.id);
+  };
+
+  const handleVolumeChange = (volume: number) => {
+    onVolumeChange?.(track.id, volume);
+  };
+
+  const handleSpeedChange = (speed: number) => {
+    onSpeedChange?.(track.id, speed);
   };
 
   return (
@@ -63,19 +73,11 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
 
         {/* Sliders Section */}
         <View style={styles.slidersContainer}>
-          {/* Volume Section */}
-          <View style={styles.sliderSection}>
-            <Text style={styles.sliderLabel}>Volume: {track.volume}</Text>
-            {/* Placeholder for volume slider - Task 4 */}
-            <View style={styles.sliderPlaceholder} />
-          </View>
+          {/* Volume Slider */}
+          <VolumeSlider value={track.volume} onValueChange={handleVolumeChange} />
 
-          {/* Speed Section */}
-          <View style={styles.sliderSection}>
-            <Text style={styles.sliderLabel}>Speed: {track.speed.toFixed(2)}x</Text>
-            {/* Placeholder for speed slider - Task 4 */}
-            <View style={styles.sliderPlaceholder} />
-          </View>
+          {/* Speed Slider */}
+          <SpeedSlider value={track.speed} onValueChange={handleSpeedChange} />
         </View>
 
         {/* Pause Button (right) */}
