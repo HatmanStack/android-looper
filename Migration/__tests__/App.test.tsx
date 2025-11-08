@@ -10,21 +10,23 @@ jest.mock('expo-status-bar', () => ({
 describe('App', () => {
   it('renders without crashing', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Looper - Audio Mixing App/i)).toBeTruthy();
+    expect(getByText(/Track list will appear here/i)).toBeTruthy();
   });
 
-  it('displays Phase 1 completion message', () => {
+  it('renders top control buttons', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Phase 1: Project Setup Complete/i)).toBeTruthy();
+    expect(getByText(/Record/i)).toBeTruthy();
+    expect(getByText(/Stop/i)).toBeTruthy();
   });
 
-  it('renders the themed card', () => {
+  it('renders bottom control buttons', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/React Native Paper Theme Configured/i)).toBeTruthy();
+    expect(getByText(/Import Audio/i)).toBeTruthy();
+    expect(getByText(/Save/i)).toBeTruthy();
   });
 
-  it('renders the example button', () => {
+  it('renders track list placeholder', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Example Button/i)).toBeTruthy();
+    expect(getByText(/Track list will appear here/i)).toBeTruthy();
   });
 });
