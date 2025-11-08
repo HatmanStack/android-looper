@@ -5,6 +5,7 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
 export default [
   {
@@ -19,6 +20,7 @@ export default [
     ],
   },
   js.configs.recommended,
+  // Main configuration for TypeScript files
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
@@ -31,9 +33,10 @@ export default [
         sourceType: 'module',
       },
       globals: {
-        browser: true,
-        node: true,
-        es2021: true,
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
+        __DEV__: 'readonly',
       },
     },
     plugins: {
@@ -58,6 +61,26 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'prettier/prettier': 'error',
+    },
+  },
+  // Test files configuration
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx', '__tests__/**/*'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+        ...globals.node,
+      },
+    },
+  },
+  // Jest config files
+  {
+    files: ['jest.setup.js', 'jest.env-setup.js', 'jest.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+        ...globals.node,
+      },
     },
   },
 ];
