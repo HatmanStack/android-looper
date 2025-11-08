@@ -10,11 +10,21 @@ jest.mock('expo-status-bar', () => ({
 describe('App', () => {
   it('renders without crashing', () => {
     const { getByText } = render(<App />);
-    expect(getByText(/Open up App.tsx to start working on your app!/i)).toBeTruthy();
+    expect(getByText(/Looper - Audio Mixing App/i)).toBeTruthy();
   });
 
-  it('renders the main View component', () => {
-    const { root } = render(<App />);
-    expect(root).toBeTruthy();
+  it('displays Phase 1 completion message', () => {
+    const { getByText } = render(<App />);
+    expect(getByText(/Phase 1: Project Setup Complete/i)).toBeTruthy();
+  });
+
+  it('renders the themed card', () => {
+    const { getByText } = render(<App />);
+    expect(getByText(/React Native Paper Theme Configured/i)).toBeTruthy();
+  });
+
+  it('renders the example button', () => {
+    const { getByText } = render(<App />);
+    expect(getByText(/Example Button/i)).toBeTruthy();
   });
 });
