@@ -1,4 +1,6 @@
-// Barrel export file for components
-// Export components here as they are created
+/**
+ * TrackListItem barrel export
+ */
+
 export { TrackListItem } from './TrackListItem';
 export type { TrackListItemProps } from './TrackListItem';
