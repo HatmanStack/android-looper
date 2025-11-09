@@ -6,7 +6,7 @@
  */
 
 import { useTrackStore } from './useTrackStore';
-import { usePlaybackStore } from './usePlaybackStore';
+import { usePlaybackStore, type TrackState } from './usePlaybackStore';
 import { useUIStore } from './useUIStore';
 
 /**
@@ -112,7 +112,9 @@ export function importState(stateSnapshot: any) {
       playbackStore.reset();
 
       if (stateSnapshot.playback.trackStates) {
-        const trackStatesMap = new Map(stateSnapshot.playback.trackStates);
+        const trackStatesMap: Map<string, TrackState> = new Map(
+          stateSnapshot.playback.trackStates
+        );
         usePlaybackStore.setState({
           trackStates: trackStatesMap,
           playingTracks: new Set(stateSnapshot.playback.playingTracks || []),
