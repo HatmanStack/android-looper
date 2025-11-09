@@ -9,9 +9,10 @@
 
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Button, Surface } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TrackList } from '@components/TrackList';
+import { ActionButton } from '@components/ActionButton';
 import type { Track } from '../../types';
 import { styles } from './MainScreen.styles';
 
@@ -98,22 +99,8 @@ export const MainScreen: React.FC = () => {
       <View style={styles.container}>
         {/* Top Controls */}
         <Surface style={styles.topControls} elevation={0}>
-          <Button
-            mode="contained"
-            onPress={handleRecord}
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-          >
-            Record
-          </Button>
-          <Button
-            mode="contained"
-            onPress={handleStop}
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-          >
-            Stop
-          </Button>
+          <ActionButton label="Record" icon="microphone" onPress={handleRecord} />
+          <ActionButton label="Stop" icon="stop" onPress={handleStop} />
         </Surface>
 
         {/* Middle Section - Track List */}
@@ -130,22 +117,8 @@ export const MainScreen: React.FC = () => {
 
         {/* Bottom Controls */}
         <Surface style={styles.bottomControls} elevation={0}>
-          <Button
-            mode="contained"
-            onPress={handleImport}
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-          >
-            Import Audio
-          </Button>
-          <Button
-            mode="contained"
-            onPress={handleSave}
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-          >
-            Save
-          </Button>
+          <ActionButton label="Import Audio" icon="file-music" onPress={handleImport} />
+          <ActionButton label="Save" icon="content-save" onPress={handleSave} />
         </Surface>
       </View>
     </SafeAreaView>

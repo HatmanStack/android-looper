@@ -8,3 +8,5 @@ export { VolumeSlider } from './VolumeSlider';
 export type { VolumeSliderProps } from './VolumeSlider';
 export { SpeedSlider } from './SpeedSlider';
 export type { SpeedSliderProps } from './SpeedSlider';
+export { ActionButton } from './ActionButton';
+export type { ActionButtonProps } from './ActionButton';

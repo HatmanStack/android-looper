@@ -38,11 +38,4 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1E1E1E', // Surface color from theme
   },
-  button: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  buttonContent: {
-    paddingVertical: 8,
-  },
 });
