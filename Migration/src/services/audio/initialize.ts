@@ -11,14 +11,14 @@ import { Platform } from 'react-native';
  */
 export function initializeAudioServices(): void {
   if (Platform.OS === 'web') {
-    // Dynamically import web services
-    import('./web').then((module) => {
-      module.initializeWebAudioServices();
-    });
+    // Dynamically require web services
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { initializeWebAudioServices } = require('./web');
+    initializeWebAudioServices();
   } else {
-    // Dynamically import native services
-    import('./native').then((module) => {
-      module.initializeNativeAudioServices();
-    });
+    // Dynamically require native services
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { initializeNativeAudioServices } = require('./native');
+    initializeNativeAudioServices();
   }
 }

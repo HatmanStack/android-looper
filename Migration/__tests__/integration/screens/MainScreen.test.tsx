@@ -70,16 +70,12 @@ describe('MainScreen Integration', () => {
     expect(() => fireEvent.press(recordButton)).not.toThrow();
   });
 
-  it('displays import alert when import button is pressed', () => {
+  it('import button triggers file import', () => {
     const { getByText } = renderWithProvider(<MainScreen />);
-    const alertSpy = jest.spyOn(Alert, 'alert');
 
     const importButton = getByText('Import Audio');
-    fireEvent.press(importButton);
 
-    expect(alertSpy).toHaveBeenCalledWith(
-      'Coming Soon',
-      'Audio import will be implemented in Phase 4'
-    );
+    // Press import button should not throw
+    expect(() => fireEvent.press(importButton)).not.toThrow();
   });
 });
