@@ -22,8 +22,8 @@ describe('Recording Flow Integration', () => {
     audioService = getAudioService();
   });
 
-  afterEach(() => {
-    audioService?.cleanup();
+  afterEach(async () => {
+    await audioService?.cleanup();
   });
 
   it('should complete full recording flow', async () => {

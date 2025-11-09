@@ -30,8 +30,8 @@ Welcome to Looper! This guide will help you get started with recording, importin
 - Or install APK from GitHub Releases
 
 **iOS:**
-- Download from [Apple App Store](https://apps.apple.com/app/looper/id000000000)
-- Or install via TestFlight (beta)
+- App Store link coming soon
+- Install via TestFlight (beta) for early access
 
 ### First Launch
 

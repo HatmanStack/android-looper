@@ -1,7 +1,7 @@
 # Looper - Audio Mixing App
 
-![CI](https://github.com/USERNAME/android-looper/workflows/CI/badge.svg)
-![Deploy](https://github.com/USERNAME/android-looper/workflows/Deploy%20Web/badge.svg)
+![CI](https://github.com/HatmanStack/android-looper/workflows/CI/badge.svg)
+![Deploy](https://github.com/HatmanStack/android-looper/workflows/Deploy%20Web/badge.svg)
 
 **Professional multi-track audio mixing for everyone.**
 
@@ -33,7 +33,7 @@ No installation required - works in any modern browser!
 
 **Android:**
 - [Download from Google Play](https://play.google.com/store/apps/details?id=com.looper.app)
-- Or download APK from [Releases](https://github.com/USERNAME/android-looper/releases)
+- Or download APK from [Releases](https://github.com/HatmanStack/android-looper/releases)
 
 **iOS:**
 - [Download from App Store](https://apps.apple.com/app/looper/id000000000)
@@ -61,7 +61,7 @@ No installation required - works in any modern browser!
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/USERNAME/android-looper.git
+   git clone https://github.com/HatmanStack/android-looper.git
    cd android-looper/Migration
    ```
 
@@ -204,11 +204,11 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 - [ ] Custom themes
 - [ ] Playlist management
 
-See [Issues](https://github.com/USERNAME/android-looper/issues) for current feature requests and bugs.
+See [Issues](https://github.com/HatmanStack/android-looper/issues) for current feature requests and bugs.
 
 ## 🐛 Bug Reports
 
-Found a bug? Please [open an issue](https://github.com/USERNAME/android-looper/issues/new) with:
+Found a bug? Please [open an issue](https://github.com/HatmanStack/android-looper/issues/new) with:
 
 - Description of the bug
 - Steps to reproduce
@@ -220,7 +220,7 @@ Found a bug? Please [open an issue](https://github.com/USERNAME/android-looper/i
 ## 💬 Support
 
 - **Documentation**: [docs/](./docs/)
-- **Issues**: [GitHub Issues](https://github.com/USERNAME/android-looper/issues)
+- **Issues**: [GitHub Issues](https://github.com/HatmanStack/android-looper/issues)
 - **Email**: support@looper.app
 - **Website**: [looper.app](https://looper.app)
 
@@ -238,13 +238,13 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 ## 📊 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/USERNAME/android-looper?style=social)
-![GitHub forks](https://img.shields.io/github/forks/USERNAME/android-looper?style=social)
-![GitHub issues](https://img.shields.io/github/issues/USERNAME/android-looper)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/USERNAME/android-looper)
+![GitHub stars](https://img.shields.io/github/stars/HatmanStack/android-looper?style=social)
+![GitHub forks](https://img.shields.io/github/forks/HatmanStack/android-looper?style=social)
+![GitHub issues](https://img.shields.io/github/issues/HatmanStack/android-looper)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/HatmanStack/android-looper)
 
 ---
 
 **Made with ❤️ by the Looper team**
 
-[Website](https://looper.app) • [Documentation](./docs/) • [Report Bug](https://github.com/USERNAME/android-looper/issues) • [Request Feature](https://github.com/USERNAME/android-looper/issues)
+[Website](https://looper.app) • [Documentation](./docs/) • [Report Bug](https://github.com/HatmanStack/android-looper/issues) • [Request Feature](https://github.com/HatmanStack/android-looper/issues)
