@@ -56,9 +56,7 @@ export function useAppLifecycle(callbacks: AppLifecycleCallbacks = {}) {
   const { onActive, onBackground, onInactive, onChange } = callbacks;
 
   // Track previous state
-  const previousStateRef = useRef<LifecycleState>(
-    AppState.currentState as LifecycleState
-  );
+  const previousStateRef = useRef<LifecycleState>(AppState.currentState as LifecycleState);
 
   const handleStateChange = useCallback(
     (nextAppState: AppStateStatus) => {
@@ -143,10 +141,7 @@ export function useAppLifecycle(callbacks: AppLifecycleCallbacks = {}) {
  * );
  * ```
  */
-export function useBackgroundHandler(
-  onBackground: () => void,
-  onForeground?: () => void
-) {
+export function useBackgroundHandler(onBackground: () => void, onForeground?: () => void) {
   return useAppLifecycle({
     onBackground,
     onActive: onForeground,

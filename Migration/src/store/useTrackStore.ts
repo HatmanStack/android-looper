@@ -31,54 +31,52 @@ interface TrackStore {
 export const useTrackStore = create<TrackStore>()(
   persist(
     (set, get) => ({
-  // Initial state
-  tracks: [],
-
-  // Add a new track
-  addTrack: (track: Track) =>
-    set((state) => ({
-      tracks: [...state.tracks, track],
-    })),
-
-  // Remove a track by ID
-  removeTrack: (id: string) =>
-    set((state) => ({
-      tracks: state.tracks.filter((track) => track.id !== id),
-    })),
-
-  // Update track properties
-  updateTrack: (id: string, updates: Partial<Track>) =>
-    set((state) => ({
-      tracks: state.tracks.map((track) =>
-        track.id === id ? { ...track, ...updates } : track
-      ),
-    })),
-
-  // Get a specific track by ID
-  getTrack: (id: string) => {
-    return get().tracks.find((track) => track.id === id);
-  },
-
-  // Clear all tracks
-  clearTracks: () =>
-    set({
+      // Initial state
       tracks: [],
-    }),
 
-  // Derived state: Get track count
-  getTrackCount: () => {
-    return get().tracks.length;
-  },
+      // Add a new track
+      addTrack: (track: Track) =>
+        set((state) => ({
+          tracks: [...state.tracks, track],
+        })),
 
-  // Derived state: Check if there are playable tracks
-  hasPlayableTracks: () => {
-    return get().tracks.length > 0;
-  },
+      // Remove a track by ID
+      removeTrack: (id: string) =>
+        set((state) => ({
+          tracks: state.tracks.filter((track) => track.id !== id),
+        })),
 
-  // Derived state: Get all currently playing tracks
-  getPlayingTracks: () => {
-    return get().tracks.filter((track) => track.isPlaying);
-  },
+      // Update track properties
+      updateTrack: (id: string, updates: Partial<Track>) =>
+        set((state) => ({
+          tracks: state.tracks.map((track) => (track.id === id ? { ...track, ...updates } : track)),
+        })),
+
+      // Get a specific track by ID
+      getTrack: (id: string) => {
+        return get().tracks.find((track) => track.id === id);
+      },
+
+      // Clear all tracks
+      clearTracks: () =>
+        set({
+          tracks: [],
+        }),
+
+      // Derived state: Get track count
+      getTrackCount: () => {
+        return get().tracks.length;
+      },
+
+      // Derived state: Check if there are playable tracks
+      hasPlayableTracks: () => {
+        return get().tracks.length > 0;
+      },
+
+      // Derived state: Get all currently playing tracks
+      getPlayingTracks: () => {
+        return get().tracks.filter((track) => track.isPlaying);
+      },
     }),
     {
       name: 'looper-tracks', // Storage key

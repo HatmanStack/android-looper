@@ -110,7 +110,10 @@ export class FFmpegService implements IFFmpegService {
         const output = await session.getOutput();
         const failStackTrace = await session.getFailStackTrace();
 
-        this.error('FFmpeg execution failed', new Error(failStackTrace || output || 'Unknown error'));
+        this.error(
+          'FFmpeg execution failed',
+          new Error(failStackTrace || output || 'Unknown error')
+        );
 
         throw new AudioError(
           AudioErrorCode.MIXING_FAILED,

@@ -112,9 +112,7 @@ export function importState(stateSnapshot: any) {
       playbackStore.reset();
 
       if (stateSnapshot.playback.trackStates) {
-        const trackStatesMap: Map<string, TrackState> = new Map(
-          stateSnapshot.playback.trackStates
-        );
+        const trackStatesMap: Map<string, TrackState> = new Map(stateSnapshot.playback.trackStates);
         usePlaybackStore.setState({
           trackStates: trackStatesMap,
           playingTracks: new Set(stateSnapshot.playback.playingTracks || []),
@@ -173,12 +171,9 @@ export function getStoreStats() {
       playingCount: playbackStore.playingTracks.size,
     },
     ui: {
-      modalsOpen:
-        (uiStore.saveModalVisible ? 1 : 0) + (uiStore.mixingModalVisible ? 1 : 0),
+      modalsOpen: (uiStore.saveModalVisible ? 1 : 0) + (uiStore.mixingModalVisible ? 1 : 0),
       activeOperations:
-        (uiStore.isRecording ? 1 : 0) +
-        (uiStore.isMixing ? 1 : 0) +
-        (uiStore.isLoading ? 1 : 0),
+        (uiStore.isRecording ? 1 : 0) + (uiStore.isMixing ? 1 : 0) + (uiStore.isLoading ? 1 : 0),
     },
   };
 }

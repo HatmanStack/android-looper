@@ -54,135 +54,135 @@ export const usePlaybackStore = create<PlaybackState>()(
       playingTracks: new Set(),
       isAnyPlaying: false,
 
-  setTrackPlaying: (trackId: string, isPlaying: boolean) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      const trackState = newTrackStates.get(trackId);
+      setTrackPlaying: (trackId: string, isPlaying: boolean) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          const trackState = newTrackStates.get(trackId);
 
-      if (trackState) {
-        newTrackStates.set(trackId, { ...trackState, isPlaying });
-      }
+          if (trackState) {
+            newTrackStates.set(trackId, { ...trackState, isPlaying });
+          }
 
-      const newPlayingTracks = new Set(state.playingTracks);
-      if (isPlaying) {
-        newPlayingTracks.add(trackId);
-      } else {
-        newPlayingTracks.delete(trackId);
-      }
+          const newPlayingTracks = new Set(state.playingTracks);
+          if (isPlaying) {
+            newPlayingTracks.add(trackId);
+          } else {
+            newPlayingTracks.delete(trackId);
+          }
 
-      return {
-        trackStates: newTrackStates,
-        playingTracks: newPlayingTracks,
-        isAnyPlaying: newPlayingTracks.size > 0,
-      };
-    }),
+          return {
+            trackStates: newTrackStates,
+            playingTracks: newPlayingTracks,
+            isAnyPlaying: newPlayingTracks.size > 0,
+          };
+        }),
 
-  setTrackSpeed: (trackId: string, speed: number) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      const trackState = newTrackStates.get(trackId);
+      setTrackSpeed: (trackId: string, speed: number) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          const trackState = newTrackStates.get(trackId);
 
-      if (trackState) {
-        newTrackStates.set(trackId, { ...trackState, speed });
-      }
+          if (trackState) {
+            newTrackStates.set(trackId, { ...trackState, speed });
+          }
 
-      return { trackStates: newTrackStates };
-    }),
+          return { trackStates: newTrackStates };
+        }),
 
-  setTrackVolume: (trackId: string, volume: number) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      const trackState = newTrackStates.get(trackId);
+      setTrackVolume: (trackId: string, volume: number) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          const trackState = newTrackStates.get(trackId);
 
-      if (trackState) {
-        newTrackStates.set(trackId, { ...trackState, volume });
-      }
+          if (trackState) {
+            newTrackStates.set(trackId, { ...trackState, volume });
+          }
 
-      return { trackStates: newTrackStates };
-    }),
+          return { trackStates: newTrackStates };
+        }),
 
-  setTrackLooping: (trackId: string, isLooping: boolean) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      const trackState = newTrackStates.get(trackId);
+      setTrackLooping: (trackId: string, isLooping: boolean) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          const trackState = newTrackStates.get(trackId);
 
-      if (trackState) {
-        newTrackStates.set(trackId, { ...trackState, isLooping });
-      }
+          if (trackState) {
+            newTrackStates.set(trackId, { ...trackState, isLooping });
+          }
 
-      return { trackStates: newTrackStates };
-    }),
+          return { trackStates: newTrackStates };
+        }),
 
-  addTrack: (trackId: string, initialState?: Partial<TrackState>) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      newTrackStates.set(trackId, {
-        ...DEFAULT_TRACK_STATE,
-        ...initialState,
-      });
+      addTrack: (trackId: string, initialState?: Partial<TrackState>) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          newTrackStates.set(trackId, {
+            ...DEFAULT_TRACK_STATE,
+            ...initialState,
+          });
 
-      return { trackStates: newTrackStates };
-    }),
+          return { trackStates: newTrackStates };
+        }),
 
-  removeTrack: (trackId: string) =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      newTrackStates.delete(trackId);
+      removeTrack: (trackId: string) =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          newTrackStates.delete(trackId);
 
-      const newPlayingTracks = new Set(state.playingTracks);
-      newPlayingTracks.delete(trackId);
+          const newPlayingTracks = new Set(state.playingTracks);
+          newPlayingTracks.delete(trackId);
 
-      return {
-        trackStates: newTrackStates,
-        playingTracks: newPlayingTracks,
-        isAnyPlaying: newPlayingTracks.size > 0,
-      };
-    }),
+          return {
+            trackStates: newTrackStates,
+            playingTracks: newPlayingTracks,
+            isAnyPlaying: newPlayingTracks.size > 0,
+          };
+        }),
 
-  pauseAll: () =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
+      pauseAll: () =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
 
-      // Set all tracks to not playing
-      newTrackStates.forEach((trackState, trackId) => {
-        newTrackStates.set(trackId, { ...trackState, isPlaying: false });
-      });
+          // Set all tracks to not playing
+          newTrackStates.forEach((trackState, trackId) => {
+            newTrackStates.set(trackId, { ...trackState, isPlaying: false });
+          });
 
-      return {
-        trackStates: newTrackStates,
-        playingTracks: new Set(),
-        isAnyPlaying: false,
-      };
-    }),
+          return {
+            trackStates: newTrackStates,
+            playingTracks: new Set(),
+            isAnyPlaying: false,
+          };
+        }),
 
-  playAll: () =>
-    set((state) => {
-      const newTrackStates = new Map(state.trackStates);
-      const newPlayingTracks = new Set<string>();
+      playAll: () =>
+        set((state) => {
+          const newTrackStates = new Map(state.trackStates);
+          const newPlayingTracks = new Set<string>();
 
-      // Set all tracks to playing
-      newTrackStates.forEach((trackState, trackId) => {
-        newTrackStates.set(trackId, { ...trackState, isPlaying: true });
-        newPlayingTracks.add(trackId);
-      });
+          // Set all tracks to playing
+          newTrackStates.forEach((trackState, trackId) => {
+            newTrackStates.set(trackId, { ...trackState, isPlaying: true });
+            newPlayingTracks.add(trackId);
+          });
 
-      return {
-        trackStates: newTrackStates,
-        playingTracks: newPlayingTracks,
-        isAnyPlaying: newPlayingTracks.size > 0,
-      };
-    }),
+          return {
+            trackStates: newTrackStates,
+            playingTracks: newPlayingTracks,
+            isAnyPlaying: newPlayingTracks.size > 0,
+          };
+        }),
 
-  getTrackState: (trackId: string) => {
-    return get().trackStates.get(trackId);
-  },
+      getTrackState: (trackId: string) => {
+        return get().trackStates.get(trackId);
+      },
 
-  reset: () =>
-    set({
-      trackStates: new Map(),
-      playingTracks: new Set(),
-      isAnyPlaying: false,
-    }),
+      reset: () =>
+        set({
+          trackStates: new Map(),
+          playingTracks: new Set(),
+          isAnyPlaying: false,
+        }),
     }),
     {
       name: 'looper-playback', // Storage key

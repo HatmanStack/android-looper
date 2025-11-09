@@ -28,9 +28,7 @@ export function runMigrations<TState>(
     // Parse versioned state
     // Check for 'version' property to distinguish versioned from non-versioned data
     const versionedState: VersionedState<TState> =
-      typeof persistedData === 'object' &&
-      persistedData !== null &&
-      'version' in persistedData
+      typeof persistedData === 'object' && persistedData !== null && 'version' in persistedData
         ? persistedData
         : { version: 0, state: persistedData };
 
@@ -184,20 +182,14 @@ export function createMigratedStorage<TState>(
         }
 
         // Return migrated state as versioned state
-        const versionedState = createVersionedState(
-          migrationResult.state,
-          config.currentVersion
-        );
+        const versionedState = createVersionedState(migrationResult.state, config.currentVersion);
 
         return JSON.stringify(versionedState);
       } catch (error) {
         console.error('[Migration] Failed to parse/migrate stored data:', error);
 
         if (config.defaultState) {
-          const versionedState = createVersionedState(
-            config.defaultState,
-            config.currentVersion
-          );
+          const versionedState = createVersionedState(config.defaultState, config.currentVersion);
           return JSON.stringify(versionedState);
         }
 

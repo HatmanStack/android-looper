@@ -27,10 +27,7 @@ describe('useAppLifecycle', () => {
   it('should register AppState listener', () => {
     renderHook(() => useAppLifecycle());
 
-    expect(AppState.addEventListener).toHaveBeenCalledWith(
-      'change',
-      expect.any(Function)
-    );
+    expect(AppState.addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
   });
 
   it('should call onActive when app becomes active', () => {

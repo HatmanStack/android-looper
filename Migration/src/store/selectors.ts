@@ -18,8 +18,7 @@ import type { TrackState } from './usePlaybackStore';
 /**
  * Select all tracks
  */
-export const selectTracks = (state: ReturnType<typeof useTrackStore.getState>) =>
-  state.tracks;
+export const selectTracks = (state: ReturnType<typeof useTrackStore.getState>) => state.tracks;
 
 /**
  * Select track count
@@ -30,9 +29,8 @@ export const selectTrackCount = (state: ReturnType<typeof useTrackStore.getState
 /**
  * Select specific track by ID
  */
-export const selectTrackById =
-  (id: string) => (state: ReturnType<typeof useTrackStore.getState>) =>
-    state.tracks.find((track) => track.id === id);
+export const selectTrackById = (id: string) => (state: ReturnType<typeof useTrackStore.getState>) =>
+  state.tracks.find((track) => track.id === id);
 
 /**
  * Select track IDs only (useful for lists to prevent re-renders)
@@ -43,16 +41,14 @@ export const selectTrackIds = (state: ReturnType<typeof useTrackStore.getState>)
 /**
  * Select playing tracks
  */
-export const selectPlayingTracks = (
-  state: ReturnType<typeof useTrackStore.getState>
-) => state.tracks.filter((track) => track.isPlaying);
+export const selectPlayingTracks = (state: ReturnType<typeof useTrackStore.getState>) =>
+  state.tracks.filter((track) => track.isPlaying);
 
 /**
  * Check if has any tracks
  */
-export const selectHasTracksBoolean = (
-  state: ReturnType<typeof useTrackStore.getState>
-) => state.tracks.length > 0;
+export const selectHasTracksBoolean = (state: ReturnType<typeof useTrackStore.getState>) =>
+  state.tracks.length > 0;
 
 // ============================================================================
 // Playback Store Selectors
@@ -89,16 +85,14 @@ export const selectTrackVolume =
 /**
  * Select if any track is playing
  */
-export const selectIsAnyPlaying = (
-  state: ReturnType<typeof usePlaybackStore.getState>
-) => state.isAnyPlaying;
+export const selectIsAnyPlaying = (state: ReturnType<typeof usePlaybackStore.getState>) =>
+  state.isAnyPlaying;
 
 /**
  * Select count of playing tracks
  */
-export const selectPlayingTrackCount = (
-  state: ReturnType<typeof usePlaybackStore.getState>
-) => state.playingTracks.size;
+export const selectPlayingTrackCount = (state: ReturnType<typeof usePlaybackStore.getState>) =>
+  state.playingTracks.size;
 
 // ============================================================================
 // UI Store Selectors
@@ -107,16 +101,14 @@ export const selectPlayingTrackCount = (
 /**
  * Select save modal visibility
  */
-export const selectSaveModalVisible = (
-  state: ReturnType<typeof useUIStore.getState>
-) => state.saveModalVisible;
+export const selectSaveModalVisible = (state: ReturnType<typeof useUIStore.getState>) =>
+  state.saveModalVisible;
 
 /**
  * Select mixing modal visibility
  */
-export const selectMixingModalVisible = (
-  state: ReturnType<typeof useUIStore.getState>
-) => state.mixingModalVisible;
+export const selectMixingModalVisible = (state: ReturnType<typeof useUIStore.getState>) =>
+  state.mixingModalVisible;
 
 /**
  * Select if recording
@@ -127,8 +119,7 @@ export const selectIsRecording = (state: ReturnType<typeof useUIStore.getState>)
 /**
  * Select if mixing
  */
-export const selectIsMixing = (state: ReturnType<typeof useUIStore.getState>) =>
-  state.isMixing;
+export const selectIsMixing = (state: ReturnType<typeof useUIStore.getState>) => state.isMixing;
 
 /**
  * Select mixing progress

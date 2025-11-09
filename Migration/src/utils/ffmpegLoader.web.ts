@@ -56,9 +56,7 @@ export function isFFmpegSupported(): boolean {
   // Check for SharedArrayBuffer (required for multithreading)
   // Note: Some features work without it, but performance is better with it
   if (typeof SharedArrayBuffer === 'undefined') {
-    console.warn(
-      '[FFmpegLoader] SharedArrayBuffer not available (limited performance)'
-    );
+    console.warn('[FFmpegLoader] SharedArrayBuffer not available (limited performance)');
     // Still return true as FFmpeg can work without it
   }
 
@@ -83,8 +81,7 @@ export function getFFmpegSupportInfo(): {
   if (!hasWebAssembly) {
     message = 'Your browser does not support WebAssembly. Please update your browser.';
   } else if (!hasSharedArrayBuffer) {
-    message =
-      'Your browser has limited FFmpeg support. Some features may be slower.';
+    message = 'Your browser has limited FFmpeg support. Some features may be slower.';
   }
 
   return {

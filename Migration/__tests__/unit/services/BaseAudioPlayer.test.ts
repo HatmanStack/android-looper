@@ -182,14 +182,18 @@ describe('BaseAudioPlayer', () => {
       await player.load('test://audio');
 
       await expect(player.setSpeed(0.04)).rejects.toThrow(AudioError);
-      await expect(player.setSpeed(0.04)).rejects.toThrow('Speed must be between 0.05 and 2.50, got 0.04');
+      await expect(player.setSpeed(0.04)).rejects.toThrow(
+        'Speed must be between 0.05 and 2.50, got 0.04'
+      );
     });
 
     it('should reject speed above maximum (2.5)', async () => {
       await player.load('test://audio');
 
       await expect(player.setSpeed(2.51)).rejects.toThrow(AudioError);
-      await expect(player.setSpeed(2.51)).rejects.toThrow('Speed must be between 0.05 and 2.50, got 2.51');
+      await expect(player.setSpeed(2.51)).rejects.toThrow(
+        'Speed must be between 0.05 and 2.50, got 2.51'
+      );
     });
 
     it('should accept minimum speed (0.05)', async () => {
@@ -219,14 +223,18 @@ describe('BaseAudioPlayer', () => {
       await player.load('test://audio');
 
       await expect(player.setVolume(-1)).rejects.toThrow(AudioError);
-      await expect(player.setVolume(-1)).rejects.toThrow('Volume must be between 0 and 100, got -1');
+      await expect(player.setVolume(-1)).rejects.toThrow(
+        'Volume must be between 0 and 100, got -1'
+      );
     });
 
     it('should reject volume above 100', async () => {
       await player.load('test://audio');
 
       await expect(player.setVolume(101)).rejects.toThrow(AudioError);
-      await expect(player.setVolume(101)).rejects.toThrow('Volume must be between 0 and 100, got 101');
+      await expect(player.setVolume(101)).rejects.toThrow(
+        'Volume must be between 0 and 100, got 101'
+      );
     });
 
     it('should accept minimum volume (0)', async () => {

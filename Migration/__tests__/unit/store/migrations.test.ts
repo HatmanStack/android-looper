@@ -2,10 +2,7 @@
  * Migration System Tests
  */
 
-import {
-  runMigrations,
-  createVersionedState,
-} from '../../../src/store/migrations/migrationSystem';
+import { runMigrations, createVersionedState } from '../../../src/store/migrations/migrationSystem';
 import type { MigrationConfig } from '../../../src/store/migrations/types';
 
 describe('Migration System', () => {
