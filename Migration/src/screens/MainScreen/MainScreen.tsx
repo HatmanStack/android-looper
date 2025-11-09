@@ -13,6 +13,7 @@ import { Surface } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TrackList } from '@components/TrackList';
 import { ActionButton } from '@components/ActionButton';
+import { SaveModal } from '@components/SaveModal';
 import type { Track } from '../../types';
 import { styles } from './MainScreen.styles';
 
@@ -52,6 +53,7 @@ const MOCK_TRACKS: Track[] = [
 
 export const MainScreen: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>(MOCK_TRACKS);
+  const [saveModalVisible, setSaveModalVisible] = useState(false);
 
   const handleRecord = () => {
     console.log('Record button pressed');
@@ -67,6 +69,16 @@ export const MainScreen: React.FC = () => {
 
   const handleSave = () => {
     console.log('Save button pressed');
+    setSaveModalVisible(true);
+  };
+
+  const handleSaveModalDismiss = () => {
+    setSaveModalVisible(false);
+  };
+
+  const handleSaveModalSave = (filename: string) => {
+    console.log(`Saving file as: ${filename}`);
+    // Actual save functionality will be implemented in Phase 6-7
   };
 
   const handlePlay = (trackId: string) => {
@@ -120,6 +132,14 @@ export const MainScreen: React.FC = () => {
           <ActionButton label="Import Audio" icon="file-music" onPress={handleImport} />
           <ActionButton label="Save" icon="content-save" onPress={handleSave} />
         </Surface>
+
+        {/* Save Modal */}
+        <SaveModal
+          visible={saveModalVisible}
+          trackNumber={tracks.length}
+          onDismiss={handleSaveModalDismiss}
+          onSave={handleSaveModalSave}
+        />
       </View>
     </SafeAreaView>
   );
