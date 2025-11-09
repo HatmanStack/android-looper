@@ -63,10 +63,25 @@ export const SaveModal: React.FC<SaveModalProps> = ({
 
   return (
     <Portal>
-      <Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={styles.modalContainer}>
-        <View style={styles.content}>
+      <Modal
+        visible={visible}
+        onDismiss={onDismiss}
+        contentContainerStyle={styles.modalContainer}
+        accessibilityViewIsModal={true}
+      >
+        <View
+          style={styles.content}
+          accessibilityRole="dialog"
+        >
           {/* Track Label */}
-          {trackNumber !== undefined && <Text style={styles.trackLabel}>Track {trackNumber}</Text>}
+          {trackNumber !== undefined && (
+            <Text
+              style={styles.trackLabel}
+              accessibilityRole="header"
+            >
+              Track {trackNumber}
+            </Text>
+          )}
 
           {/* Filename Input */}
           <TextInput
@@ -78,14 +93,31 @@ export const SaveModal: React.FC<SaveModalProps> = ({
             error={!!error}
             autoFocus
             onSubmitEditing={handleSave}
+            accessibilityLabel="File name"
+            accessibilityHint="Enter a name for the saved audio file"
           />
 
           {/* Error Message */}
-          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          {error ? (
+            <Text
+              style={styles.errorText}
+              accessibilityRole="alert"
+              accessibilityLiveRegion="assertive"
+            >
+              {error}
+            </Text>
+          ) : null}
 
           {/* Action Buttons */}
           <View style={styles.buttonContainer}>
-            <Button mode="outlined" onPress={handleCancel} style={styles.cancelButton}>
+            <Button
+              mode="outlined"
+              onPress={handleCancel}
+              style={styles.cancelButton}
+              accessibilityLabel="Cancel"
+              accessibilityHint="Close dialog without saving"
+              accessibilityRole="button"
+            >
               Cancel
             </Button>
             <Button
@@ -93,6 +125,10 @@ export const SaveModal: React.FC<SaveModalProps> = ({
               onPress={handleSave}
               style={styles.saveButton}
               disabled={!filename.trim()}
+              accessibilityLabel="Save"
+              accessibilityHint="Save audio file with entered name"
+              accessibilityRole="button"
+              accessibilityState={{ disabled: !filename.trim() }}
             >
               Save
             </Button>

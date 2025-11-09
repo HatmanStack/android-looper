@@ -16,6 +16,8 @@ export interface ActionButtonProps {
   disabled?: boolean;
   mode?: 'contained' | 'outlined' | 'text';
   style?: object;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
@@ -25,6 +27,8 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   disabled = false,
   mode = 'contained',
   style,
+  accessibilityLabel,
+  accessibilityHint,
 }) => {
   return (
     <Button
@@ -34,6 +38,10 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       disabled={disabled}
       style={[styles.button, style]}
       contentStyle={styles.buttonContent}
+      accessibilityLabel={accessibilityLabel || label}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
     >
       {label}
     </Button>

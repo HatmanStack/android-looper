@@ -68,6 +68,10 @@ export const SpeedSlider: React.FC<SpeedSliderProps> = ({
         minimumTrackTintColor="#BB86FC" // Theme primary color
         maximumTrackTintColor="#666"
         thumbTintColor="#FFFFFF"
+        accessibilityLabel="Playback speed"
+        accessibilityValue={{ text: `${displayValue} times` }}
+        accessibilityHint="Adjust playback speed from 0.05 to 2.50 times"
+        accessibilityRole="adjustable"
       />
     </View>
   );

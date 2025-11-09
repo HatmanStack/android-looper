@@ -56,12 +56,26 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      accessible={true}
+      accessibilityLabel={`Track: ${track.name}`}
+      accessibilityRole="none"
+    >
       {/* Track Name */}
-      <Text style={styles.trackName}>{track.name}</Text>
+      <Text
+        style={styles.trackName}
+        accessibilityRole="header"
+      >
+        {track.name}
+      </Text>
 
       {/* Control Buttons Row */}
-      <View style={styles.controlsRow}>
+      <View
+        style={styles.controlsRow}
+        accessibilityRole="toolbar"
+        accessibilityLabel="Track controls"
+      >
         {/* Play Button (left) */}
         <IconButton
           icon="play"
@@ -69,6 +83,10 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
           iconColor={track.isPlaying ? '#BB86FC' : '#E1E1E1'}
           onPress={handlePlay}
           style={styles.playButton}
+          accessibilityLabel={`Play ${track.name}`}
+          accessibilityHint="Double tap to play this track"
+          accessibilityRole="button"
+          accessibilityState={{ selected: track.isPlaying }}
         />
 
         {/* Sliders Section */}
@@ -87,6 +105,9 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
           iconColor="#E1E1E1"
           onPress={handlePause}
           style={styles.pauseButton}
+          accessibilityLabel={`Pause ${track.name}`}
+          accessibilityHint="Double tap to pause this track"
+          accessibilityRole="button"
         />
 
         {/* Delete Button (far right) */}
@@ -96,6 +117,9 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
           iconColor="#E1E1E1"
           onPress={handleDelete}
           style={styles.deleteButton}
+          accessibilityLabel={`Delete ${track.name}`}
+          accessibilityHint="Double tap to remove this track"
+          accessibilityRole="button"
         />
       </View>
     </View>

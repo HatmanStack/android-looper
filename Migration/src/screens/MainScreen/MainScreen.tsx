@@ -382,18 +382,26 @@ export const MainScreen: React.FC = () => {
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <View style={styles.container}>
         {/* Top Controls */}
-        <Surface style={styles.topControls} elevation={0}>
+        <Surface
+          style={styles.topControls}
+          elevation={0}
+          accessibilityRole="toolbar"
+          accessibilityLabel="Recording controls"
+        >
           <ActionButton
             label={isRecording ? 'Recording...' : 'Record'}
             icon="microphone"
             onPress={handleRecord}
             disabled={isRecording || isLoading}
+            accessibilityLabel={isRecording ? 'Recording in progress' : 'Record audio'}
+            accessibilityHint="Start recording a new audio track"
           />
           <ActionButton
             label="Stop"
             icon="stop"
             onPress={handleStop}
             disabled={!isRecording || isLoading}
+            accessibilityHint="Stop recording and save track"
           />
         </Surface>
 
@@ -410,18 +418,25 @@ export const MainScreen: React.FC = () => {
         </View>
 
         {/* Bottom Controls */}
-        <Surface style={styles.bottomControls} elevation={0}>
+        <Surface
+          style={styles.bottomControls}
+          elevation={0}
+          accessibilityRole="toolbar"
+          accessibilityLabel="File controls"
+        >
           <ActionButton
             label="Import Audio"
             icon="file-music"
             onPress={handleImport}
             disabled={isLoading}
+            accessibilityHint="Import an audio file from device storage"
           />
           <ActionButton
             label="Save"
             icon="content-save"
             onPress={handleSave}
             disabled={tracks.length === 0 || isLoading}
+            accessibilityHint="Mix and save all tracks to a single audio file"
           />
         </Surface>
 
@@ -455,8 +470,15 @@ export const MainScreen: React.FC = () => {
               alignItems: 'center',
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}
+            accessibilityLabel="Loading"
+            accessibilityLiveRegion="polite"
+            accessibilityRole="progressbar"
           >
-            <ActivityIndicator size="large" color="#BB86FC" />
+            <ActivityIndicator
+              size="large"
+              color="#BB86FC"
+              accessibilityLabel="Loading, please wait"
+            />
           </View>
         )}
       </View>

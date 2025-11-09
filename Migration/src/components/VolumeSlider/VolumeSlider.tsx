@@ -20,9 +20,11 @@ export const VolumeSlider: React.FC<VolumeSliderProps> = ({
   onValueChange,
   disabled = false,
 }) => {
+  const volumePercent = Math.round(value);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Volume: {Math.round(value)}</Text>
+      <Text style={styles.label}>Volume: {volumePercent}</Text>
       <Slider
         testID="slider"
         style={styles.slider}
@@ -35,6 +37,10 @@ export const VolumeSlider: React.FC<VolumeSliderProps> = ({
         minimumTrackTintColor="#BB86FC" // Theme primary color
         maximumTrackTintColor="#666"
         thumbTintColor="#FFFFFF"
+        accessibilityLabel="Volume"
+        accessibilityValue={{ text: `${volumePercent} percent` }}
+        accessibilityHint="Adjust track volume from 0 to 100 percent"
+        accessibilityRole="adjustable"
       />
     </View>
   );

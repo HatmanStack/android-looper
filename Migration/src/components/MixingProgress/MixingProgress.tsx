@@ -50,9 +50,17 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
         visible={visible}
         dismissable={false}
         contentContainerStyle={[styles.modal, { backgroundColor: theme.colors.surface }]}
+        accessibilityViewIsModal={true}
       >
-        <View style={styles.content}>
-          <Text variant="headlineSmall" style={styles.title}>
+        <View
+          style={styles.content}
+          accessibilityRole="dialog"
+        >
+          <Text
+            variant="headlineSmall"
+            style={styles.title}
+            accessibilityRole="header"
+          >
             Mixing Audio
           </Text>
 
@@ -60,23 +68,41 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
             Please wait while your tracks are being mixed...
           </Text>
 
-          <View style={styles.progressContainer}>
+          <View
+            style={styles.progressContainer}
+            accessibilityLabel={`Mixing progress: ${Math.round(progress * 100)} percent complete`}
+            accessibilityRole="progressbar"
+            accessibilityValue={{ min: 0, max: 100, now: Math.round(progress * 100) }}
+            accessibilityLiveRegion="polite"
+          >
             <ProgressBar
               progress={progress}
               color={theme.colors.primary}
               style={styles.progressBar}
             />
-            <Text variant="labelLarge" style={styles.progressText}>
+            <Text
+              variant="labelLarge"
+              style={styles.progressText}
+              accessibilityLabel={`${Math.round(progress * 100)} percent`}
+            >
               {Math.round(progress * 100)}%
             </Text>
           </View>
 
           {currentTime !== undefined && totalDuration !== undefined && (
             <View style={styles.timeContainer}>
-              <Text variant="bodySmall" style={styles.timeText}>
+              <Text
+                variant="bodySmall"
+                style={styles.timeText}
+                accessibilityLabel={`Time elapsed: ${formatTime(currentTime)}`}
+              >
                 Time: {formatTime(currentTime)}
               </Text>
-              <Text variant="bodySmall" style={styles.timeText}>
+              <Text
+                variant="bodySmall"
+                style={styles.timeText}
+                accessibilityLabel={`Time remaining: ${getEstimatedTimeRemaining()}`}
+              >
                 Remaining: {getEstimatedTimeRemaining()}
               </Text>
             </View>
@@ -87,6 +113,9 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
             onPress={onCancel}
             style={styles.cancelButton}
             textColor={theme.colors.error}
+            accessibilityLabel="Cancel mixing"
+            accessibilityHint="Stop the mixing process and return to main screen"
+            accessibilityRole="button"
           >
             Cancel
           </Button>

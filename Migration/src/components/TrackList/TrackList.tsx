@@ -42,9 +42,20 @@ export const TrackList: React.FC<TrackListProps> = ({
   );
 
   const renderEmptyState = () => (
-    <View style={styles.emptyContainer}>
-      <Text style={styles.emptyTitle}>No tracks yet</Text>
-      <Text style={styles.emptySubtitle}>Record audio or import tracks to get started</Text>
+    <View
+      style={styles.emptyContainer}
+      accessibilityRole="text"
+      accessibilityLabel="No tracks yet. Record audio or import tracks to get started"
+    >
+      <Text
+        style={styles.emptyTitle}
+        accessibilityRole="header"
+      >
+        No tracks yet
+      </Text>
+      <Text style={styles.emptySubtitle}>
+        Record audio or import tracks to get started
+      </Text>
     </View>
   );
 
