@@ -366,7 +366,9 @@ describe('Performance Degradation Tests', () => {
     const baseline = results[0].avgTime;
     for (const result of results) {
       const ratio = result.avgTime / baseline;
-      console.log(`${result.count} tracks: avg update ${result.avgTime.toFixed(2)}ms (ratio: ${ratio.toFixed(2)})`);
+      console.log(
+        `${result.count} tracks: avg update ${result.avgTime.toFixed(2)}ms (ratio: ${ratio.toFixed(2)})`
+      );
 
       // Update time shouldn't grow more than 2x
       expect(ratio).toBeLessThan(2.0);

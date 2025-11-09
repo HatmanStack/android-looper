@@ -50,9 +50,7 @@ describe('NativeFileImporter', () => {
     });
 
     it('should throw on picker error', async () => {
-      (DocumentPicker.getDocumentAsync as jest.Mock).mockRejectedValue(
-        new Error('Picker error')
-      );
+      (DocumentPicker.getDocumentAsync as jest.Mock).mockRejectedValue(new Error('Picker error'));
 
       await expect(importer.pickAudioFile()).rejects.toThrow(AudioError);
       await expect(importer.pickAudioFile()).rejects.toThrow('Failed to open file picker');

@@ -35,7 +35,7 @@ describe('Recording Flow Integration', () => {
     expect(recorder).toBeDefined();
 
     // 2. Simulate recording time (2 seconds)
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // 3. Stop recording
     const recordingUri = await audioService.stopRecording();

@@ -7,18 +7,21 @@ This guide covers performance testing strategies for the Looper application to e
 ## Performance Targets
 
 ### Loading Performance
+
 - **Cold start time**: < 3 seconds
 - **Hot start time**: < 1 second
 - **Screen transitions**: < 300ms
 - **Audio file loading**: < 2 seconds for files up to 100MB
 
 ### Runtime Performance
+
 - **Interaction latency**: < 100ms for all user interactions
 - **Scrolling**: 60 fps (16.67ms per frame)
 - **Audio playback**: < 50ms latency
 - **Memory usage**: < 150MB for typical session (5-10 tracks)
 
 ### Scalability
+
 - **Maximum tracks**: Support 20+ simultaneous tracks
 - **Large files**: Handle audio files up to 500MB
 - **Long sessions**: Stable performance for 1+ hour sessions
@@ -36,6 +39,7 @@ Built-in performance monitor accessible via Dev Menu:
 ```
 
 Metrics shown:
+
 - **RAM**: Memory usage
 - **JSC/Hermes**: JavaScript heap size
 - **Views**: Number of views in hierarchy
@@ -54,6 +58,7 @@ react-devtools
 ```
 
 Usage:
+
 1. Click "Profiler" tab
 2. Click "Record" button
 3. Perform actions in app
@@ -76,6 +81,7 @@ Comprehensive debugging and profiling tool:
 ```
 
 Key features:
+
 - Layout inspection
 - Network traffic monitoring
 - Memory profiling
@@ -103,6 +109,7 @@ For web performance profiling:
 ```
 
 Key instruments:
+
 - **Time Profiler**: CPU usage and hot code paths
 - **Allocations**: Memory allocation tracking
 - **Leaks**: Memory leak detection
@@ -117,6 +124,7 @@ Key instruments:
 ```
 
 Features:
+
 - CPU profiler (method tracing, sampling)
 - Memory profiler (heap dumps, allocation tracking)
 - Network profiler
@@ -133,6 +141,7 @@ Create a performance test checklist:
 ```
 
 #### Cold Start Test
+
 1. Force quit app
 2. Clear app from memory
 3. Start timer
@@ -141,13 +150,16 @@ Create a performance test checklist:
 6. **Target**: < 3 seconds
 
 #### Interaction Latency Test
+
 Test each interaction:
+
 - Button press → visual feedback: < 100ms
 - Slider drag → value update: < 100ms
 - Track play → audio start: < 200ms
 - Track pause → audio stop: < 100ms
 
 #### Memory Leak Test
+
 1. Start app with no tracks
 2. Record baseline memory
 3. Import 10 tracks
@@ -157,6 +169,7 @@ Test each interaction:
 7. **Expected**: Return to baseline ± 10MB
 
 #### Scrolling Performance Test
+
 1. Import 20 tracks
 2. Enable "Show Perf Monitor"
 3. Scroll track list rapidly
@@ -222,13 +235,18 @@ Use React.memo for expensive components:
 ```typescript
 import React, { memo } from 'react';
 
-export const TrackListItem = memo<TrackListItemProps>(({ track, onPlay }) => {
-  // Component implementation
-}, (prevProps, nextProps) => {
-  // Custom comparison function
-  return prevProps.track.id === nextProps.track.id &&
-         prevProps.track.isPlaying === nextProps.track.isPlaying;
-});
+export const TrackListItem = memo<TrackListItemProps>(
+  ({ track, onPlay }) => {
+    // Component implementation
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison function
+    return (
+      prevProps.track.id === nextProps.track.id &&
+      prevProps.track.isPlaying === nextProps.track.isPlaying
+    );
+  }
+);
 ```
 
 #### 2. useMemo for Expensive Calculations
@@ -246,9 +264,12 @@ const expensiveValue = useMemo(() => {
 ```typescript
 import { useCallback } from 'react';
 
-const handlePlay = useCallback((trackId: string) => {
-  audioService.playTrack(trackId);
-}, [audioService]); // Stable reference
+const handlePlay = useCallback(
+  (trackId: string) => {
+    audioService.playTrack(trackId);
+  },
+  [audioService]
+); // Stable reference
 ```
 
 ### List Optimization
@@ -288,12 +309,10 @@ Use granular selectors to prevent unnecessary re-renders:
 const state = useTrackStore();
 
 // ✅ Good: Only re-renders when tracks array changes
-const tracks = useTrackStore(state => state.tracks);
+const tracks = useTrackStore((state) => state.tracks);
 
 // ✅ Better: Only re-renders when specific track changes
-const track = useTrackStore(
-  state => state.tracks.find(t => t.id === trackId)
-);
+const track = useTrackStore((state) => state.tracks.find((t) => t.id === trackId));
 ```
 
 #### Shallow Comparison
@@ -302,10 +321,7 @@ const track = useTrackStore(
 import { shallow } from 'zustand/shallow';
 
 // Only re-render if trackIds array content changes
-const trackIds = useTrackStore(
-  state => state.tracks.map(t => t.id),
-  shallow
-);
+const trackIds = useTrackStore((state) => state.tracks.map((t) => t.id), shallow);
 ```
 
 ### Audio Service Optimization
@@ -333,9 +349,7 @@ const preloadNextTrack = async (currentIndex: number) => {
 ```typescript
 // Unload tracks not in use
 const unloadInactiveTracks = async () => {
-  const playingTrackIds = new Set(
-    tracks.filter(t => t.isPlaying).map(t => t.id)
-  );
+  const playingTrackIds = new Set(tracks.filter((t) => t.isPlaying).map((t) => t.id));
 
   for (const track of tracks) {
     if (!playingTrackIds.has(track.id)) {
@@ -473,10 +487,7 @@ interface BenchmarkResult {
   memory: number;
 }
 
-async function benchmark(
-  name: string,
-  fn: () => Promise<void>
-): Promise<BenchmarkResult> {
+async function benchmark(name: string, fn: () => Promise<void>): Promise<BenchmarkResult> {
   const startMemory = process.memoryUsage().heapUsed;
   const startTime = performance.now();
 
@@ -509,6 +520,7 @@ console.log(`${result.name}: ${result.duration}ms, ${result.memory} bytes`);
 **Symptoms**: App takes > 3s to show first screen
 
 **Solutions**:
+
 - Lazy load heavy components
 - Reduce initial bundle size
 - Use React.lazy() for route-based code splitting
@@ -519,6 +531,7 @@ console.log(`${result.name}: ${result.duration}ms, ${result.memory} bytes`);
 **Symptoms**: FPS drops below 60 during scroll
 
 **Solutions**:
+
 - Use FlatList instead of ScrollView for long lists
 - Enable removeClippedSubviews
 - Optimize item rendering (memo, pure components)
@@ -529,6 +542,7 @@ console.log(`${result.name}: ${result.duration}ms, ${result.memory} bytes`);
 **Symptoms**: Memory usage increases over time, never decreases
 
 **Solutions**:
+
 - Unsubscribe from event listeners
 - Clean up timers and intervals
 - Unload unused audio resources
@@ -539,6 +553,7 @@ console.log(`${result.name}: ${result.duration}ms, ${result.memory} bytes`);
 **Symptoms**: Delay between play button press and audio start
 
 **Solutions**:
+
 - Preload audio files
 - Use native audio APIs (expo-av) instead of web APIs
 - Reduce audio file size (compression)

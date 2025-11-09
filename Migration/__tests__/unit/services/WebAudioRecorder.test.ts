@@ -30,9 +30,7 @@ describe('WebAudioRecorder', () => {
     jest.clearAllMocks();
 
     mockStream = {
-      getTracks: jest.fn().mockReturnValue([
-        { stop: jest.fn() },
-      ]),
+      getTracks: jest.fn().mockReturnValue([{ stop: jest.fn() }]),
     } as any;
 
     (navigator.mediaDevices.getUserMedia as jest.Mock).mockResolvedValue(mockStream);
@@ -101,9 +99,10 @@ describe('WebAudioRecorder', () => {
 
     it('should use supported mime type', async () => {
       // Mock MediaRecorder.isTypeSupported
-      (MediaRecorder as any).isTypeSupported = jest.fn()
+      (MediaRecorder as any).isTypeSupported = jest
+        .fn()
         .mockReturnValueOnce(false) // webm not supported
-        .mockReturnValueOnce(true);  // mp4 supported
+        .mockReturnValueOnce(true); // mp4 supported
 
       recorder = new WebAudioRecorder();
       await recorder.startRecording();

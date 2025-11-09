@@ -2,7 +2,10 @@
  * Permissions Utility Tests
  */
 
-import { requestMicrophonePermission, requestStoragePermission } from '../../../src/utils/permissions';
+import {
+  requestMicrophonePermission,
+  requestStoragePermission,
+} from '../../../src/utils/permissions';
 import { Platform } from 'react-native';
 
 // Mock platform

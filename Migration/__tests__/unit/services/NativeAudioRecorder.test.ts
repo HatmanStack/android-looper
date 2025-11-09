@@ -70,12 +70,12 @@ describe('NativeAudioRecorder', () => {
     });
 
     it('should throw AudioError on permission check failure', async () => {
-      (Audio.requestPermissionsAsync as jest.Mock).mockRejectedValue(
-        new Error('Permission error')
-      );
+      (Audio.requestPermissionsAsync as jest.Mock).mockRejectedValue(new Error('Permission error'));
 
       await expect(recorder.checkPermission()).rejects.toThrow(AudioError);
-      await expect(recorder.checkPermission()).rejects.toThrow('Failed to check recording permissions');
+      await expect(recorder.checkPermission()).rejects.toThrow(
+        'Failed to check recording permissions'
+      );
     });
   });
 

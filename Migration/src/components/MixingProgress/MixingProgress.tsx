@@ -52,11 +52,7 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
         contentContainerStyle={[styles.modal, { backgroundColor: theme.colors.surface }]}
       >
         <View style={styles.content}>
-          <Text
-            variant="headlineSmall"
-            style={styles.title}
-            accessibilityRole="header"
-          >
+          <Text variant="headlineSmall" style={styles.title} accessibilityRole="header">
             Mixing Audio
           </Text>
 

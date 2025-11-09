@@ -47,15 +47,10 @@ export const TrackList: React.FC<TrackListProps> = ({
       accessibilityRole="text"
       accessibilityLabel="No tracks yet. Record audio or import tracks to get started"
     >
-      <Text
-        style={styles.emptyTitle}
-        accessibilityRole="header"
-      >
+      <Text style={styles.emptyTitle} accessibilityRole="header">
         No tracks yet
       </Text>
-      <Text style={styles.emptySubtitle}>
-        Record audio or import tracks to get started
-      </Text>
+      <Text style={styles.emptySubtitle}>Record audio or import tracks to get started</Text>
     </View>
   );
 

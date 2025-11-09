@@ -8,26 +8,29 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 
 ### Target Platforms
 
-| Platform | Minimum Version | Target Version | Notes |
-|----------|----------------|----------------|-------|
-| **Web** | Chrome 90+, Firefox 88+, Safari 14+ | Latest stable browsers | Requires Web Audio API, MediaRecorder |
-| **iOS** | iOS 13.0+ | iOS 17.0+ | Requires AVFoundation framework |
-| **Android** | Android 7.0 (API 24)+ | Android 14 (API 34)+ | Requires MediaRecorder, AudioTrack |
+| Platform    | Minimum Version                     | Target Version         | Notes                                 |
+| ----------- | ----------------------------------- | ---------------------- | ------------------------------------- |
+| **Web**     | Chrome 90+, Firefox 88+, Safari 14+ | Latest stable browsers | Requires Web Audio API, MediaRecorder |
+| **iOS**     | iOS 13.0+                           | iOS 17.0+              | Requires AVFoundation framework       |
+| **Android** | Android 7.0 (API 24)+               | Android 14 (API 34)+   | Requires MediaRecorder, AudioTrack    |
 
 ### Device Categories
 
 #### Web
+
 - Desktop (1920x1080+)
 - Tablet (768x1024)
 - Mobile (375x667+)
 
 #### iOS
+
 - iPhone SE (small screen)
 - iPhone 14/15 (standard)
 - iPhone 14/15 Pro Max (large screen)
 - iPad (tablet form factor)
 
 #### Android
+
 - Small phone (< 5.5")
 - Standard phone (5.5" - 6.5")
 - Large phone (> 6.5")
@@ -38,18 +41,21 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 ### Web
 
 **Unique Features:**
+
 - Browser audio context
 - MediaRecorder API
 - File download via blob URLs
 - FFmpeg.wasm for audio mixing
 
 **Limitations:**
+
 - Audio latency higher than native
 - File system access limited
 - Background playback restricted
 - No native file picker (uses HTML input)
 
 **Testing Focus:**
+
 - Browser compatibility (Chrome, Firefox, Safari)
 - Audio context initialization
 - MediaRecorder permissions
@@ -59,6 +65,7 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 ### iOS
 
 **Unique Features:**
+
 - AVFoundation audio
 - Native file picker
 - Background audio playback
@@ -66,11 +73,13 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 - FFmpeg Kit for native mixing
 
 **Limitations:**
+
 - App Store restrictions
 - Sandbox file access
 - Background limits (unless using background modes)
 
 **Testing Focus:**
+
 - Permissions (microphone, media library)
 - Background audio behavior
 - App lifecycle (foreground/background)
@@ -80,6 +89,7 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 ### Android
 
 **Unique Features:**
+
 - MediaRecorder for recording
 - AudioTrack for playback
 - Native file picker
@@ -87,11 +97,13 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 - FFmpeg Kit for native mixing
 
 **Limitations:**
+
 - Device fragmentation
 - Manufacturer customizations
 - Permission model variations
 
 **Testing Focus:**
+
 - Permissions (microphone, storage)
 - Background playback
 - App lifecycle
@@ -102,84 +114,84 @@ The Looper application runs on three platforms: **Web**, **iOS**, and **Android*
 
 ### Audio Recording
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| Request microphone permission | ✓ | ✓ | ✓ | Different permission UIs |
-| Start recording | ✓ | ✓ | ✓ | Verify audio capture |
-| Stop recording | ✓ | ✓ | ✓ | Return valid URI/blob |
-| Recording duration accurate | ✓ | ✓ | ✓ | Match expected duration |
-| Audio quality acceptable | ✓ | ✓ | ✓ | Sample rate, bit rate |
-| Handle permission denied | ✓ | ✓ | ✓ | Show error message |
-| Handle concurrent recording | ✓ | ✓ | ✓ | Only one recording at a time |
+| Test Case                     | Web | iOS | Android | Notes                        |
+| ----------------------------- | --- | --- | ------- | ---------------------------- |
+| Request microphone permission | ✓   | ✓   | ✓       | Different permission UIs     |
+| Start recording               | ✓   | ✓   | ✓       | Verify audio capture         |
+| Stop recording                | ✓   | ✓   | ✓       | Return valid URI/blob        |
+| Recording duration accurate   | ✓   | ✓   | ✓       | Match expected duration      |
+| Audio quality acceptable      | ✓   | ✓   | ✓       | Sample rate, bit rate        |
+| Handle permission denied      | ✓   | ✓   | ✓       | Show error message           |
+| Handle concurrent recording   | ✓   | ✓   | ✓       | Only one recording at a time |
 
 ### Audio Playback
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| Load audio file | ✓ | ✓ | ✓ | From local URI |
-| Play audio | ✓ | ✓ | ✓ | Audio starts playing |
-| Pause audio | ✓ | ✓ | ✓ | Audio pauses |
-| Adjust volume | ✓ | ✓ | ✓ | 0-100 range |
-| Adjust speed | ✓ | ✓ | ✓ | 0.05x-2.50x range |
-| Loop playback | ✓ | ✓ | ✓ | Audio loops continuously |
-| Play multiple tracks | ✓ | ✓ | ✓ | Up to 20 simultaneous |
-| Background playback | ✗ | ✓ | ✓ | Web has limitations |
+| Test Case            | Web | iOS | Android | Notes                    |
+| -------------------- | --- | --- | ------- | ------------------------ |
+| Load audio file      | ✓   | ✓   | ✓       | From local URI           |
+| Play audio           | ✓   | ✓   | ✓       | Audio starts playing     |
+| Pause audio          | ✓   | ✓   | ✓       | Audio pauses             |
+| Adjust volume        | ✓   | ✓   | ✓       | 0-100 range              |
+| Adjust speed         | ✓   | ✓   | ✓       | 0.05x-2.50x range        |
+| Loop playback        | ✓   | ✓   | ✓       | Audio loops continuously |
+| Play multiple tracks | ✓   | ✓   | ✓       | Up to 20 simultaneous    |
+| Background playback  | ✗   | ✓   | ✓       | Web has limitations      |
 
 ### File Operations
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| Import audio file | ✓ | ✓ | ✓ | Different pickers |
-| Supported formats (MP3) | ✓ | ✓ | ✓ | Universal support |
-| Supported formats (WAV) | ✓ | ✓ | ✓ | Universal support |
-| Supported formats (AAC) | ✓ | ✓ | ✓ | Platform dependent |
-| Large file (>100MB) | ✓ | ✓ | ✓ | Performance test |
-| Cancel import | ✓ | ✓ | ✓ | Handle gracefully |
+| Test Case               | Web | iOS | Android | Notes              |
+| ----------------------- | --- | --- | ------- | ------------------ |
+| Import audio file       | ✓   | ✓   | ✓       | Different pickers  |
+| Supported formats (MP3) | ✓   | ✓   | ✓       | Universal support  |
+| Supported formats (WAV) | ✓   | ✓   | ✓       | Universal support  |
+| Supported formats (AAC) | ✓   | ✓   | ✓       | Platform dependent |
+| Large file (>100MB)     | ✓   | ✓   | ✓       | Performance test   |
+| Cancel import           | ✓   | ✓   | ✓       | Handle gracefully  |
 
 ### Audio Mixing
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| Mix 2 tracks | ✓ | ✓ | ✓ | Basic mixing |
-| Mix 10 tracks | ✓ | ✓ | ✓ | Performance test |
-| Mix with different speeds | ✓ | ✓ | ✓ | Speed adjustments |
-| Mix with different volumes | ✓ | ✓ | ✓ | Volume normalization |
-| Progress updates | ✓ | ✓ | ✓ | 0-100% progress |
-| Save/download mixed file | ✓ | ✓ | ✓ | Web downloads, native saves |
-| Handle mixing errors | ✓ | ✓ | ✓ | Show error message |
+| Test Case                  | Web | iOS | Android | Notes                       |
+| -------------------------- | --- | --- | ------- | --------------------------- |
+| Mix 2 tracks               | ✓   | ✓   | ✓       | Basic mixing                |
+| Mix 10 tracks              | ✓   | ✓   | ✓       | Performance test            |
+| Mix with different speeds  | ✓   | ✓   | ✓       | Speed adjustments           |
+| Mix with different volumes | ✓   | ✓   | ✓       | Volume normalization        |
+| Progress updates           | ✓   | ✓   | ✓       | 0-100% progress             |
+| Save/download mixed file   | ✓   | ✓   | ✓       | Web downloads, native saves |
+| Handle mixing errors       | ✓   | ✓   | ✓       | Show error message          |
 
 ### UI/UX
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| Responsive layout | ✓ | ✓ | ✓ | Different screen sizes |
-| Touch targets (min 44x44) | ✓ | ✓ | ✓ | Accessibility |
-| Keyboard navigation | ✓ | N/A | N/A | Web only |
-| Screen reader support | ✓ | ✓ | ✓ | VoiceOver, TalkBack |
-| Dark/light theme | ✓ | ✓ | ✓ | System theme |
-| Landscape orientation | ✓ | ✓ | ✓ | Layout adapts |
-| Tablet layout | ✓ | ✓ | ✓ | Larger screens |
+| Test Case                 | Web | iOS | Android | Notes                  |
+| ------------------------- | --- | --- | ------- | ---------------------- |
+| Responsive layout         | ✓   | ✓   | ✓       | Different screen sizes |
+| Touch targets (min 44x44) | ✓   | ✓   | ✓       | Accessibility          |
+| Keyboard navigation       | ✓   | N/A | N/A     | Web only               |
+| Screen reader support     | ✓   | ✓   | ✓       | VoiceOver, TalkBack    |
+| Dark/light theme          | ✓   | ✓   | ✓       | System theme           |
+| Landscape orientation     | ✓   | ✓   | ✓       | Layout adapts          |
+| Tablet layout             | ✓   | ✓   | ✓       | Larger screens         |
 
 ### Performance
 
-| Test Case | Web | iOS | Android | Target |
-|-----------|-----|-----|---------|--------|
-| Cold start time | ✓ | ✓ | ✓ | < 3s |
-| Interaction latency | ✓ | ✓ | ✓ | < 100ms |
-| List scrolling (60 FPS) | ✓ | ✓ | ✓ | Smooth |
-| Memory usage | ✓ | ✓ | ✓ | < 150MB |
-| Large file handling | ✓ | ✓ | ✓ | No crashes |
+| Test Case               | Web | iOS | Android | Target     |
+| ----------------------- | --- | --- | ------- | ---------- |
+| Cold start time         | ✓   | ✓   | ✓       | < 3s       |
+| Interaction latency     | ✓   | ✓   | ✓       | < 100ms    |
+| List scrolling (60 FPS) | ✓   | ✓   | ✓       | Smooth     |
+| Memory usage            | ✓   | ✓   | ✓       | < 150MB    |
+| Large file handling     | ✓   | ✓   | ✓       | No crashes |
 
 ### Error Handling
 
-| Test Case | Web | iOS | Android | Notes |
-|-----------|-----|-----|---------|-------|
-| No microphone permission | ✓ | ✓ | ✓ | Show error |
-| No storage permission | N/A | ✓ | ✓ | Show error |
-| Corrupted audio file | ✓ | ✓ | ✓ | Handle gracefully |
-| Network error (FFmpeg) | ✓ | N/A | N/A | Web only |
-| Out of memory | ✓ | ✓ | ✓ | Handle gracefully |
-| App backgrounded during operation | N/A | ✓ | ✓ | Resume or cancel |
+| Test Case                         | Web | iOS | Android | Notes             |
+| --------------------------------- | --- | --- | ------- | ----------------- |
+| No microphone permission          | ✓   | ✓   | ✓       | Show error        |
+| No storage permission             | N/A | ✓   | ✓       | Show error        |
+| Corrupted audio file              | ✓   | ✓   | ✓       | Handle gracefully |
+| Network error (FFmpeg)            | ✓   | N/A | N/A     | Web only          |
+| Out of memory                     | ✓   | ✓   | ✓       | Handle gracefully |
+| App backgrounded during operation | N/A | ✓   | ✓       | Resume or cancel  |
 
 ## Platform-Specific Test Procedures
 
@@ -204,17 +216,20 @@ npm run web
 #### Browser-Specific Tests
 
 **Chrome:**
+
 - ✓ MediaRecorder API support
 - ✓ Web Audio API support
 - ✓ FFmpeg.wasm loading
 - ✓ File download functionality
 
 **Firefox:**
+
 - ✓ MediaRecorder format (webm vs mp4)
 - ✓ Audio context initialization
 - ✓ Blob URL handling
 
 **Safari:**
+
 - ✓ MediaRecorder polyfill (if needed)
 - ✓ Audio context user activation requirement
 - ✓ Download behavior differences
@@ -229,6 +244,7 @@ npm run web
 ```
 
 Use Chrome DevTools Device Mode:
+
 1. Open DevTools (F12)
 2. Toggle device toolbar (Ctrl+Shift+M)
 3. Select device or enter custom dimensions
@@ -260,12 +276,14 @@ npx react-native run-ios --simulator="iPhone 15 Pro"
 #### iOS-Specific Tests
 
 **Permissions:**
+
 ```
 Settings → Looper → Microphone → Allow
 Settings → Looper → Photos → Read and Write
 ```
 
 **Background Audio:**
+
 ```
 1. Play audio
 2. Press Home button
@@ -274,6 +292,7 @@ Settings → Looper → Photos → Read and Write
 ```
 
 **VoiceOver:**
+
 ```
 Settings → Accessibility → VoiceOver → ON
 Navigate app with screen reader
@@ -283,6 +302,7 @@ Verify all elements are announced
 #### iOS Version Testing
 
 Test on multiple iOS versions:
+
 - iOS 13 (minimum supported)
 - iOS 15 (common version)
 - iOS 17 (latest)
@@ -309,6 +329,7 @@ npx react-native run-android --deviceId emulator-5554
 #### Android-Specific Tests
 
 **Permissions:**
+
 ```
 Settings → Apps → Looper → Permissions
 - Microphone → Allow
@@ -316,6 +337,7 @@ Settings → Apps → Looper → Permissions
 ```
 
 **Background Playback:**
+
 ```
 1. Play audio
 2. Press Home button
@@ -324,6 +346,7 @@ Settings → Apps → Looper → Permissions
 ```
 
 **TalkBack:**
+
 ```
 Settings → Accessibility → TalkBack → ON
 Navigate app with screen reader
@@ -333,6 +356,7 @@ Verify all elements are announced
 #### Android Version Testing
 
 Test on multiple Android versions:
+
 - Android 7.0 (minimum supported)
 - Android 12 (common version)
 - Android 14 (latest)
@@ -340,6 +364,7 @@ Test on multiple Android versions:
 #### Device Manufacturer Testing
 
 Test on devices from different manufacturers:
+
 - **Samsung**: OneUI customizations
 - **Google Pixel**: Stock Android
 - **OnePlus**: OxygenOS
@@ -391,16 +416,19 @@ jobs:
 ### Known Platform Differences
 
 #### Web
+
 - **Audio latency**: Higher than native (50-150ms vs 10-30ms)
 - **File download**: Uses blob URLs instead of native save dialog
 - **FFmpeg**: Loads asynchronously, requires progress indication
 
 #### iOS
+
 - **Audio session**: Must configure AVAudioSession category
 - **Background**: Requires background modes capability
 - **Permissions**: Must request in Info.plist
 
 #### Android
+
 - **Permissions**: Runtime permissions required (API 23+)
 - **Audio focus**: Must request audio focus for playback
 - **Background**: Foreground service notification required
@@ -422,15 +450,15 @@ if (Platform.OS === 'web') {
 
 ## Testing Tools Comparison
 
-| Tool | Web | iOS | Android | Purpose |
-|------|-----|-----|---------|---------|
-| Chrome DevTools | ✓ | ✗ | ✗ | Debugging, performance |
-| React DevTools | ✓ | ✓ | ✓ | Component inspection |
-| Flipper | ✗ | ✓ | ✓ | Native debugging |
-| Xcode Instruments | ✗ | ✓ | ✗ | iOS profiling |
-| Android Studio Profiler | ✗ | ✗ | ✓ | Android profiling |
-| Playwright | ✓ | ✗ | ✗ | E2E testing (web) |
-| Detox | ✗ | ✓ | ✓ | E2E testing (native) |
+| Tool                    | Web | iOS | Android | Purpose                |
+| ----------------------- | --- | --- | ------- | ---------------------- |
+| Chrome DevTools         | ✓   | ✗   | ✗       | Debugging, performance |
+| React DevTools          | ✓   | ✓   | ✓       | Component inspection   |
+| Flipper                 | ✗   | ✓   | ✓       | Native debugging       |
+| Xcode Instruments       | ✗   | ✓   | ✗       | iOS profiling          |
+| Android Studio Profiler | ✗   | ✗   | ✓       | Android profiling      |
+| Playwright              | ✓   | ✗   | ✗       | E2E testing (web)      |
+| Detox                   | ✗   | ✓   | ✓       | E2E testing (native)   |
 
 ## Manual Testing Checklist
 

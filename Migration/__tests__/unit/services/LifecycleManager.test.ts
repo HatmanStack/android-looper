@@ -62,10 +62,7 @@ describe('LifecycleManager', () => {
       lifecycleManager = LifecycleManager.getInstance();
       lifecycleManager.initialize();
 
-      expect(AppState.addEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function)
-      );
+      expect(AppState.addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
     });
 
     it('should not initialize twice', () => {

@@ -63,18 +63,11 @@ export const SaveModal: React.FC<SaveModalProps> = ({
 
   return (
     <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={onDismiss}
-        contentContainerStyle={styles.modalContainer}
-      >
+      <Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={styles.modalContainer}>
         <View style={styles.content}>
           {/* Track Label */}
           {trackNumber !== undefined && (
-            <Text
-              style={styles.trackLabel}
-              accessibilityRole="header"
-            >
+            <Text style={styles.trackLabel} accessibilityRole="header">
               Track {trackNumber}
             </Text>
           )}

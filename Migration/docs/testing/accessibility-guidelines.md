@@ -63,19 +63,21 @@ Content must be robust enough to be interpreted reliably by a wide variety of us
 - [ ] Test in both light and dark themes
 
 **Testing Tools:**
+
 - WebAIM Contrast Checker
 - Chrome DevTools Accessibility Panel
 - Lighthouse Accessibility Audit
 
 **Current Theme Colors:**
+
 ```typescript
 // Verify these meet contrast requirements
 const colors = {
-  primary: '#6200EE',      // Purple - check against white/light backgrounds
-  background: '#FFFFFF',   // White
-  text: '#000000',         // Black - 21:1 ratio ✓
-  disabled: '#9E9E9E',     // Gray - check ratio
-  error: '#B00020',        // Red - check against white
+  primary: '#6200EE', // Purple - check against white/light backgrounds
+  background: '#FFFFFF', // White
+  text: '#000000', // Black - 21:1 ratio ✓
+  disabled: '#9E9E9E', // Gray - check ratio
+  error: '#B00020', // Red - check against white
 };
 ```
 
@@ -105,12 +107,9 @@ const styles = StyleSheet.create({
 
 // Usage
 <Pressable
-  style={({ focused }) => [
-    styles.button,
-    focused && styles.buttonFocused,
-  ]}
+  style={({ focused }) => [styles.button, focused && styles.buttonFocused]}
   accessibilityRole="button"
-/>
+/>;
 ```
 
 ### Touch Targets
@@ -148,6 +147,7 @@ const styles = StyleSheet.create({
 - [ ] Dynamic content announces changes
 
 **Testing:**
+
 1. Enable VoiceOver: Settings → Accessibility → VoiceOver
 2. Navigate using swipe gestures
 3. Activate elements with double-tap
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
 - [ ] Navigation follows visual order
 
 **Testing:**
+
 1. Enable TalkBack: Settings → Accessibility → TalkBack
 2. Navigate using swipe gestures
 3. Activate with double-tap
@@ -174,6 +175,7 @@ const styles = StyleSheet.create({
 - [ ] Landmarks for page structure
 
 **Supported:**
+
 - NVDA (Windows)
 - JAWS (Windows)
 - VoiceOver (macOS)
@@ -184,14 +186,15 @@ const styles = StyleSheet.create({
 ```tsx
 // React Native Accessibility Props
 <View
-  accessible={true}                           // Groups children as single element
-  accessibilityLabel="Main controls"         // What element is
-  accessibilityHint="Record and playback"    // What it does
-  accessibilityRole="toolbar"                // Semantic role
-  accessibilityState={{ disabled: false }}   // Current state
-  accessibilityValue={{ text: "75%" }}       // Current value (sliders, etc.)
-  accessibilityActions={[                    // Custom actions
-    { name: 'activate', label: 'Start recording' }
+  accessible={true} // Groups children as single element
+  accessibilityLabel="Main controls" // What element is
+  accessibilityHint="Record and playback" // What it does
+  accessibilityRole="toolbar" // Semantic role
+  accessibilityState={{ disabled: false }} // Current state
+  accessibilityValue={{ text: '75%' }} // Current value (sliders, etc.)
+  accessibilityActions={[
+    // Custom actions
+    { name: 'activate', label: 'Start recording' },
   ]}
   onAccessibilityAction={(event) => {
     if (event.nativeEvent.actionName === 'activate') {
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
 ```tsx
 <Modal
   visible={visible}
-  accessibilityViewIsModal={true}  // Trap focus in modal
+  accessibilityViewIsModal={true} // Trap focus in modal
   onRequestClose={onClose}
 >
   <View accessibilityRole="dialog">
@@ -276,16 +279,19 @@ npm install --save-dev @react-native-community/eslint-plugin-react-native-a11y
 ### Manual Testing
 
 **iOS:**
+
 1. Settings → Accessibility → VoiceOver → ON
 2. Settings → Accessibility → Display & Text Size → Larger Text
 3. Settings → Accessibility → Display & Text Size → Increase Contrast
 
 **Android:**
+
 1. Settings → Accessibility → TalkBack → ON
 2. Settings → Accessibility → Text and display → Font size
 3. Settings → Accessibility → Color and motion → High contrast text
 
 **Web:**
+
 1. Browser DevTools → Lighthouse → Accessibility Audit
 2. axe DevTools browser extension
 3. Keyboard-only navigation test

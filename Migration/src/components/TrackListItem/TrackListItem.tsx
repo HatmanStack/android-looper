@@ -63,10 +63,7 @@ export const TrackListItem: React.FC<TrackListItemProps> = ({
       accessibilityRole="none"
     >
       {/* Track Name */}
-      <Text
-        style={styles.trackName}
-        accessibilityRole="header"
-      >
+      <Text style={styles.trackName} accessibilityRole="header">
         {track.name}
       </Text>
 

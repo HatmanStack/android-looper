@@ -48,7 +48,7 @@ describe('Mixing Flow Integration', () => {
       },
     ];
 
-    tracks.forEach(track => useTrackStore.getState().addTrack(track));
+    tracks.forEach((track) => useTrackStore.getState().addTrack(track));
 
     // Verify tracks added
     expect(useTrackStore.getState().tracks).toHaveLength(2);
@@ -71,7 +71,7 @@ describe('Mixing Flow Integration', () => {
     expect(ffmpegService.load).toHaveBeenCalled();
 
     // 4. Prepare tracks for mixing
-    const mixTracks = tracks.map(track => ({
+    const mixTracks = tracks.map((track) => ({
       uri: track.uri,
       speed: track.speed,
       volume: track.volume,
@@ -132,9 +132,7 @@ describe('Mixing Flow Integration', () => {
     await ffmpegService.load();
 
     await ffmpegService.mix({
-      tracks: [
-        { uri: 'file://track1.mp3', speed: 1.0, volume: 75 },
-      ],
+      tracks: [{ uri: 'file://track1.mp3', speed: 1.0, volume: 75 }],
       onProgress: (progress) => {
         progressUpdates.push(progress.ratio);
         useUIStore.getState().setMixingProgress(progress.ratio);
@@ -164,7 +162,7 @@ describe('Mixing Flow Integration', () => {
       },
     ];
 
-    tracks.forEach(track => useTrackStore.getState().addTrack(track));
+    tracks.forEach((track) => useTrackStore.getState().addTrack(track));
 
     jest.spyOn(ffmpegService, 'load').mockResolvedValue(undefined);
     jest.spyOn(ffmpegService, 'mix').mockRejectedValue(new Error('Mixing failed'));

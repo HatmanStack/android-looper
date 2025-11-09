@@ -166,9 +166,9 @@ describe('Import Flow Integration', () => {
 
   it('should handle import cancellation', async () => {
     // Mock user cancelling
-    jest.spyOn(fileImporter, 'pickAudioFile').mockRejectedValue(
-      new Error('File selection cancelled')
-    );
+    jest
+      .spyOn(fileImporter, 'pickAudioFile')
+      .mockRejectedValue(new Error('File selection cancelled'));
 
     await expect(fileImporter.pickAudioFile()).rejects.toThrow('File selection cancelled');
 

@@ -11,6 +11,7 @@ This guide describes the E2E testing strategy for the Looper application across 
 For web testing, we use Playwright which provides cross-browser testing capabilities.
 
 **Installation:**
+
 ```bash
 npm install -D @playwright/test
 npx playwright install
@@ -23,6 +24,7 @@ npx playwright install
 For native iOS and Android testing, Detox is recommended.
 
 **Installation:**
+
 ```bash
 npm install -D detox jest-circus
 ```
@@ -53,6 +55,7 @@ e2e/
 ### 1. Recording Flow
 
 **Steps:**
+
 1. Launch app
 2. Grant microphone permissions (if needed)
 3. Tap/click Record button
@@ -62,6 +65,7 @@ e2e/
 7. Verify track is playable
 
 **Assertions:**
+
 - Record button changes to Stop
 - Track added with correct name
 - Track has duration
@@ -70,12 +74,14 @@ e2e/
 ### 2. Import Flow
 
 **Steps:**
+
 1. Tap/click Import button
 2. Select test audio file from picker
 3. Verify track added to list
 4. Verify metadata loaded (name, duration)
 
 **Assertions:**
+
 - File picker opens
 - Selected file appears in list
 - Metadata is correct
@@ -84,6 +90,7 @@ e2e/
 ### 3. Playback Flow
 
 **Steps:**
+
 1. Add or create a track
 2. Tap/click Play button
 3. Verify playing indicator shows
@@ -93,6 +100,7 @@ e2e/
 7. Verify paused state
 
 **Assertions:**
+
 - Play button changes to Pause
 - Playing indicator visible
 - Speed/volume changes reflected
@@ -101,6 +109,7 @@ e2e/
 ### 4. Mixing Flow
 
 **Steps:**
+
 1. Add 2+ tracks to list
 2. Tap/click Mix/Save button
 3. Enter output filename
@@ -109,6 +118,7 @@ e2e/
 6. Verify success message
 
 **Assertions:**
+
 - Mix button enabled with 2+ tracks
 - Progress indicator shows
 - Progress updates (0% to 100%)
@@ -120,15 +130,18 @@ e2e/
 ### Web
 
 **Browser Testing:**
+
 - Chrome (latest 2 versions)
 - Firefox (latest 2 versions)
 - Safari (latest 2 versions)
 
 **Permissions:**
+
 - Mock navigator.mediaDevices.getUserMedia
 - Handle permission prompts automatically
 
 **File System:**
+
 - Use blob URLs for audio
 - Test File API interactions
 - Verify download links
@@ -136,11 +149,13 @@ e2e/
 ### iOS
 
 **Permissions:**
+
 - Microphone permission flow
 - Media library access
 - Notification handling
 
 **Device Testing:**
+
 - iPhone 12+ (various screen sizes)
 - iPad (tablet layout)
 - iOS 15+ versions
@@ -148,11 +163,13 @@ e2e/
 ### Android
 
 **Permissions:**
+
 - Runtime permissions (microphone, storage)
 - Permission denial handling
 - Settings navigation
 
 **Device Testing:**
+
 - Various manufacturers (Pixel, Samsung)
 - Different Android versions (11+)
 - Different screen sizes/densities
@@ -183,10 +200,7 @@ export const mockTrack = {
   createdAt: Date.now(),
 };
 
-export const mockTracks = [
-  mockTrack,
-  { ...mockTrack, id: 'test-track-2', name: 'Test Track 2' },
-];
+export const mockTracks = [mockTrack, { ...mockTrack, id: 'test-track-2', name: 'Test Track 2' }];
 ```
 
 ## Running E2E Tests
@@ -226,6 +240,7 @@ detox test --configuration android.emu.debug
 ## CI Integration
 
 E2E tests should run in CI on:
+
 - Pull requests to main branch
 - Nightly builds
 - Release candidates
@@ -271,6 +286,7 @@ jobs:
 ### Flaky Tests
 
 If tests are flaky:
+
 - Add explicit waits for async operations
 - Check for race conditions
 - Increase timeouts for slow operations

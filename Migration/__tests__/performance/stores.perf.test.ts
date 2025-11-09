@@ -329,9 +329,7 @@ describe('Performance - Store Selectors', () => {
     tracks.forEach((track) => useTrackStore.getState().addTrack(track));
 
     const { duration } = await measureDuration(async () => {
-      const playingTracks = useTrackStore
-        .getState()
-        .tracks.filter((t) => t.isPlaying);
+      const playingTracks = useTrackStore.getState().tracks.filter((t) => t.isPlaying);
       expect(playingTracks.length).toBe(10);
     });
 

@@ -209,7 +209,9 @@ describe('Performance Characteristics', () => {
       default: { min: 0, max: 100, unit: 'ms' },
     });
 
-    console.log(`Expected audio latency: ${expectedLatency.min}-${expectedLatency.max}${expectedLatency.unit}`);
+    console.log(
+      `Expected audio latency: ${expectedLatency.min}-${expectedLatency.max}${expectedLatency.unit}`
+    );
 
     expect(expectedLatency).toBeDefined();
   });

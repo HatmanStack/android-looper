@@ -160,7 +160,9 @@ export function assertPerformance(
       `⚠️  Performance regression: ${name} took ${actual}${unit} (target: ${target}${unit})`
     );
   } else {
-    console.log(`✓ Performance check passed: ${name} took ${actual}${unit} (target: ${target}${unit})`);
+    console.log(
+      `✓ Performance check passed: ${name} took ${actual}${unit} (target: ${target}${unit})`
+    );
   }
 
   return benchmark;
