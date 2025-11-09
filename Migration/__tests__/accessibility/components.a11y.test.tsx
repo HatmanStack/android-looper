@@ -94,11 +94,12 @@ describe('Accessibility - VolumeSlider', () => {
   });
 
   it('should have adjustable role', () => {
-    const { getByRole } = render(<VolumeSlider value={75} onValueChange={jest.fn()} />, {
+    const { getByLabelText } = render(<VolumeSlider value={75} onValueChange={jest.fn()} />, {
       wrapper: Wrapper,
     });
 
-    expect(getByRole('adjustable')).toBeDefined();
+    const slider = getByLabelText('Volume');
+    expect(slider.props.accessibilityRole).toBe('adjustable');
   });
 
   it('should have accessibility hint', () => {
@@ -130,11 +131,12 @@ describe('Accessibility - SpeedSlider', () => {
   });
 
   it('should have adjustable role', () => {
-    const { getByRole } = render(<SpeedSlider value={1.0} onValueChange={jest.fn()} />, {
+    const { getByLabelText } = render(<SpeedSlider value={1.0} onValueChange={jest.fn()} />, {
       wrapper: Wrapper,
     });
 
-    expect(getByRole('adjustable')).toBeDefined();
+    const slider = getByLabelText('Playback speed');
+    expect(slider.props.accessibilityRole).toBe('adjustable');
   });
 
   it('should announce max speed correctly', () => {
@@ -201,7 +203,7 @@ describe('Accessibility - TrackListItem', () => {
     const { getByLabelText } = render(<TrackListItem track={playingTrack} />, { wrapper: Wrapper });
 
     const playButton = getByLabelText('Play Test Track');
-    expect(playButton.props.accessibilityState).toEqual({ selected: true });
+    expect(playButton.props.accessibilityState).toMatchObject({ selected: true });
   });
 
   it('should have toolbar label for controls', () => {
