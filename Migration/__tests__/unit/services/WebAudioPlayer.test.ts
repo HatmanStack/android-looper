@@ -171,6 +171,34 @@ describe('WebAudioPlayer', () => {
 
       expect(mockBufferSource.loop).toBe(false);
     });
+
+    it('should allow speed changes while looping', async () => {
+      await player.load('blob:test-audio');
+      await player.setLooping(true);
+      await player.play();
+
+      expect(mockBufferSource.loop).toBe(true);
+
+      // Change speed while looping
+      await player.setSpeed(1.5);
+
+      expect(mockBufferSource.playbackRate.value).toBe(1.5);
+      expect(mockBufferSource.loop).toBe(true); // Loop should still be enabled
+    });
+
+    it('should allow volume changes while looping', async () => {
+      await player.load('blob:test-audio');
+      await player.setLooping(true);
+      await player.play();
+
+      expect(mockBufferSource.loop).toBe(true);
+
+      // Change volume while looping
+      await player.setVolume(50);
+
+      expect(mockGainNode.gain.value).toBeGreaterThan(0);
+      expect(mockBufferSource.loop).toBe(true); // Loop should still be enabled
+    });
   });
 
   describe('getDuration', () => {

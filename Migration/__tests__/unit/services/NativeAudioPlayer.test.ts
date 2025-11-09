@@ -178,6 +178,34 @@ describe('NativeAudioPlayer', () => {
 
       expect(mockSound.setIsLoopingAsync).toHaveBeenCalledWith(false);
     });
+
+    it('should allow speed changes while looping', async () => {
+      await player.load('file:///test-audio.m4a');
+      await player.setLooping(true);
+      await player.play();
+
+      expect(mockSound.setIsLoopingAsync).toHaveBeenCalledWith(true);
+
+      // Change speed while looping
+      await player.setSpeed(1.5);
+
+      expect(mockSound.setRateAsync).toHaveBeenCalledWith(1.5, true);
+      // Looping should remain enabled (setIsLoopingAsync not called again)
+    });
+
+    it('should allow volume changes while looping', async () => {
+      await player.load('file:///test-audio.m4a');
+      await player.setLooping(true);
+      await player.play();
+
+      expect(mockSound.setIsLoopingAsync).toHaveBeenCalledWith(true);
+
+      // Change volume while looping
+      await player.setVolume(50);
+
+      expect(mockSound.setVolumeAsync).toHaveBeenCalled();
+      // Looping should remain enabled (setIsLoopingAsync not called again)
+    });
   });
 
   describe('getDuration', () => {
