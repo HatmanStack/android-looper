@@ -8,6 +8,7 @@
 import { createFFmpeg, FFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { AudioError, AudioErrorCode } from '../audio/AudioError';
 import type { MixOptions, MixingProgress, IFFmpegService } from './types';
+import { FFmpegCommandBuilder } from './FFmpegCommandBuilder';
 
 /**
  * Web FFmpeg Service using WebAssembly
@@ -119,8 +120,12 @@ export class FFmpegService implements IFFmpegService {
         inputFiles.push(inputName);
       }
 
-      // Build FFmpeg command
-      const command = this.buildMixCommand(tracks, inputFiles, 'output.mp3');
+      // Build FFmpeg command using shared builder
+      const command = FFmpegCommandBuilder.buildMixCommand({
+        tracks,
+        inputFiles,
+        outputFile: 'output.mp3',
+      });
       this.log(`Executing FFmpeg command: ${command.join(' ')}`);
 
       // Set progress callback if provided
@@ -159,119 +164,6 @@ export class FFmpegService implements IFFmpegService {
         { tracks: tracks.length, originalError: error }
       );
     }
-  }
-
-  /**
-   * Build FFmpeg command for mixing tracks with speed and volume
-   */
-  private buildMixCommand(
-    tracks: MixTrack[],
-    inputFiles: string[],
-    outputFile: string
-  ): string[] {
-    const command: string[] = [];
-
-    // Add input files
-    for (const file of inputFiles) {
-      command.push('-i', file);
-    }
-
-    // Build filter complex for speed and volume adjustments
-    const filters: string[] = [];
-    const mixInputs: string[] = [];
-
-    for (let i = 0; i < tracks.length; i++) {
-      const track = tracks[i];
-      const inputLabel = `${i}:a`;
-      let filterChain = `[${inputLabel}]`;
-
-      // Apply speed adjustment using atempo filter
-      // atempo only supports 0.5-2.0 range, so we need to chain filters for extreme values
-      const atempoFilters = this.buildAtempoFilter(track.speed);
-      if (atempoFilters.length > 0) {
-        filterChain += atempoFilters.join(',');
-        filterChain += ',';
-      }
-
-      // Apply volume adjustment
-      // Convert 0-100 range to volume multiplier
-      const volumeMultiplier = this.calculateVolumeMultiplier(track.volume);
-      filterChain += `volume=${volumeMultiplier}`;
-
-      // Output label for this processed stream
-      const outputLabel = `a${i}`;
-      filterChain += `[${outputLabel}]`;
-
-      filters.push(filterChain);
-      mixInputs.push(`[${outputLabel}]`);
-    }
-
-    // Add amix filter to combine all processed streams
-    const amixFilter = `${mixInputs.join('')}amix=inputs=${tracks.length}:duration=longest:normalize=0[out]`;
-    filters.push(amixFilter);
-
-    // Join all filters into filter_complex
-    command.push('-filter_complex', filters.join(';'));
-
-    // Map output
-    command.push('-map', '[out]');
-
-    // Output encoding settings
-    command.push(
-      '-codec:a',
-      'libmp3lame',
-      '-b:a',
-      '128k',
-      '-ar',
-      '44100',
-      '-y', // Overwrite output file
-      outputFile
-    );
-
-    return command;
-  }
-
-  /**
-   * Build atempo filter chain for speed adjustment
-   * atempo only supports 0.5-2.0, so we chain multiple filters for extreme values
-   */
-  private buildAtempoFilter(speed: number): string[] {
-    const filters: string[] = [];
-
-    if (speed === 1.0) {
-      return filters; // No speed change needed
-    }
-
-    let remainingSpeed = speed;
-
-    // Apply atempo filters in chain to reach desired speed
-    while (Math.abs(remainingSpeed - 1.0) > 0.01) {
-      if (remainingSpeed > 2.0) {
-        filters.push('atempo=2.0');
-        remainingSpeed /= 2.0;
-      } else if (remainingSpeed < 0.5) {
-        filters.push('atempo=0.5');
-        remainingSpeed /= 0.5;
-      } else {
-        filters.push(`atempo=${remainingSpeed.toFixed(2)}`);
-        break;
-      }
-    }
-
-    return filters;
-  }
-
-  /**
-   * Calculate volume multiplier from 0-100 range
-   * Uses logarithmic scaling matching Android implementation
-   */
-  private calculateVolumeMultiplier(volume: number): number {
-    if (volume === 0) return 0;
-    if (volume === 100) return 1.0;
-
-    // Logarithmic scaling: 1 - (log(100 - volume) / log(100))
-    const scaledVolume = 1 - Math.log(100 - volume) / Math.log(100);
-    return Math.max(0, Math.min(1, scaledVolume));
   }
 
   /**

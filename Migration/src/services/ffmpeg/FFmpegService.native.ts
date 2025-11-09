@@ -9,6 +9,7 @@ import { FFmpegKit, FFmpegKitConfig, ReturnCode, Statistics } from 'ffmpeg-kit-r
 import * as FileSystem from 'expo-file-system';
 import { AudioError, AudioErrorCode } from '../audio/AudioError';
 import type { MixOptions, MixingProgress, IFFmpegService } from './types';
+import { FFmpegCommandBuilder } from './FFmpegCommandBuilder';
 
 /**
  * Native FFmpeg Service using ffmpeg-kit-react-native
@@ -65,8 +66,13 @@ export class FFmpegService implements IFFmpegService {
         })
       );
 
-      // Build FFmpeg command
-      const command = this.buildMixCommand(tracks, inputPaths, this.uriToPath(outputPath));
+      // Build FFmpeg command using shared builder
+      const commandArgs = FFmpegCommandBuilder.buildMixCommand({
+        tracks,
+        inputFiles: inputPaths,
+        outputFile: this.uriToPath(outputPath),
+      });
+      const command = commandArgs.join(' ');
       this.log(`Executing FFmpeg command: ${command}`);
 
       // Set up progress callback
@@ -153,116 +159,6 @@ export class FFmpegService implements IFFmpegService {
       await FFmpegKit.cancel(this.currentSessionId);
       this.currentSessionId = null;
     }
-  }
-
-  /**
-   * Build FFmpeg command for mixing tracks
-   */
-  private buildMixCommand(
-    tracks: MixTrack[],
-    inputPaths: string[],
-    outputPath: string
-  ): string {
-    const parts: string[] = [];
-
-    // Add input files
-    for (const path of inputPaths) {
-      parts.push('-i', path);
-    }
-
-    // Build filter complex for speed and volume adjustments
-    const filters: string[] = [];
-    const mixInputs: string[] = [];
-
-    for (let i = 0; i < tracks.length; i++) {
-      const track = tracks[i];
-      const inputLabel = `${i}:a`;
-      let filterChain = `[${inputLabel}]`;
-
-      // Apply speed adjustment using atempo filter
-      const atempoFilters = this.buildAtempoFilter(track.speed);
-      if (atempoFilters.length > 0) {
-        filterChain += atempoFilters.join(',');
-        filterChain += ',';
-      }
-
-      // Apply volume adjustment
-      const volumeMultiplier = this.calculateVolumeMultiplier(track.volume);
-      filterChain += `volume=${volumeMultiplier}`;
-
-      // Output label for this processed stream
-      const outputLabel = `a${i}`;
-      filterChain += `[${outputLabel}]`;
-
-      filters.push(filterChain);
-      mixInputs.push(`[${outputLabel}]`);
-    }
-
-    // Add amix filter to combine all processed streams
-    const amixFilter = `${mixInputs.join('')}amix=inputs=${tracks.length}:duration=longest:normalize=0[out]`;
-    filters.push(amixFilter);
-
-    // Join all filters into filter_complex
-    parts.push('-filter_complex', filters.join(';'));
-
-    // Map output
-    parts.push('-map', '[out]');
-
-    // Output encoding settings
-    parts.push(
-      '-codec:a',
-      'libmp3lame',
-      '-b:a',
-      '128k',
-      '-ar',
-      '44100',
-      '-y' // Overwrite output file
-    );
-
-    // Output file (must be last)
-    parts.push(outputPath);
-
-    return parts.join(' ');
-  }
-
-  /**
-   * Build atempo filter chain for speed adjustment
-   */
-  private buildAtempoFilter(speed: number): string[] {
-    const filters: string[] = [];
-
-    if (speed === 1.0) {
-      return filters;
-    }
-
-    let remainingSpeed = speed;
-
-    while (Math.abs(remainingSpeed - 1.0) > 0.01) {
-      if (remainingSpeed > 2.0) {
-        filters.push('atempo=2.0');
-        remainingSpeed /= 2.0;
-      } else if (remainingSpeed < 0.5) {
-        filters.push('atempo=0.5');
-        remainingSpeed /= 0.5;
-      } else {
-        filters.push(`atempo=${remainingSpeed.toFixed(2)}`);
-        break;
-      }
-    }
-
-    return filters;
-  }
-
-  /**
-   * Calculate volume multiplier from 0-100 range
-   */
-  private calculateVolumeMultiplier(volume: number): number {
-    if (volume === 0) return 0;
-    if (volume === 100) return 1.0;
-
-    // Logarithmic scaling
-    const scaledVolume = 1 - Math.log(100 - volume) / Math.log(100);
-    return Math.max(0, Math.min(1, scaledVolume));
   }
 
   /**
