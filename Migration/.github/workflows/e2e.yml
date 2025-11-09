@@ -1,0 +1,143 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run E2E tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  playwright-web:
+    name: Playwright E2E Tests (Web)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./Migration
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Build web
+        working-directory: ./Migration
+        run: npm run build:web
+        env:
+          NODE_ENV: production
+
+      - name: Start web server
+        working-directory: ./Migration
+        run: |
+          npm run serve:web &
+          npx wait-on http://localhost:8081 --timeout 60000
+
+      - name: Run Playwright tests
+        working-directory: ./Migration
+        run: npx playwright test
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: Migration/playwright-report/
+          retention-days: 7
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-results
+          path: Migration/test-results/
+          retention-days: 7
+
+  detox-android:
+    name: Detox E2E Tests (Android)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # Note: Detox tests require a dev build or release build
+      # This is a placeholder - actual implementation would need:
+      # 1. Build APK with EAS or local build
+      # 2. Start Android emulator
+      # 3. Install APK
+      # 4. Run Detox tests
+
+      - name: Run Detox tests (placeholder)
+        working-directory: ./Migration
+        run: echo "Detox E2E tests would run here"
+        # run: npm run test:e2e:android
+
+  detox-ios:
+    name: Detox E2E Tests (iOS)
+    runs-on: macos-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      # Note: Detox tests require a dev build or release build
+      # This is a placeholder - actual implementation would need:
+      # 1. Build IPA with EAS or local build
+      # 2. Start iOS simulator
+      # 3. Install app
+      # 4. Run Detox tests
+
+      - name: Run Detox tests (placeholder)
+        working-directory: ./Migration
+        run: echo "Detox E2E tests would run here"
+        # run: npm run test:e2e:ios
