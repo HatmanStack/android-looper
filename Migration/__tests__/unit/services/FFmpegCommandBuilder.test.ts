@@ -10,9 +10,7 @@ import type { MixTrack } from '../../../src/services/ffmpeg/types';
 describe('FFmpegCommandBuilder', () => {
   describe('buildMixCommand', () => {
     it('should build command for single track', () => {
-      const tracks: MixTrack[] = [
-        { uri: 'track1.mp3', speed: 1.0, volume: 75 },
-      ];
+      const tracks: MixTrack[] = [{ uri: 'track1.mp3', speed: 1.0, volume: 75 }];
 
       const command = FFmpegCommandBuilder.buildMixCommand({
         inputFiles: ['input1.mp3'],
@@ -53,9 +51,7 @@ describe('FFmpegCommandBuilder', () => {
     });
 
     it('should include encoding parameters', () => {
-      const tracks: MixTrack[] = [
-        { uri: 'track1.mp3', speed: 1.0, volume: 75 },
-      ];
+      const tracks: MixTrack[] = [{ uri: 'track1.mp3', speed: 1.0, volume: 75 }];
 
       const command = FFmpegCommandBuilder.buildMixCommand({
         inputFiles: ['input1.mp3'],

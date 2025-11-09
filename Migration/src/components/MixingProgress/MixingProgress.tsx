@@ -49,10 +49,7 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
       <Modal
         visible={visible}
         dismissable={false}
-        contentContainerStyle={[
-          styles.modal,
-          { backgroundColor: theme.colors.surface },
-        ]}
+        contentContainerStyle={[styles.modal, { backgroundColor: theme.colors.surface }]}
       >
         <View style={styles.content}>
           <Text variant="headlineSmall" style={styles.title}>

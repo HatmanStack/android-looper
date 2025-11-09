@@ -1,3 +1,4 @@
+/* eslint-env jest */
 /**
  * Mock for ffmpeg-kit-react-native
  */

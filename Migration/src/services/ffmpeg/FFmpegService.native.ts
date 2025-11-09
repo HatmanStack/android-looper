@@ -7,8 +7,9 @@
 
 import { FFmpegKit, FFmpegKitConfig, ReturnCode, Statistics } from 'ffmpeg-kit-react-native';
 import * as FileSystem from 'expo-file-system';
-import { AudioError, AudioErrorCode } from '../audio/AudioError';
-import type { MixOptions, MixingProgress, IFFmpegService } from './types';
+import { AudioError } from '../audio/AudioError';
+import { AudioErrorCode } from '../../types/audio';
+import type { MixOptions, IFFmpegService } from './types';
 import { FFmpegCommandBuilder } from './FFmpegCommandBuilder';
 
 /**
@@ -54,8 +55,11 @@ export class FFmpegService implements IFFmpegService {
     this.log(`Mixing ${tracks.length} tracks...`);
 
     try {
-      // Prepare output path
-      const outputPath = `${FileSystem.cacheDirectory}mixed_${Date.now()}.mp3`;
+      // Prepare output path using a fixed temporary directory name
+      // FileSystem directories are available at runtime but not in types
+      // @ts-expect-error - documentDirectory exists at runtime
+      const cacheDir = FileSystem.documentDirectory as string;
+      const outputPath = `${cacheDir}mixed_${Date.now()}.mp3`;
 
       // Convert file URIs to absolute paths
       const inputPaths = await Promise.all(
@@ -110,7 +114,10 @@ export class FFmpegService implements IFFmpegService {
         const output = await session.getOutput();
         const failStackTrace = await session.getFailStackTrace();
 
-        this.error('FFmpeg execution failed', new Error(failStackTrace || output || 'Unknown error'));
+        this.error(
+          'FFmpeg execution failed',
+          new Error(failStackTrace || output || 'Unknown error')
+        );
 
         throw new AudioError(
           AudioErrorCode.MIXING_FAILED,
@@ -146,6 +153,7 @@ export class FFmpegService implements IFFmpegService {
       );
     } finally {
       // Clean up statistics callback
+      // @ts-expect-error - FFmpegKit expects StatisticsCallback but we want to clear it
       FFmpegKitConfig.enableStatisticsCallback(null);
     }
   }

@@ -30,12 +30,14 @@ When you click Save:
 ### Platform Differences
 
 **Web:**
+
 - Uses @ffmpeg/ffmpeg (WebAssembly)
 - First load takes ~5-10 seconds (downloading WASM)
 - Subsequent mixes are faster
 - Downloads as .mp3 file to your browser's download folder
 
 **Native (iOS/Android):**
+
 - Uses ffmpeg-kit-react-native
 - FFmpeg binary included in app
 - Faster processing than web
@@ -62,6 +64,7 @@ multiplier = 1 - (log(100 - volume) / log(100))
 ```
 
 This ensures:
+
 - 0 = silence (0.0)
 - 50 ≈ 0.5 multiplier
 - 100 = full volume (1.0)
@@ -104,17 +107,20 @@ amix=inputs=N:duration=longest:normalize=0
 ### "FFmpeg failed to load"
 
 **Web:** Your browser may not support WebAssembly. Try:
+
 - Update to latest browser version
 - Try Chrome, Firefox, or Safari
 - Check browser console for errors
 
 **Native:** FFmpeg binary issue. Try:
+
 - Reinstall the app
 - Check device storage space
 
 ### "Mixing failed"
 
 Common causes:
+
 - Corrupted audio file
 - Insufficient storage space
 - Out of memory (too many/large tracks)
@@ -127,6 +133,7 @@ Common causes:
 - **Many Tracks:** More tracks = longer processing
 
 Tips:
+
 - Use smaller/shorter audio files
 - Reduce track count
 - Use native app for better performance
@@ -152,11 +159,13 @@ Output: Properly time-stretched and mixed
 ## Performance Benchmarks
 
 **Web (Chrome, M1 Mac):**
+
 - 2 tracks, 3 min each: ~30 seconds
 - 5 tracks, 2 min each: ~60 seconds
 - First load overhead: ~10 seconds
 
 **Native (iPhone 12):**
+
 - 2 tracks, 3 min each: ~15 seconds
 - 5 tracks, 2 min each: ~30 seconds
 - No load overhead
@@ -164,6 +173,7 @@ Output: Properly time-stretched and mixed
 ## Future Enhancements
 
 Potential improvements:
+
 - Real-time mixing preview
 - Additional output formats (WAV, AAC)
 - Normalization options

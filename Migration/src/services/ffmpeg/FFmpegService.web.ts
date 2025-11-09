@@ -6,8 +6,9 @@
  */
 
 import { createFFmpeg, FFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-import { AudioError, AudioErrorCode } from '../audio/AudioError';
-import type { MixOptions, MixingProgress, IFFmpegService } from './types';
+import { AudioError } from '../audio/AudioError';
+import { AudioErrorCode } from '../../types/audio';
+import type { MixOptions, IFFmpegService } from './types';
 import { FFmpegCommandBuilder } from './FFmpegCommandBuilder';
 
 /**
@@ -50,7 +51,7 @@ export class FFmpegService implements IFFmpegService {
 
       this.ffmpeg = createFFmpeg({
         log: true,
-        progress: ({ ratio }) => {
+        progress: ({ ratio }: { ratio: number }) => {
           this.log(`FFmpeg load progress: ${(ratio * 100).toFixed(1)}%`);
           onProgress?.(ratio);
         },
@@ -130,11 +131,11 @@ export class FFmpegService implements IFFmpegService {
 
       // Set progress callback if provided
       if (onProgress) {
-        this.ffmpeg.setProgress(({ ratio, time }) => {
+        this.ffmpeg.setProgress(({ ratio }: { ratio: number }) => {
           onProgress({
             ratio,
-            time: time * 1000, // Convert to ms
-            duration: 0, // We don't have total duration easily accessible
+            time: 0, // Time not available in v0.11 progress
+            duration: 0, // Duration not available
           });
         });
       }
@@ -144,7 +145,7 @@ export class FFmpegService implements IFFmpegService {
 
       // Read output file
       const data = this.ffmpeg.FS('readFile', 'output.mp3');
-      const blob = new Blob([data.buffer], { type: 'audio/mpeg' });
+      const blob = new Blob([data.buffer as ArrayBuffer], { type: 'audio/mpeg' });
 
       // Clean up virtual file system
       for (const file of inputFiles) {

@@ -23,7 +23,7 @@ import { AudioService } from '../../services/audio/AudioService';
 import { AudioError } from '../../services/audio/AudioError';
 import { getFileImporter } from '../../services/audio/FileImporterFactory';
 import { getAudioMetadata } from '../../utils/audioUtils';
-import { getFFmpegService } from '../../services/ffmpeg/FFmpegService';
+import { getFFmpegService } from '../../services/ffmpeg/FFmpegService.web';
 import type { MixingProgress as MixingProgressType } from '../../services/ffmpeg/types';
 
 // Initialize audio services for current platform
@@ -208,7 +208,7 @@ export const MainScreen: React.FC = () => {
       const ffmpegService = getFFmpegService();
 
       // Ensure FFmpeg is loaded (especially important for web)
-      await ffmpegService.load((ratio) => {
+      await ffmpegService.load((ratio: number) => {
         setMixingProgress((prev) => ({ ...prev, ratio: ratio * 0.1 })); // Loading is 10% of progress
       });
 
@@ -222,7 +222,7 @@ export const MainScreen: React.FC = () => {
       // Mix tracks with progress callback
       const result = await ffmpegService.mix({
         tracks: mixTracks,
-        onProgress: (progress) => {
+        onProgress: (progress: MixingProgressType) => {
           // Offset by 10% for loading, scale remaining 90%
           setMixingProgress({
             ratio: 0.1 + progress.ratio * 0.9,
