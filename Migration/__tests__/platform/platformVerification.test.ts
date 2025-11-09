@@ -10,6 +10,36 @@ import { getAudioService } from '../../src/services/audio/AudioServiceFactory';
 import { getFileImporter } from '../../src/services/audio/FileImporterFactory';
 import { getFFmpegService } from '../../src/services/ffmpeg/FFmpegService';
 
+// Mock Web APIs for web platform tests
+if (typeof navigator === 'undefined') {
+  (global as any).navigator = {};
+}
+
+if (typeof (global as any).navigator.mediaDevices === 'undefined') {
+  (global as any).navigator.mediaDevices = {
+    getUserMedia: jest.fn(),
+    enumerateDevices: jest.fn(),
+  };
+}
+
+if (typeof MediaRecorder === 'undefined') {
+  (global as any).MediaRecorder = class MediaRecorder {
+    start() {}
+    stop() {}
+    ondataavailable = null;
+    onstop = null;
+  };
+}
+
+if (typeof AudioContext === 'undefined') {
+  (global as any).AudioContext = class AudioContext {
+    createBufferSource() {}
+    createGain() {}
+    decodeAudioData() {}
+    destination = {};
+  };
+}
+
 describe('Platform Verification', () => {
   it('should identify current platform', () => {
     expect(Platform.OS).toBeDefined();

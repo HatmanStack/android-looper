@@ -230,5 +230,20 @@ describe('WebAudioPlayer', () => {
 
       expect(player.isPlaying()).toBe(false);
     });
+
+    it('should disconnect audio nodes to prevent memory leaks', async () => {
+      await player.load('blob:test-audio');
+      await player.play();
+
+      // Clear previous calls from setup
+      jest.clearAllMocks();
+
+      await player.unload();
+
+      // Verify nodes are disconnected to release resources
+      expect(mockBufferSource.stop).toHaveBeenCalled();
+      expect(mockBufferSource.disconnect).toHaveBeenCalled();
+      expect(mockGainNode.disconnect).toHaveBeenCalled();
+    });
   });
 });

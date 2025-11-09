@@ -24,10 +24,15 @@ describe('NativeFileImporter', () => {
     it('should return selected audio file', async () => {
       (DocumentPicker.getDocumentAsync as jest.Mock).mockResolvedValue({
         type: 'success',
-        uri: 'file://test-audio.mp3',
-        name: 'test-audio.mp3',
-        size: 1024000,
-        mimeType: 'audio/mpeg',
+        canceled: false,
+        assets: [
+          {
+            uri: 'file://test-audio.mp3',
+            name: 'test-audio.mp3',
+            size: 1024000,
+            mimeType: 'audio/mpeg',
+          },
+        ],
       });
 
       const result = await importer.pickAudioFile();
@@ -42,7 +47,7 @@ describe('NativeFileImporter', () => {
 
     it('should throw if user cancelled', async () => {
       (DocumentPicker.getDocumentAsync as jest.Mock).mockResolvedValue({
-        type: 'cancel',
+        canceled: true,
       });
 
       await expect(importer.pickAudioFile()).rejects.toThrow(AudioError);

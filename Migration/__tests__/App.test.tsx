@@ -26,27 +26,15 @@ describe('App', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('renders without crashing', () => {
+  it('renders without crashing and displays all control buttons', () => {
     const { getByText } = render(<App />);
-    expect(getByText('Record')).toBeTruthy();
-  });
 
-  it('renders top control buttons', () => {
-    const { getByText } = render(<App />);
+    // Top control buttons
     expect(getByText('Record')).toBeTruthy();
     expect(getByText('Stop')).toBeTruthy();
-  });
 
-  it('renders bottom control buttons', () => {
-    const { getByText } = render(<App />);
+    // Bottom control buttons
     expect(getByText('Import Audio')).toBeTruthy();
     expect(getByText('Save')).toBeTruthy();
-  });
-
-  it('renders MainScreen component', () => {
-    const { getByText } = render(<App />);
-    // Verify core UI elements are present
-    expect(getByText('Record')).toBeTruthy();
-    expect(getByText('Import Audio')).toBeTruthy();
   });
 });
