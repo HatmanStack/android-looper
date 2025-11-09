@@ -73,7 +73,7 @@ export class NativeFileImporter {
         try {
           const file = new File(copiedUri);
           file.delete();
-        } catch (e) {
+        } catch {
           // Ignore deletion errors
         }
         throw new AudioError(
@@ -206,7 +206,7 @@ export class NativeFileImporter {
       if (sound) {
         try {
           await sound.unloadAsync();
-        } catch (unloadError) {
+        } catch {
           // Ignore unload errors
         }
       }

@@ -23,11 +23,13 @@ export interface FileImporterClass {
  */
 export function getFileImporter(): FileImporterClass {
   if (Platform.OS === 'web') {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // Dynamic import for web
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { WebFileImporter } = require('./WebFileImporter');
     return WebFileImporter;
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // Dynamic import for native
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { NativeFileImporter } = require('./NativeFileImporter');
     return NativeFileImporter;
   }
