@@ -242,7 +242,10 @@ describe('AudioService', () => {
     });
 
     it('exports file to external storage', async () => {
-      const result = await audioService.exportToExternalStorage(MOCK_AUDIO_URIS.recording1, 'export');
+      const result = await audioService.exportToExternalStorage(
+        MOCK_AUDIO_URIS.recording1,
+        'export'
+      );
       expect(result).toBeTruthy();
     });
 

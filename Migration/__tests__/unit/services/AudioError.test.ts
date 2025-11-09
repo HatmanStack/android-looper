@@ -28,7 +28,9 @@ describe('AudioError', () => {
   it('uses default user message when not provided', () => {
     const error = new AudioError(AudioErrorCode.PERMISSION_DENIED, 'Test error');
 
-    expect(error.userMessage).toBe('Microphone permission is required to record audio. Please grant permission in your device settings.');
+    expect(error.userMessage).toBe(
+      'Microphone permission is required to record audio. Please grant permission in your device settings.'
+    );
   });
 
   it('identifies permission errors', () => {
@@ -73,12 +75,9 @@ describe('AudioError', () => {
   });
 
   it('formats error for logging', () => {
-    const error = new AudioError(
-      AudioErrorCode.RECORDING_FAILED,
-      'Test error',
-      'User message',
-      { detail: 'context' }
-    );
+    const error = new AudioError(AudioErrorCode.RECORDING_FAILED, 'Test error', 'User message', {
+      detail: 'context',
+    });
 
     const formatted = error.toJSON();
     expect(formatted).toHaveProperty('code');
