@@ -8,7 +8,7 @@
  * This is a new feature not present in the Android app.
  */
 
-import { MixerTrackInput, ProgressCallback, AudioFormat } from '../../../types/audio';
+import { MixerTrackInput, ProgressCallback, MixingOptions } from '../../../types/audio';
 
 export interface IAudioMixer {
   /**
@@ -82,44 +82,4 @@ export interface IAudioMixer {
    * @returns Promise resolving to true if valid, false otherwise
    */
   validateTracks(tracks: MixerTrackInput[]): Promise<boolean>;
-}
-
-/**
- * Mixing configuration options
- */
-export interface MixingOptions {
-  /**
-   * Output audio format
-   */
-  format?: AudioFormat;
-
-  /**
-   * Sample rate for output (Hz)
-   */
-  sampleRate?: number;
-
-  /**
-   * Bit rate for output (kbps)
-   */
-  bitRate?: number;
-
-  /**
-   * Number of channels (1 = mono, 2 = stereo)
-   */
-  channels?: number;
-
-  /**
-   * Whether to normalize volume across all tracks
-   */
-  normalize?: boolean;
-
-  /**
-   * Apply fade in at the beginning (ms)
-   */
-  fadeIn?: number;
-
-  /**
-   * Apply fade out at the end (ms)
-   */
-  fadeOut?: number;
 }

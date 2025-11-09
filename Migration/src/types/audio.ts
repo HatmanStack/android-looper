@@ -152,6 +152,46 @@ export interface AudioMetadata {
 export type ProgressCallback = (progress: number) => void;
 
 /**
+ * Mixing configuration options
+ */
+export interface MixingOptions {
+  /**
+   * Output audio format
+   */
+  format?: AudioFormat;
+
+  /**
+   * Sample rate for output (Hz)
+   */
+  sampleRate?: number;
+
+  /**
+   * Bit rate for output (kbps)
+   */
+  bitRate?: number;
+
+  /**
+   * Number of channels (1 = mono, 2 = stereo)
+   */
+  channels?: number;
+
+  /**
+   * Whether to normalize volume across all tracks
+   */
+  normalize?: boolean;
+
+  /**
+   * Apply fade in at the beginning (ms)
+   */
+  fadeIn?: number;
+
+  /**
+   * Apply fade out at the end (ms)
+   */
+  fadeOut?: number;
+}
+
+/**
  * Audio error codes
  */
 export enum AudioErrorCode {
