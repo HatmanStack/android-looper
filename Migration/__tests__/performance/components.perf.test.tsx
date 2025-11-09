@@ -17,7 +17,7 @@ import {
   assertPerformance,
   calculateAverageInterval,
   runBenchmark,
-} from './utils/performanceUtils';
+} from '../../src/test-utils/performanceUtils';
 
 // Mock track data generator
 function generateMockTrack(id: number): Track {

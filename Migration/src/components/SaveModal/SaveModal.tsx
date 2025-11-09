@@ -67,12 +67,8 @@ export const SaveModal: React.FC<SaveModalProps> = ({
         visible={visible}
         onDismiss={onDismiss}
         contentContainerStyle={styles.modalContainer}
-        accessibilityViewIsModal={true}
       >
-        <View
-          style={styles.content}
-          accessibilityRole="dialog"
-        >
+        <View style={styles.content}>
           {/* Track Label */}
           {trackNumber !== undefined && (
             <Text

@@ -50,12 +50,8 @@ export const MixingProgress: React.FC<MixingProgressProps> = ({
         visible={visible}
         dismissable={false}
         contentContainerStyle={[styles.modal, { backgroundColor: theme.colors.surface }]}
-        accessibilityViewIsModal={true}
       >
-        <View
-          style={styles.content}
-          accessibilityRole="dialog"
-        >
+        <View style={styles.content}>
           <Text
             variant="headlineSmall"
             style={styles.title}
