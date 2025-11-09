@@ -56,6 +56,33 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       favicon: './assets/favicon.png',
       bundler: 'metro',
       output: 'static',
+      config: {
+        firebase: undefined,
+      },
+      // PWA Configuration
+      name: 'Looper - Audio Mixing App',
+      shortName: 'Looper',
+      description: 'Record, import, and mix audio tracks with independent speed and volume controls',
+      themeColor: '#BB86FC',
+      backgroundColor: '#121212',
+      display: 'standalone',
+      startUrl: '/',
+      scope: '/',
+      lang: 'en-US',
+      orientation: 'portrait',
+      dir: 'ltr',
+      preferRelatedApplications: false,
+      relatedApplications: [
+        {
+          platform: 'play',
+          url: 'https://play.google.com/store/apps/details?id=com.looper.app',
+          id: 'com.looper.app',
+        },
+        {
+          platform: 'itunes',
+          url: 'https://apps.apple.com/app/looper/id000000000',
+        },
+      ],
     },
     plugins: [
       'expo-av',
