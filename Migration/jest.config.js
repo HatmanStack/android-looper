@@ -7,6 +7,7 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',
   ],
+  testPathIgnorePatterns: ['/node_modules/', '/__fixtures__/'],
   moduleNameMapper: {
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@screens/(.*)$': '<rootDir>/src/screens/$1',
@@ -22,6 +23,11 @@ module.exports = {
     '!src/**/*.d.ts',
     '!src/**/*.test.{ts,tsx}',
     '!src/**/__tests__/**',
+    '!src/**/index.ts', // Exclude re-export files
+    '!src/types/**', // Exclude type definition files
+    '!src/services/audio/interfaces/**', // Exclude interface files
+    '!src/constants/**', // Exclude constant definitions
+    '!src/utils/logger*.ts', // Exclude logger stubs (platform-specific)
   ],
   coverageThreshold: {
     global: {

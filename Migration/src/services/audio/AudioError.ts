@@ -112,4 +112,11 @@ export class AudioError extends Error {
       AudioErrorCode.RESOURCE_UNAVAILABLE,
     ].includes(this.code);
   }
+
+  /**
+   * Convert error to string
+   */
+  toString(): string {
+    return `AudioError [${this.code}]: ${this.message}`;
+  }
 }
