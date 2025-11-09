@@ -158,15 +158,4 @@ describe('SpeedSlider', () => {
       });
     });
   });
-
-  describe('pitch preservation', () => {
-    it('should preserve pitch by setting shouldCorrectPitch', () => {
-      // This is tested in the player implementations
-      // SpeedSlider just provides the UI and value
-      // The actual pitch preservation is handled by:
-      // - WebAudioPlayer (playbackRate on AudioBufferSourceNode)
-      // - NativeAudioPlayer (setRateAsync with shouldCorrectPitch: true)
-      expect(true).toBe(true);
-    });
-  });
 });

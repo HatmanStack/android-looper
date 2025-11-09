@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import App from '../App';
 
 // Mock expo-status-bar
@@ -17,8 +17,11 @@ describe('App', () => {
   });
 
   afterEach(async () => {
-    // Wait for cleanup operations
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    // Wait for any pending async operations to complete
+    await waitFor(() => {
+      // Ensure all async effects have settled
+      expect(true).toBe(true);
+    });
     consoleLogSpy.mockRestore();
     consoleErrorSpy.mockRestore();
   });

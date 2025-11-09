@@ -176,12 +176,14 @@ describe('Error Handling', () => {
     const audioService = getAudioService();
 
     // Attempting operations without permissions should throw errors
+    await expect(audioService.startRecording()).rejects.toBeDefined();
+
+    // Verify error has proper structure
     try {
       await audioService.startRecording();
+      fail('Should have thrown an error');
     } catch (error: any) {
-      expect(error).toBeDefined();
       expect(error.message || error.userMessage).toBeDefined();
-
       console.log(`Platform error handling works: ${error.message || error.userMessage}`);
     }
   });
