@@ -6,7 +6,7 @@
  */
 
 import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
+import { Paths, File } from 'expo-file-system';
 import { Audio } from 'expo-av';
 import { AudioErrorCode } from '../../types/audio';
 import { AudioError } from './AudioError';
@@ -70,7 +70,12 @@ export class NativeFileImporter {
       const isPlayable = await this.verifyAudioPlayback(copiedUri);
       if (!isPlayable) {
         // Delete copied file if not playable
-        await FileSystem.deleteAsync(copiedUri, { idempotent: true });
+        try {
+          const file = new File(copiedUri);
+          file.delete();
+        } catch (e) {
+          // Ignore deletion errors
+        }
         throw new AudioError(
           AudioErrorCode.INVALID_FORMAT,
           'Audio file cannot be played',
@@ -151,18 +156,16 @@ export class NativeFileImporter {
       const sanitizedName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
       const uniqueName = `imported_${timestamp}_${sanitizedName}`;
 
-      // Destination path in app's document directory
-      const destPath = `${FileSystem.documentDirectory}${uniqueName}`;
+      // Create source and destination file instances
+      const sourceFile = new File(uri);
+      const destFile = new File(Paths.document, uniqueName);
 
       // Copy file
-      await FileSystem.copyAsync({
-        from: uri,
-        to: destPath,
-      });
+      sourceFile.copy(destFile);
 
-      console.log(`[NativeFileImporter] Copied file from ${uri} to ${destPath}`);
+      console.log(`[NativeFileImporter] Copied file from ${uri} to ${destFile.uri}`);
 
-      return destPath;
+      return destFile.uri;
     } catch (error) {
       throw new AudioError(
         AudioErrorCode.FILE_NOT_FOUND,
@@ -217,7 +220,8 @@ export class NativeFileImporter {
    */
   public static async deleteFile(uri: string): Promise<void> {
     try {
-      await FileSystem.deleteAsync(uri, { idempotent: true });
+      const file = new File(uri);
+      file.delete();
       console.log(`[NativeFileImporter] Deleted file: ${uri}`);
     } catch (error) {
       console.error('[NativeFileImporter] Failed to delete file:', error);

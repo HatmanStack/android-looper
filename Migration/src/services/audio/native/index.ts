@@ -4,7 +4,7 @@
  * Registers native (iOS/Android) audio service implementations.
  */
 
-import { registerNativeServices } from '../AudioServiceFactory';
+import { registerAudioServices } from '../AudioServiceFactory';
 import { NativeAudioRecorder } from '../NativeAudioRecorder';
 import { MockAudioPlayer } from '../mock/MockAudioPlayer';
 import { MockAudioMixer } from '../mock/MockAudioMixer';
@@ -15,7 +15,7 @@ import { MockFileManager } from '../mock/MockFileManager';
  * Note: Player and Mixer use mocks for now (will be implemented in Phase 5 & 6)
  */
 export function initializeNativeAudioServices(): void {
-  registerNativeServices({
+  registerAudioServices('native', {
     recorder: NativeAudioRecorder,
     player: MockAudioPlayer,
     mixer: MockAudioMixer,

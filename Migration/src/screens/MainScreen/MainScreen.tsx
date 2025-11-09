@@ -20,6 +20,8 @@ import { initializeAudioServices } from '../../services/audio/initialize';
 import { getAudioService } from '../../services/audio/AudioServiceFactory';
 import { AudioService } from '../../services/audio/AudioService';
 import { AudioError } from '../../services/audio/AudioError';
+import { getFileImporter } from '../../services/audio/FileImporterFactory';
+import { getAudioMetadata } from '../../utils/audioUtils';
 
 // Initialize audio services for current platform
 initializeAudioServices();
@@ -118,9 +120,57 @@ export const MainScreen: React.FC = () => {
     }
   };
 
-  const handleImport = () => {
-    console.log('Import Audio button pressed');
-    Alert.alert('Coming Soon', 'Audio import will be implemented in Phase 4');
+  const handleImport = async () => {
+    if (!audioServiceRef.current) {
+      Alert.alert('Error', 'Audio service not initialized');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      console.log('[MainScreen] Starting file import...');
+
+      // Get the file importer for current platform
+      const fileImporter = getFileImporter();
+      const importedFile = await fileImporter.pickAudioFile();
+
+      console.log('[MainScreen] File imported:', importedFile.name);
+
+      // Get audio metadata
+      const metadata = await getAudioMetadata(importedFile.uri);
+
+      // Create new track
+      const newTrack: Track = {
+        id: `track-${Date.now()}`,
+        name: importedFile.name.replace(/\.[^/.]+$/, ''), // Remove extension
+        uri: importedFile.uri,
+        duration: metadata.duration,
+        speed: 1.0,
+        volume: 75,
+        isPlaying: false,
+        createdAt: Date.now(),
+      };
+
+      // Load track for playback
+      await audioServiceRef.current.loadTrack(newTrack.id, newTrack.uri, {
+        speed: newTrack.speed,
+        volume: newTrack.volume,
+        loop: true,
+      });
+
+      setTracks((prevTracks) => [...prevTracks, newTrack]);
+      console.log('[MainScreen] Imported track added:', newTrack.name);
+    } catch (error) {
+      console.error('[MainScreen] Import failed:', error);
+      if (error instanceof AudioError) {
+        Alert.alert('Import Error', error.userMessage);
+      } else {
+        // User cancelled
+        console.log('[MainScreen] Import cancelled by user');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSave = () => {

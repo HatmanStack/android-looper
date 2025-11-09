@@ -208,15 +208,11 @@ export class NativeAudioRecorder extends BaseAudioRecorder {
       },
     };
 
-    // Add max duration if specified
-    if (options?.maxDuration) {
-      // expo-av accepts max duration in milliseconds
-      if (baseOptions.android) {
-        baseOptions.android.maxFileSize = options.maxDuration;
-      }
-      if (baseOptions.ios) {
-        baseOptions.ios.maxFileSize = options.maxDuration;
-      }
+    // Add max file size if specified (Android only)
+    if (options?.maxDuration && baseOptions.android) {
+      // Android uses maxFileSize in bytes, not duration
+      // We'll skip this for now as it's file size, not duration
+      // This would need to be calculated based on bitrate and duration
     }
 
     return baseOptions;
