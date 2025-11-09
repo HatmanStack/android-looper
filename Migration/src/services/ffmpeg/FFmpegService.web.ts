@@ -7,28 +7,12 @@
 
 import { createFFmpeg, FFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { AudioError, AudioErrorCode } from '../audio/AudioError';
-
-export interface MixingProgress {
-  ratio: number; // 0-1
-  time: number; // Current time in ms
-  duration: number; // Total duration in ms
-}
-
-export interface MixTrack {
-  uri: string;
-  speed: number; // 0.05 - 2.50
-  volume: number; // 0 - 100
-}
-
-export interface MixOptions {
-  tracks: MixTrack[];
-  onProgress?: (progress: MixingProgress) => void;
-}
+import type { MixOptions, MixingProgress, IFFmpegService } from './types';
 
 /**
  * Web FFmpeg Service using WebAssembly
  */
-export class FFmpegService {
+export class FFmpegService implements IFFmpegService {
   private ffmpeg: FFmpeg | null = null;
   private isLoaded: boolean = false;
   private isLoading: boolean = false;
