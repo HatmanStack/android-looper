@@ -7,10 +7,12 @@ This directory contains CI/CD workflows for the Looper application.
 ### CI (`ci.yml`)
 
 **Triggers:**
+
 - Push to `main` or `develop` branches
 - Pull requests to `main` or `develop`
 
 **Jobs:**
+
 1. **Test**: Runs on Node 18.x and 20.x
    - Checkout code
    - Install dependencies
@@ -28,6 +30,7 @@ This directory contains CI/CD workflows for the Looper application.
    - Upload build artifact
 
 **Status Badge:**
+
 ```markdown
 ![CI](https://github.com/USERNAME/android-looper/workflows/CI/badge.svg)
 ```
@@ -37,11 +40,13 @@ This directory contains CI/CD workflows for the Looper application.
 ### Deploy Web (`deploy-web.yml`)
 
 **Triggers:**
+
 - Push to `main` branch
 - New version tags (`v*`)
 - Manual workflow dispatch
 
 **Jobs:**
+
 1. **Deploy**: Deploy to production
    - Run tests
    - Build web bundle
@@ -52,15 +57,18 @@ This directory contains CI/CD workflows for the Looper application.
    - Can integrate with Slack/Discord/Email
 
 **Required Secrets:**
+
 - `VERCEL_TOKEN`: Vercel authentication token
 - `VERCEL_ORG_ID`: Vercel organization ID
 - `VERCEL_PROJECT_ID`: Vercel project ID
 
 **Alternative (Netlify):**
+
 - `NETLIFY_SITE_ID`: Netlify site ID
 - `NETLIFY_AUTH_TOKEN`: Netlify authentication token
 
 **Status Badge:**
+
 ```markdown
 ![Deploy](https://github.com/USERNAME/android-looper/workflows/Deploy%20Web/badge.svg)
 ```
@@ -70,10 +78,12 @@ This directory contains CI/CD workflows for the Looper application.
 ### Build Mobile Apps (`build-mobile.yml`)
 
 **Triggers:**
+
 - New version tags (`v*`)
 - Manual workflow dispatch (with platform and profile options)
 
 **Jobs:**
+
 1. **Build**: Build mobile apps with EAS
    - Run tests
    - Build Android APK/AAB
@@ -86,13 +96,16 @@ This directory contains CI/CD workflows for the Looper application.
    - Create GitHub release
 
 **Required Secrets:**
+
 - `EXPO_TOKEN`: Expo authentication token
 
 **Manual Trigger Inputs:**
+
 - `platform`: `all`, `android`, or `ios`
 - `profile`: `production`, `preview`, or `development`
 
 **Obtaining EXPO_TOKEN:**
+
 ```bash
 eas login
 eas whoami
@@ -100,6 +113,7 @@ eas whoami
 ```
 
 **Status Badge:**
+
 ```markdown
 ![Build Mobile](https://github.com/USERNAME/android-looper/workflows/Build%20Mobile%20Apps/badge.svg)
 ```
@@ -109,12 +123,14 @@ eas whoami
 ### E2E Tests (`e2e.yml`)
 
 **Triggers:**
+
 - Push to `main` branch
 - Pull requests to `main`
 - Scheduled daily at 2 AM UTC
 - Manual workflow dispatch
 
 **Jobs:**
+
 1. **Playwright Web**: Run Playwright E2E tests
    - Install Playwright browsers (Chromium, Firefox)
    - Build web bundle
@@ -133,6 +149,7 @@ eas whoami
    - Run Detox tests
 
 **Status Badge:**
+
 ```markdown
 ![E2E Tests](https://github.com/USERNAME/android-looper/workflows/E2E%20Tests/badge.svg)
 ```
@@ -146,25 +163,30 @@ eas whoami
 Go to `Settings` → `Secrets and variables` → `Actions` → `New repository secret`
 
 **Required:**
+
 - `EXPO_TOKEN`: For EAS builds and submissions
 
 **For Web Deployment (choose one):**
 
 **Vercel:**
+
 - `VERCEL_TOKEN`
 - `VERCEL_ORG_ID`
 - `VERCEL_PROJECT_ID`
 
 **Netlify:**
+
 - `NETLIFY_SITE_ID`
 - `NETLIFY_AUTH_TOKEN`
 
 **Optional:**
+
 - `CODECOV_TOKEN`: For code coverage uploads
 
 ### 2. Enable Workflows
 
 Workflows are enabled by default. To disable/enable:
+
 - Go to `Actions` tab
 - Select workflow
 - Click `...` → `Disable/Enable workflow`
@@ -172,6 +194,7 @@ Workflows are enabled by default. To disable/enable:
 ### 3. Protecting Main Branch
 
 Recommended settings for `main` branch:
+
 1. Go to `Settings` → `Branches` → `Add rule`
 2. Branch name pattern: `main`
 3. Enable:
@@ -210,7 +233,7 @@ Edit any workflow file:
 ```yaml
 - uses: actions/setup-node@v4
   with:
-    node-version: '20.x'  # Change to desired version
+    node-version: '20.x' # Change to desired version
 ```
 
 ### Add Slack Notifications
@@ -236,8 +259,8 @@ Install Slack GitHub app, then add to workflows:
   uses: sarisia/actions-status-discord@v1
   with:
     webhook: ${{ secrets.DISCORD_WEBHOOK }}
-    title: "Deployment Complete"
-    description: "Web app deployed successfully"
+    title: 'Deployment Complete'
+    description: 'Web app deployed successfully'
 ```
 
 ---

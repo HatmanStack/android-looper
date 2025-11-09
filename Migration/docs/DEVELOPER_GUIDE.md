@@ -21,11 +21,13 @@ Welcome to the Looper development guide! This document covers everything you nee
 ### Prerequisites
 
 **Required:**
+
 - Node.js 18+ and npm
 - Git
 - Code editor (VS Code recommended)
 
 **Platform-Specific:**
+
 - **Android Development**: Android Studio, Android SDK, Java 11+
 - **iOS Development**: macOS, Xcode 14+, CocoaPods
 - **Web Development**: Modern browser (Chrome/Firefox/Safari)
@@ -64,6 +66,7 @@ Welcome to the Looper development guide! This document covers everything you nee
 ### VS Code Setup
 
 **Recommended Extensions:**
+
 - ESLint
 - Prettier
 - TypeScript and JavaScript Language Features
@@ -152,6 +155,7 @@ We use Git Flow:
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation only
@@ -246,12 +250,14 @@ We use Zustand for state:
 // Create store
 const useTrackStore = create<TrackStore>((set, get) => ({
   tracks: [],
-  addTrack: (track) => set((state) => ({
-    tracks: [...state.tracks, track]
-  })),
-  removeTrack: (id) => set((state) => ({
-    tracks: state.tracks.filter(t => t.id !== id)
-  })),
+  addTrack: (track) =>
+    set((state) => ({
+      tracks: [...state.tracks, track],
+    })),
+  removeTrack: (id) =>
+    set((state) => ({
+      tracks: state.tracks.filter((t) => t.id !== id),
+    })),
 }));
 
 // Use in components
@@ -386,6 +392,7 @@ Output: `web-build/` directory
 ### Mobile (EAS Build)
 
 **Prerequisites:**
+
 - EAS CLI: `npm install -g eas-cli`
 - Expo account: `eas login`
 
@@ -424,6 +431,7 @@ See [Build & Deploy Guide](./BUILD_AND_DEPLOY.md) for details.
 ### Code Review
 
 All PRs require:
+
 - ✅ Passing tests
 - ✅ Passing linter
 - ✅ Passing TypeScript checks
@@ -502,7 +510,8 @@ function formatDuration(ms: number): string {
 }
 
 // ❌ Bad
-function formatDuration(ms) {  // No type
+function formatDuration(ms) {
+  // No type
   // ...
 }
 ```
@@ -517,6 +526,7 @@ npm run format:check  # Check formatting
 ```
 
 **Key rules:**
+
 - 2 spaces indentation
 - Single quotes for strings
 - Trailing commas
@@ -525,12 +535,14 @@ npm run format:check  # Check formatting
 ### Naming Conventions
 
 **Files:**
+
 - Components: `PascalCase.tsx` (e.g., `ActionButton.tsx`)
 - Utilities: `camelCase.ts` (e.g., `formatTime.ts`)
 - Types: `PascalCase.ts` (e.g., `Track.ts`)
 - Tests: `*.test.ts` or `*.spec.ts`
 
 **Variables/Functions:**
+
 - `camelCase` for variables and functions
 - `PascalCase` for components and classes
 - `UPPER_SNAKE_CASE` for constants
@@ -573,7 +585,7 @@ export function formatTime(ms: number): string {
 
 ```typescript
 // Calculate remaining time based on current progress
-const remaining = (elapsed / progress) - elapsed;
+const remaining = elapsed / progress - elapsed;
 ```
 
 ---

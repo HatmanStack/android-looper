@@ -62,7 +62,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       // PWA Configuration
       name: 'Looper - Audio Mixing App',
       shortName: 'Looper',
-      description: 'Record, import, and mix audio tracks with independent speed and volume controls',
+      description:
+        'Record, import, and mix audio tracks with independent speed and volume controls',
       themeColor: '#BB86FC',
       backgroundColor: '#121212',
       display: 'standalone',

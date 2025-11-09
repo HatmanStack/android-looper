@@ -32,10 +32,12 @@ No installation required - works in any modern browser!
 ### Install on Mobile
 
 **Android:**
+
 - [Download from Google Play](https://play.google.com/store/apps/details?id=com.looper.app)
 - Or download APK from [Releases](https://github.com/USERNAME/android-looper/releases)
 
 **iOS:**
+
 - [Download from App Store](https://apps.apple.com/app/looper/id000000000)
 - Or install via TestFlight (beta)
 
