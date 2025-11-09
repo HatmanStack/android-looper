@@ -7,7 +7,7 @@
 
 import { BaseAudioRecorder } from '../BaseAudioRecorder';
 import { RecordingOptions, AudioFormat } from '../../../types/audio';
-import { generateMockUri } from '../../../../__tests__/fixtures/mockAudioData';
+import { generateMockUri } from '../../../../__tests__/__fixtures__/mockAudioData';
 
 export class MockAudioRecorder extends BaseAudioRecorder {
   private recordingTimer: NodeJS.Timeout | null = null;

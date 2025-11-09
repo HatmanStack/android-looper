@@ -148,9 +148,7 @@ export const MainScreen: React.FC = () => {
 
       // Update track state
       setTracks((prevTracks) =>
-        prevTracks.map((track) =>
-          track.id === trackId ? { ...track, isPlaying: true } : track
-        )
+        prevTracks.map((track) => (track.id === trackId ? { ...track, isPlaying: true } : track))
       );
 
       console.log(`[MainScreen] Playing track: ${trackId}`);
@@ -172,9 +170,7 @@ export const MainScreen: React.FC = () => {
 
       // Update track state
       setTracks((prevTracks) =>
-        prevTracks.map((track) =>
-          track.id === trackId ? { ...track, isPlaying: false } : track
-        )
+        prevTracks.map((track) => (track.id === trackId ? { ...track, isPlaying: false } : track))
       );
 
       console.log(`[MainScreen] Paused track: ${trackId}`);

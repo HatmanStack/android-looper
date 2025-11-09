@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
 import { MainScreen } from '../../../src/screens/MainScreen/MainScreen';
 
@@ -8,6 +8,17 @@ const renderWithProvider = (component: React.ReactElement) => {
 };
 
 describe('MainScreen Integration', () => {
+  let consoleLogSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+  });
+
+  afterEach(async () => {
+    // Wait for cleanup operations
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    consoleLogSpy.mockRestore();
+  });
   it('renders all main sections', () => {
     const { getByText } = renderWithProvider(<MainScreen />);
 

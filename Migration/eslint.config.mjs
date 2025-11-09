@@ -70,6 +70,7 @@ export default [
       globals: {
         ...globals.jest,
         ...globals.node,
+        NodeJS: 'readonly',
       },
     },
   },

@@ -95,12 +95,14 @@ Mock Implementations (testing)
 The main entry point for all audio operations. Manages instances of recorder, players, and mixer.
 
 **Responsibilities:**
+
 - Coordinate multiple audio operations
 - Manage player instances (up to 10 concurrent)
 - Provide high-level API for UI
 - Handle resource lifecycle
 
 **Key Methods:**
+
 ```typescript
 // Recording
 startRecording(options?: RecordingOptions): Promise<void>
@@ -122,10 +124,12 @@ mixTracks(tracks: MixerTrackInput[], outputPath: string): Promise<string>
 Interface for audio recording operations.
 
 **State Management:**
+
 - `isRecording(): boolean` - Check recording state
 - `getRecordingDuration(): number` - Get current duration
 
 **Operations:**
+
 - `startRecording()` - Begin recording
 - `stopRecording()` - Stop and save recording
 - `cancelRecording()` - Cancel without saving
@@ -136,6 +140,7 @@ Interface for audio recording operations.
 Interface for audio playback with speed and volume control.
 
 **Capabilities:**
+
 - Load/unload audio files
 - Play/pause/stop control
 - Speed adjustment (0.05x - 2.50x)
@@ -146,8 +151,9 @@ Interface for audio playback with speed and volume control.
 
 **Speed Calculation:**
 Matches Android implementation where seekbar value 3-102 maps to speed:
+
 ```typescript
-speed = seekbarValue / 41
+speed = seekbarValue / 41;
 ```
 
 ### 4. IAudioMixer
@@ -155,6 +161,7 @@ speed = seekbarValue / 41
 Interface for mixing multiple audio tracks with FFmpeg.
 
 **Features:**
+
 - Mix unlimited tracks (memory permitting)
 - Per-track speed and volume adjustment
 - Progress reporting (0-100%)
@@ -162,6 +169,7 @@ Interface for mixing multiple audio tracks with FFmpeg.
 - Duration estimation
 
 **Platform Performance:**
+
 - Web (FFmpeg WebAssembly): ~5x slower than native
 - Native (FFmpeg with hardware acceleration): Baseline performance
 
@@ -170,6 +178,7 @@ Interface for mixing multiple audio tracks with FFmpeg.
 Factory for creating platform-specific service instances.
 
 **Pattern:**
+
 ```typescript
 // Register platform services during app initialization
 registerAudioServices('native', {
@@ -186,12 +195,14 @@ const audioService = getAudioService();
 ### 6. Error Handling
 
 **AudioError Class:**
+
 - Error codes for categorization
 - User-friendly messages
 - Platform information
 - Recovery hints
 
 **Error Codes:**
+
 ```typescript
 enum AudioErrorCode {
   PERMISSION_DENIED,
@@ -229,7 +240,7 @@ Uses `Platform.select()` from React Native:
 ```typescript
 const platform = Platform.select({
   web: 'web',
-  default: 'native',  // iOS or Android
+  default: 'native', // iOS or Android
 });
 ```
 
@@ -267,7 +278,7 @@ import { registerMockServices } from '@services/audio/mock';
 
 // Initialize (in App.tsx or similar)
 if (__DEV__) {
-  registerMockServices();  // Use mocks in development
+  registerMockServices(); // Use mocks in development
 }
 
 const audioService = getAudioService();
@@ -297,14 +308,9 @@ const tracks = [
 ];
 
 // Set progress callback
-audioService.mixTracks(
-  tracks,
-  'output.mp3',
-  { format: AudioFormat.MP3 },
-  (progress) => {
-    console.log(`Mixing: ${progress}%`);
-  }
-);
+audioService.mixTracks(tracks, 'output.mp3', { format: AudioFormat.MP3 }, (progress) => {
+  console.log(`Mixing: ${progress}%`);
+});
 ```
 
 ### Error Handling
@@ -353,6 +359,7 @@ const audioService = getAudioService();
 ### Unit Tests
 
 Tests cover:
+
 - Service factory registration and lifecycle
 - Mock service interface compliance
 - State management (recording, playing, mixing)
@@ -360,6 +367,7 @@ Tests cover:
 - Error handling
 
 Run tests:
+
 ```bash
 npm test __tests__/unit/services/
 ```
@@ -367,6 +375,7 @@ npm test __tests__/unit/services/
 ### Integration Tests
 
 UI integration tests verify:
+
 - Record button starts/stops recording
 - Track list updates with new recordings
 - Play/pause buttons work correctly
@@ -378,24 +387,28 @@ UI integration tests verify:
 ### Phase 4: Recording Implementation
 
 Implement platform-specific recorders:
+
 - `WebAudioRecorder` using MediaRecorder API
 - `NativeAudioRecorder` using expo-av
 
 ### Phase 5: Playback Implementation
 
 Implement platform-specific players:
+
 - `WebAudioPlayer` using expo-av for web
 - `NativeAudioPlayer` using expo-av for native
 
 ### Phase 6: Mixing Implementation
 
 Implement platform-specific mixers:
+
 - `WebAudioMixer` using @ffmpeg/ffmpeg (WebAssembly)
 - `NativeAudioMixer` using react-native-ffmpeg
 
 ### Phase 7: File Management
 
 Implement platform-specific file managers:
+
 - `WebFileManager` using browser storage APIs
 - `NativeFileManager` using expo-file-system
 
@@ -412,6 +425,7 @@ Implement platform-specific file managers:
 ## API Reference
 
 See individual files for detailed API documentation:
+
 - [IAudioRecorder](./interfaces/IAudioRecorder.ts)
 - [IAudioPlayer](./interfaces/IAudioPlayer.ts)
 - [IAudioMixer](./interfaces/IAudioMixer.ts)

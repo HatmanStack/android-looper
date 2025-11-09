@@ -6,7 +6,12 @@
  */
 
 import { IAudioMixer } from './interfaces/IAudioMixer';
-import { MixerTrackInput, MixingOptions, ProgressCallback, AudioErrorCode } from '../../types/audio';
+import {
+  MixerTrackInput,
+  MixingOptions,
+  ProgressCallback,
+  AudioErrorCode,
+} from '../../types/audio';
 import { AudioError } from './AudioError';
 
 export abstract class BaseAudioMixer implements IAudioMixer {
@@ -158,7 +163,7 @@ export abstract class BaseAudioMixer implements IAudioMixer {
       }
 
       // Validate speed
-      if (track.speed < 0.05 || track.speed > 2.50) {
+      if (track.speed < 0.05 || track.speed > 2.5) {
         throw new AudioError(
           AudioErrorCode.MIXING_FAILED,
           `Track ${i}: speed must be between 0.05 and 2.50`,

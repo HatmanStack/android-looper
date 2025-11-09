@@ -149,11 +149,7 @@ export class AudioService {
   /**
    * Load audio track for playback
    */
-  public async loadTrack(
-    trackId: string,
-    uri: string,
-    options?: PlaybackOptions
-  ): Promise<void> {
+  public async loadTrack(trackId: string, uri: string, options?: PlaybackOptions): Promise<void> {
     // Check if we've hit the concurrent player limit
     if (this.players.size >= this.maxConcurrentPlayers) {
       throw new AudioError(
@@ -295,9 +291,7 @@ export class AudioService {
    * Play all loaded tracks simultaneously
    */
   public async playAllTracks(): Promise<void> {
-    const playPromises = Array.from(this.players.keys()).map((trackId) =>
-      this.playTrack(trackId)
-    );
+    const playPromises = Array.from(this.players.keys()).map((trackId) => this.playTrack(trackId));
     await Promise.all(playPromises);
   }
 

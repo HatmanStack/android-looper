@@ -52,7 +52,12 @@ describe('TrackList', () => {
     const mockOnDelete = jest.fn();
 
     const { getAllByTestId } = render(
-      <TrackList tracks={mockTracks} onPlay={mockOnPlay} onPause={mockOnPause} onDelete={mockOnDelete} />
+      <TrackList
+        tracks={mockTracks}
+        onPlay={mockOnPlay}
+        onPause={mockOnPause}
+        onDelete={mockOnDelete}
+      />
     );
 
     // Verify TrackListItem components are rendered with buttons

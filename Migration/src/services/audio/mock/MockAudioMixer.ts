@@ -7,7 +7,7 @@
 
 import { BaseAudioMixer } from '../BaseAudioMixer';
 import { MixerTrackInput, MixingOptions, AudioFormat } from '../../../types/audio';
-import { generateMockUri } from '../../../../__tests__/fixtures/mockAudioData';
+import { generateMockUri } from '../../../../__tests__/__fixtures__/mockAudioData';
 
 export class MockAudioMixer extends BaseAudioMixer {
   private mixingTimer: NodeJS.Timeout | null = null;

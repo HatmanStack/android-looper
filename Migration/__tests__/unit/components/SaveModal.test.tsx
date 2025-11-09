@@ -69,14 +69,14 @@ describe('SaveModal', () => {
     const input = getByTestId('text-input-outlined');
     // Try to save without entering a filename
     fireEvent.press(getByText('Save'));
-    
+
     // onSave should not be called with empty filename
     expect(mockOnSave).not.toHaveBeenCalled();
-    
+
     // Now enter a valid filename
     fireEvent.changeText(input, 'valid-track');
     fireEvent.press(getByText('Save'));
-    
+
     // Now onSave should be called
     expect(mockOnSave).toHaveBeenCalledWith('valid-track');
   });

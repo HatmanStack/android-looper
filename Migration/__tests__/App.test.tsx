@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import App from '../App';
 
 // Mock expo-status-bar
@@ -8,6 +8,17 @@ jest.mock('expo-status-bar', () => ({
 }));
 
 describe('App', () => {
+  let consoleLogSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+  });
+
+  afterEach(async () => {
+    // Wait for cleanup operations
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    consoleLogSpy.mockRestore();
+  });
   it('renders without crashing', () => {
     const { getByText } = render(<App />);
     expect(getByText(/Record/i)).toBeTruthy();

@@ -11,7 +11,7 @@ import {
   generateMockUri,
   getMockFileSize,
   MOCK_AUDIO_URIS,
-} from '../../../../__tests__/fixtures/mockAudioData';
+} from '../../../../__tests__/__fixtures__/mockAudioData';
 
 export class MockFileManager implements IFileManager {
   // In-memory "file system"

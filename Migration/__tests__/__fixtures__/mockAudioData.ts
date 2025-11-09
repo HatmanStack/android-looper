@@ -84,7 +84,10 @@ export const MOCK_MIXER_TRACKS: MixerTrackInput[] = [
 /**
  * Generate a mock URI for testing
  */
-export function generateMockUri(prefix: string = 'recording', format: AudioFormat = AudioFormat.M4A): string {
+export function generateMockUri(
+  prefix: string = 'recording',
+  format: AudioFormat = AudioFormat.M4A
+): string {
   const timestamp = Date.now();
   return `mock://audio/${prefix}-${timestamp}.${format}`;
 }

@@ -205,7 +205,7 @@ export abstract class BaseAudioPlayer implements IAudioPlayer {
    */
   public async setSpeed(speed: number): Promise<void> {
     // Validate speed range (matches Android: 0.05 - 2.50)
-    if (speed < 0.05 || speed > 2.50) {
+    if (speed < 0.05 || speed > 2.5) {
       throw new AudioError(
         AudioErrorCode.PLAYBACK_FAILED,
         `Speed must be between 0.05 and 2.50, got ${speed}`,

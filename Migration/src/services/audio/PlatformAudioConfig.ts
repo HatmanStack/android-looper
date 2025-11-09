@@ -113,12 +113,7 @@ const WEB_CONFIG: AudioConfig = {
  */
 const NATIVE_CONFIG: AudioConfig = {
   defaultFormat: AudioFormat.M4A, // Better compression on mobile
-  supportedFormats: [
-    AudioFormat.MP3,
-    AudioFormat.WAV,
-    AudioFormat.M4A,
-    AudioFormat.THREE_GPP,
-  ],
+  supportedFormats: [AudioFormat.MP3, AudioFormat.WAV, AudioFormat.M4A, AudioFormat.THREE_GPP],
   defaultQuality: AudioQuality.HIGH,
   sampleRate: 44100,
   bitRate: 192,

@@ -26,7 +26,7 @@ export class AudioError extends Error {
   /**
    * Additional context information
    */
-  public readonly context?: Record<string, any>;
+  public readonly context?: Record<string, unknown>;
 
   /**
    * User-friendly error message
@@ -37,7 +37,7 @@ export class AudioError extends Error {
     code: AudioErrorCode,
     message: string,
     userMessage?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'AudioError';

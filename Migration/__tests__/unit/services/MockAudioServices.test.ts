@@ -21,6 +21,7 @@ describe('MockAudioRecorder', () => {
     if (recorder.isRecording()) {
       await recorder.cancelRecording();
     }
+    await recorder.cleanup();
   });
 
   it('starts recording successfully', async () => {
@@ -256,9 +257,7 @@ describe('MockAudioMixer', () => {
   });
 
   it('reports progress during mixing', (done) => {
-    const tracks = [
-      { uri: 'mock://track1.mp3', speed: 1.0, volume: 75 },
-    ];
+    const tracks = [{ uri: 'mock://track1.mp3', speed: 1.0, volume: 75 }];
 
     let progressCalled = false;
 

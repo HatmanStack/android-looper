@@ -7,7 +7,7 @@
 
 import { BaseAudioPlayer } from '../BaseAudioPlayer';
 import { PlaybackOptions, AudioMetadata } from '../../../types/audio';
-import { getMockMetadata } from '../../../../__tests__/fixtures/mockAudioData';
+import { getMockMetadata } from '../../../../__tests__/__fixtures__/mockAudioData';
 
 export class MockAudioPlayer extends BaseAudioPlayer {
   private playbackTimer: NodeJS.Timeout | null = null;
