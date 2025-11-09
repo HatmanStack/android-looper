@@ -48,23 +48,34 @@ describe('Permissions Utils', () => {
         jest.clearAllMocks();
       });
 
-      it('should request Android permission and return granted if granted', async () => {
+      it('should return granted status if permission granted', async () => {
+        const PermissionsAndroid = require('react-native').PermissionsAndroid;
+        PermissionsAndroid.request.mockResolvedValue(PermissionsAndroid.RESULTS.GRANTED);
+
         const result = await requestMicrophonePermission();
 
         expect(result.status).toBe(PermissionStatus.GRANTED);
         expect(result.canAskAgain).toBe(true);
       });
 
-      it('should return granted status if permission granted', async () => {
+      it('should return denied status and canAskAgain=true if permission denied', async () => {
+        const PermissionsAndroid = require('react-native').PermissionsAndroid;
+        PermissionsAndroid.request.mockResolvedValue(PermissionsAndroid.RESULTS.DENIED);
+
         const result = await requestMicrophonePermission();
 
-        expect(result.status).toBe(PermissionStatus.GRANTED);
+        expect(result.status).toBe(PermissionStatus.DENIED);
+        expect(result.canAskAgain).toBe(true);
       });
 
-      it('should return granted status even if never ask again', async () => {
+      it('should return denied status and canAskAgain=false if never ask again', async () => {
+        const PermissionsAndroid = require('react-native').PermissionsAndroid;
+        PermissionsAndroid.request.mockResolvedValue(PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN);
+
         const result = await requestMicrophonePermission();
 
-        expect(result.status).toBe(PermissionStatus.GRANTED);
+        expect(result.status).toBe(PermissionStatus.DENIED);
+        expect(result.canAskAgain).toBe(false);
       });
     });
   });
@@ -89,16 +100,23 @@ describe('Permissions Utils', () => {
       });
 
       it('should request storage permission on Android', async () => {
+        const PermissionsAndroid = require('react-native').PermissionsAndroid;
+        PermissionsAndroid.request.mockResolvedValue(PermissionsAndroid.RESULTS.GRANTED);
+
         const result = await requestStoragePermission();
 
         expect(result.status).toBe(PermissionStatus.GRANTED);
         expect(result.canAskAgain).toBe(true);
       });
 
-      it('should return granted status if storage permission denied', async () => {
+      it('should return denied status if storage permission denied', async () => {
+        const PermissionsAndroid = require('react-native').PermissionsAndroid;
+        PermissionsAndroid.request.mockResolvedValue(PermissionsAndroid.RESULTS.DENIED);
+
         const result = await requestStoragePermission();
 
-        expect(result.status).toBe(PermissionStatus.GRANTED);
+        expect(result.status).toBe(PermissionStatus.DENIED);
+        expect(result.canAskAgain).toBe(true);
       });
     });
   });

@@ -9,12 +9,12 @@ import { usePlaybackStore } from '../../src/store/usePlaybackStore';
 import type { Track } from '../../src/types';
 
 // Mock track generator
-function generateMockTrack(id: number, sizeKB: number = 1024): Track {
+function generateMockTrack(id: number): Track {
   return {
     id: `track-${id}`,
     name: `Track ${id}`,
     uri: `file://track${id}.mp3`,
-    duration: 30000 + Math.random() * 150000, // 30s - 3min
+    duration: 30000 + ((id * 1000) % 150000), // Deterministic: 30s - 3min
     speed: 1.0,
     volume: 75,
     isPlaying: false,
@@ -117,7 +117,8 @@ describe('Load Tests - Many Tracks', () => {
     const duration = endTime - startTime;
 
     expect(useTrackStore.getState().tracks.length).toBe(100);
-    // Should not crash, but may be slower
+    // Should complete in reasonable time (conservative threshold for CI)
+    expect(duration).toBeLessThan(500);
     console.log(`Loaded 100 tracks in ${duration}ms`);
   });
 });
@@ -178,7 +179,7 @@ describe('Stress Tests - Rapid Operations', () => {
     for (let i = 0; i < operations; i++) {
       useTrackStore.getState().updateTrack(track.id, {
         volume: i % 100,
-        speed: (i % 100) / 41,
+        speed: 0.05 + ((i % 100) / 100) * 2.45, // Speed range 0.05 - 2.50
       });
     }
 
@@ -224,6 +225,11 @@ describe('Endurance Tests - Memory Leaks', () => {
   });
 
   it('should not leak memory with repeated add/remove cycles', () => {
+    if (!(performance as any).memory) {
+      console.warn('performance.memory not available, skipping memory leak test');
+      return;
+    }
+
     const cycles = 100;
     const tracksPerCycle = 10;
     const memorySnapshots: number[] = [];
@@ -237,32 +243,37 @@ describe('Endurance Tests - Memory Leaks', () => {
       tracks.forEach((track) => useTrackStore.getState().removeTrack(track.id));
 
       // Sample memory every 10 cycles
-      if (cycle % 10 === 0 && (performance as any).memory) {
+      if (cycle % 10 === 0) {
         if (global.gc) global.gc(); // Force GC if available
         memorySnapshots.push((performance as any).memory.usedJSHeapSize);
       }
     }
 
     // Analyze memory trend
-    if (memorySnapshots.length >= 2) {
-      const firstHalf = memorySnapshots.slice(0, Math.floor(memorySnapshots.length / 2));
-      const secondHalf = memorySnapshots.slice(Math.floor(memorySnapshots.length / 2));
+    expect(memorySnapshots.length).toBeGreaterThanOrEqual(2);
 
-      const avgFirst = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
-      const avgSecond = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
+    const firstHalf = memorySnapshots.slice(0, Math.floor(memorySnapshots.length / 2));
+    const secondHalf = memorySnapshots.slice(Math.floor(memorySnapshots.length / 2));
 
-      const growthRatio = avgSecond / avgFirst;
+    const avgFirst = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
+    const avgSecond = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
 
-      console.log(`Memory growth ratio: ${growthRatio.toFixed(2)}`);
-      console.log(`First half avg: ${(avgFirst / 1024 / 1024).toFixed(2)}MB`);
-      console.log(`Second half avg: ${(avgSecond / 1024 / 1024).toFixed(2)}MB`);
+    const growthRatio = avgSecond / avgFirst;
 
-      // Memory shouldn't grow more than 20%
-      expect(growthRatio).toBeLessThan(1.2);
-    }
+    console.log(`Memory growth ratio: ${growthRatio.toFixed(2)}`);
+    console.log(`First half avg: ${(avgFirst / 1024 / 1024).toFixed(2)}MB`);
+    console.log(`Second half avg: ${(avgSecond / 1024 / 1024).toFixed(2)}MB`);
+
+    // Memory shouldn't grow more than 20%
+    expect(growthRatio).toBeLessThan(1.2);
   });
 
   it('should not leak memory with repeated state updates', () => {
+    if (!(performance as any).memory) {
+      console.warn('performance.memory not available, skipping memory leak test');
+      return;
+    }
+
     const track = generateMockTrack(1);
     useTrackStore.getState().addTrack(track);
 
@@ -275,21 +286,21 @@ describe('Endurance Tests - Memory Leaks', () => {
         speed: Math.random() * 2.5,
       });
 
-      if (i % 100 === 0 && (performance as any).memory) {
+      if (i % 100 === 0) {
         memorySnapshots.push((performance as any).memory.usedJSHeapSize);
       }
     }
 
     // Memory should be stable
-    if (memorySnapshots.length >= 2) {
-      const first = memorySnapshots[0];
-      const last = memorySnapshots[memorySnapshots.length - 1];
-      const growthRatio = last / first;
+    expect(memorySnapshots.length).toBeGreaterThanOrEqual(2);
 
-      console.log(`Memory growth after ${updates} updates: ${growthRatio.toFixed(2)}`);
+    const first = memorySnapshots[0];
+    const last = memorySnapshots[memorySnapshots.length - 1];
+    const growthRatio = last / first;
 
-      expect(growthRatio).toBeLessThan(1.2);
-    }
+    console.log(`Memory growth after ${updates} updates: ${growthRatio.toFixed(2)}`);
+
+    expect(growthRatio).toBeLessThan(1.2);
   });
 });
 
@@ -446,7 +457,11 @@ describe('Concurrent Operations', () => {
     await Promise.all(promises);
 
     // Should complete without errors
-    expect(useTrackStore.getState().tracks.length).toBeGreaterThanOrEqual(0);
+    const finalCount = useTrackStore.getState().tracks.length;
+    // Started with 50, added ~33, removed ~33, so should be close to 50
+    // Allow some variance due to operation distribution
+    expect(finalCount).toBeGreaterThan(30);
+    expect(finalCount).toBeLessThan(70);
     console.log(`${operations} mixed concurrent operations completed`);
   });
 });
