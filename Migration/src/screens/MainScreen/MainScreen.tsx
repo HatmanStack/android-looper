@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TrackList } from '@components/TrackList';
 import { ActionButton } from '@components/ActionButton';
 import { SaveModal } from '@components/SaveModal';
+import { MixingProgress } from '@components/MixingProgress';
 import type { Track } from '../../types';
 import { styles } from './MainScreen.styles';
 import { initializeAudioServices } from '../../services/audio/initialize';
@@ -22,6 +23,8 @@ import { AudioService } from '../../services/audio/AudioService';
 import { AudioError } from '../../services/audio/AudioError';
 import { getFileImporter } from '../../services/audio/FileImporterFactory';
 import { getAudioMetadata } from '../../utils/audioUtils';
+import { getFFmpegService } from '../../services/ffmpeg/FFmpegService';
+import type { MixingProgress as MixingProgressType } from '../../services/ffmpeg/types';
 
 // Initialize audio services for current platform
 initializeAudioServices();
@@ -31,6 +34,12 @@ export const MainScreen: React.FC = () => {
   const [saveModalVisible, setSaveModalVisible] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMixing, setIsMixing] = useState(false);
+  const [mixingProgress, setMixingProgress] = useState<MixingProgressType>({
+    ratio: 0,
+    time: 0,
+    duration: 0,
+  });
   const audioServiceRef = useRef<AudioService | null>(null);
 
   // Initialize AudioService
@@ -182,10 +191,89 @@ export const MainScreen: React.FC = () => {
     setSaveModalVisible(false);
   };
 
-  const handleSaveModalSave = (filename: string) => {
-    console.log(`Saving file as: ${filename}`);
+  const handleSaveModalSave = async (filename: string) => {
+    if (tracks.length < 1) {
+      Alert.alert('Error', 'Please add at least one track to mix');
+      return;
+    }
+
     setSaveModalVisible(false);
-    Alert.alert('Coming Soon', 'Audio mixing and saving will be implemented in Phase 6');
+    setIsMixing(true);
+    setMixingProgress({ ratio: 0, time: 0, duration: 0 });
+
+    try {
+      console.log(`[MainScreen] Starting mix for ${tracks.length} tracks...`);
+
+      // Get FFmpeg service
+      const ffmpegService = getFFmpegService();
+
+      // Ensure FFmpeg is loaded (especially important for web)
+      await ffmpegService.load((ratio) => {
+        setMixingProgress((prev) => ({ ...prev, ratio: ratio * 0.1 })); // Loading is 10% of progress
+      });
+
+      // Prepare tracks for mixing
+      const mixTracks = tracks.map((track) => ({
+        uri: track.uri,
+        speed: track.speed,
+        volume: track.volume,
+      }));
+
+      // Mix tracks with progress callback
+      const result = await ffmpegService.mix({
+        tracks: mixTracks,
+        onProgress: (progress) => {
+          // Offset by 10% for loading, scale remaining 90%
+          setMixingProgress({
+            ratio: 0.1 + progress.ratio * 0.9,
+            time: progress.time,
+            duration: progress.duration,
+          });
+        },
+      });
+
+      setIsMixing(false);
+
+      console.log('[MainScreen] Mixing complete');
+
+      // Handle the result (Blob for web, URI for native)
+      if (typeof result === 'string') {
+        // Native: result is a file URI
+        Alert.alert(
+          'Success',
+          `Mixed audio saved successfully!\n\nFile: ${filename}.mp3\n\nLocation: ${result}`,
+          [{ text: 'OK' }]
+        );
+      } else {
+        // Web: result is a Blob
+        // Create download link
+        const url = URL.createObjectURL(result);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${filename}.mp3`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        Alert.alert('Success', `Mixed audio downloaded as ${filename}.mp3`);
+      }
+    } catch (error) {
+      setIsMixing(false);
+      console.error('[MainScreen] Mixing failed:', error);
+
+      if (error instanceof AudioError) {
+        Alert.alert('Mixing Error', error.userMessage);
+      } else {
+        Alert.alert('Error', 'Failed to mix audio tracks');
+      }
+    }
+  };
+
+  const handleCancelMixing = () => {
+    // TODO: Implement cancellation if FFmpegService supports it
+    console.log('[MainScreen] Mixing cancellation requested');
+    Alert.alert('Cannot Cancel', 'Mixing cannot be cancelled once started');
   };
 
   const handlePlay = async (trackId: string) => {
@@ -343,6 +431,15 @@ export const MainScreen: React.FC = () => {
           trackNumber={tracks.length}
           onDismiss={handleSaveModalDismiss}
           onSave={handleSaveModalSave}
+        />
+
+        {/* Mixing Progress Modal */}
+        <MixingProgress
+          visible={isMixing}
+          progress={mixingProgress.ratio}
+          currentTime={mixingProgress.time}
+          totalDuration={mixingProgress.duration}
+          onCancel={handleCancelMixing}
         />
 
         {/* Loading Indicator */}
