@@ -60,7 +60,12 @@ Speed is adjusted using FFmpeg's `atempo` filter:
 Volume uses logarithmic scaling for natural perception:
 
 ```
-multiplier = 1 - (log(100 - volume) / log(100))
+if volume === 0:
+  multiplier = 0.0
+else if volume === 100:
+  multiplier = 1.0
+else:
+  multiplier = 1 - (log(100 - volume) / log(100))
 ```
 
 This ensures:
@@ -68,6 +73,8 @@ This ensures:
 - 0 = silence (0.0)
 - 50 ≈ 0.5 multiplier
 - 100 = full volume (1.0)
+
+The special-case handling for 0 and 100 prevents undefined logarithm values.
 
 ### Mixing Algorithm
 

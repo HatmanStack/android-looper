@@ -57,6 +57,19 @@ describe('NativeFileImporter', () => {
     });
 
     it('should use correct mime types for audio files', async () => {
+      (DocumentPicker.getDocumentAsync as jest.Mock).mockResolvedValue({
+        type: 'success',
+        canceled: false,
+        assets: [
+          {
+            uri: 'file:///test-audio.mp3',
+            name: 'test-audio.mp3',
+            size: 1024,
+            mimeType: 'audio/mpeg',
+          },
+        ],
+      });
+
       await importer.pickAudioFile();
 
       expect(DocumentPicker.getDocumentAsync).toHaveBeenCalledWith({
