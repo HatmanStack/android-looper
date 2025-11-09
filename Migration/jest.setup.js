@@ -52,6 +52,10 @@ jest.mock('expo-av', () => ({
               Promise.resolve({
                 isLoaded: true,
                 durationMillis: 120000,
+                positionMillis: 0,
+                isPlaying: false,
+                didJustFinish: false,
+                isLooping: true,
               })
             ),
             unloadAsync: jest.fn(() => Promise.resolve()),
@@ -61,6 +65,8 @@ jest.mock('expo-av', () => ({
             setPositionAsync: jest.fn(() => Promise.resolve()),
             setRateAsync: jest.fn(() => Promise.resolve()),
             setVolumeAsync: jest.fn(() => Promise.resolve()),
+            setIsLoopingAsync: jest.fn(() => Promise.resolve()),
+            setOnPlaybackStatusUpdate: jest.fn(),
           },
         })
       ),
