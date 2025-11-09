@@ -7,13 +7,21 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build:web": "expo export:web",
+    "build:web:analyze": "ANALYZE=true expo export:web",
+    "serve:web": "npx serve web-build -l 8081",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "eas:build:dev": "eas build --profile development",
+    "eas:build:preview": "eas build --profile preview",
+    "eas:build:prod": "eas build --profile production",
+    "eas:build:android": "eas build --platform android --profile production",
+    "eas:build:ios": "eas build --platform ios --profile production"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.4",
