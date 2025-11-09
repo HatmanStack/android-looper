@@ -9,7 +9,7 @@ import { useAppLifecycle, useBackgroundHandler } from '../../../src/hooks/useApp
 // Mock AppState
 jest.mock('react-native', () => ({
   AppState: {
-    currentState: 'active',
+    currentState: 'background', // Start in background so state changes trigger callbacks
     addEventListener: jest.fn(() => ({
       remove: jest.fn(),
     })),
@@ -84,26 +84,26 @@ describe('useAppLifecycle', () => {
 
     const callback = (AppState.addEventListener as jest.Mock).mock.calls[0][1];
 
-    // Simulate state changes
-    callback('background');
-    expect(onChange).toHaveBeenCalledWith('background', 'active');
-
+    // Simulate state changes (initial state is 'background')
     callback('active');
     expect(onChange).toHaveBeenCalledWith('active', 'background');
+
+    callback('background');
+    expect(onChange).toHaveBeenCalledWith('background', 'active');
   });
 
   it('should not call callbacks if state does not change', () => {
-    const onActive = jest.fn();
+    const onBackground = jest.fn();
 
-    renderHook(() => useAppLifecycle({ onActive }));
+    renderHook(() => useAppLifecycle({ onBackground }));
 
     const callback = (AppState.addEventListener as jest.Mock).mock.calls[0][1];
 
-    // Set to active (same as initial state)
-    callback('active');
+    // Set to background (same as initial state)
+    callback('background');
 
     // Should not be called since state didn't actually change
-    expect(onActive).not.toHaveBeenCalled();
+    expect(onBackground).not.toHaveBeenCalled();
   });
 
   it('should cleanup listener on unmount', () => {
@@ -130,7 +130,7 @@ describe('useAppLifecycle', () => {
     callback('background');
 
     expect(onChange).toHaveBeenCalledTimes(4);
-    expect(onChange).toHaveBeenNthCalledWith(1, 'inactive', 'active');
+    expect(onChange).toHaveBeenNthCalledWith(1, 'inactive', 'background');
     expect(onChange).toHaveBeenNthCalledWith(2, 'background', 'inactive');
     expect(onChange).toHaveBeenNthCalledWith(3, 'active', 'background');
     expect(onChange).toHaveBeenNthCalledWith(4, 'background', 'active');
