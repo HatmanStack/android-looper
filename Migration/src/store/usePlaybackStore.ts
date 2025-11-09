@@ -3,9 +3,12 @@
  *
  * Zustand store for managing playback state across all tracks.
  * Tracks playing state, speed, and volume for each track.
+ * Persists playback settings (speed, volume) to storage.
  */
 
 import { create } from 'zustand';
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
+import { createStorage, serializers } from './storage';
 
 export interface TrackState {
   speed: number;
@@ -44,10 +47,12 @@ const DEFAULT_TRACK_STATE: TrackState = {
   isLooping: true,
 };
 
-export const usePlaybackStore = create<PlaybackState>((set, get) => ({
-  trackStates: new Map(),
-  playingTracks: new Set(),
-  isAnyPlaying: false,
+export const usePlaybackStore = create<PlaybackState>()(
+  persist(
+    (set, get) => ({
+      trackStates: new Map(),
+      playingTracks: new Set(),
+      isAnyPlaying: false,
 
   setTrackPlaying: (trackId: string, isPlaying: boolean) =>
     set((state) => {
@@ -178,4 +183,33 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
       playingTracks: new Set(),
       isAnyPlaying: false,
     }),
-}));
+    }),
+    {
+      name: 'looper-playback', // Storage key
+      storage: createJSONStorage(() => createStorage()),
+      // Custom serialization for Map and Set
+      partialize: (state) => ({
+        // Persist track settings but not playing state
+        trackStates: serializers.serializeMap(
+          // Remove isPlaying from persisted state
+          new Map(
+            Array.from(state.trackStates.entries()).map(([id, trackState]) => [
+              id,
+              { ...trackState, isPlaying: false },
+            ])
+          )
+        ),
+      }),
+      // Custom deserialization
+      merge: (persistedState: any, currentState) => ({
+        ...currentState,
+        trackStates: persistedState?.trackStates
+          ? serializers.deserializeMap(persistedState.trackStates)
+          : new Map(),
+        // Always start with no tracks playing
+        playingTracks: new Set(),
+        isAnyPlaying: false,
+      }),
+    }
+  )
+);

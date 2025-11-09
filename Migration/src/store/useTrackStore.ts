@@ -3,10 +3,13 @@
  *
  * Zustand store for managing track data.
  * Handles CRUD operations for tracks and provides derived state.
+ * Persists track data to storage for app restarts.
  */
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Track } from '../types';
+import { createStorage } from './storage';
 
 interface TrackStore {
   // State
@@ -25,7 +28,9 @@ interface TrackStore {
   getPlayingTracks: () => Track[];
 }
 
-export const useTrackStore = create<TrackStore>((set, get) => ({
+export const useTrackStore = create<TrackStore>()(
+  persist(
+    (set, get) => ({
   // Initial state
   tracks: [],
 
@@ -74,4 +79,14 @@ export const useTrackStore = create<TrackStore>((set, get) => ({
   getPlayingTracks: () => {
     return get().tracks.filter((track) => track.isPlaying);
   },
-}));
+    }),
+    {
+      name: 'looper-tracks', // Storage key
+      storage: createJSONStorage(() => createStorage()),
+      // Only persist the tracks array, not the derived getters
+      partialize: (state) => ({
+        tracks: state.tracks,
+      }),
+    }
+  )
+);
