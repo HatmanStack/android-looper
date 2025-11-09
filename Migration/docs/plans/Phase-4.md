@@ -1,5 +1,45 @@
 # Phase 4: Recording & Import (Platform-Specific)
 
+---
+
+## ⚠️ CODE REVIEW STATUS: CRITICAL ISSUES FOUND
+
+**Reviewed by:** Senior Code Reviewer
+**Review Date:** 2025-11-09
+**Status:** ❌ **PHASE 4 INCOMPLETE - MISSING TASK & QUALITY ISSUES**
+
+### Summary of Completion:
+
+**Completed Tasks (9 of 10):**
+- ✅ Task 1: Web Audio Recording (MediaRecorder API)
+- ✅ Task 2: Native Audio Recording (expo-av)
+- ✅ Task 3: File Import for Web
+- ✅ Task 4: File Import for Native
+- ✅ Task 5: Permission Handling
+- ❌ **Task 6: Audio File Management (COMPLETELY MISSING)**
+- ✅ Task 7: Audio Format Conversion/Utilities
+- ✅ Task 8: UI Integration
+- ✅ Task 9: Unit and Integration Tests (partial)
+- ✅ Task 10: Documentation
+
+**Critical Issues:**
+- ❌ **Task 6 not implemented** - No storage directory or AudioFileManager
+- ❌ **Test failures**: 2 test suites fail due to unmocked expo modules
+- ❌ **Test coverage**: 42.74% (below 80% threshold)
+- ❌ **Formatting**: 3 files need prettier fixes
+- ⚠️ **Linting**: Several errors in tests
+
+### Verification Results:
+- ✅ TypeScript compilation (`npx tsc --noEmit`)
+- ❌ Tests: 125 passed, 2 suites fail (expo module mocks missing)
+- ❌ Test coverage: 42.74% vs 80% threshold
+- ❌ Formatting: 3 files fail `npm run format:check`
+- ⚠️ Linting: Errors in test files
+
+**Verdict:** Phase 4 cannot be approved. Task 6 is completely missing, tests are failing, and test coverage is critically low. Fix these issues before proceeding.
+
+---
+
 ## Phase Goal
 
 Implement audio recording and file import functionality with platform-specific implementations for web and native. Handle permissions, file storage, and audio format conversion. By the end of this phase, users can record audio or import existing audio files on all platforms.
@@ -340,6 +380,42 @@ Reference Android:
 - [ ] Storage quota checked
 - [ ] Temp files cleaned up
 
+**❌ CODE REVIEW FINDINGS (Task 6):**
+
+**Task 6 Completely Missing:**
+> **Consider:** When you search for `src/services/storage/` directory, what do you find? Does it exist?
+>
+> **Think about:** The task specification clearly states to create:
+> - `src/services/storage/AudioFileManager.ts`
+> - `src/services/storage/AudioFileManager.web.ts`
+> - `src/services/storage/AudioFileManager.native.ts`
+>
+> **Reflect:** When you run `ls -la src/services/storage/`, you get "No storage directory". How can recordings and imported files be persisted without file management?
+>
+> **Consider:** Looking at the current implementation in `src/services/audio/WebAudioRecorder.ts` and `NativeAudioRecorder.ts`, where are the recorded files being saved? Are they returning blob URLs that will disappear on page refresh?
+>
+> **Think about:** The Phase 4 success criteria state "Store audio files with consistent format (MP3)". Without AudioFileManager, how can files be:
+> - Saved permanently?
+> - Retrieved after app restart?
+> - Deleted when user wants to free space?
+> - Managed for storage quota?
+>
+> **Reflect:** Task 6 is listed as having ~16,000 tokens estimated. This is a substantial feature. Can Phase 4 be considered complete without it?
+
+**Evidence:**
+```bash
+$ ls -la src/services/storage/
+No storage directory
+
+$ Glob("src/services/storage/**/*")
+No files found
+
+$ grep -r "AudioFileManager" src/
+# No matches found
+```
+
+**Impact:** Without file management, recorded audio and imported files cannot be persisted across sessions, defeating the purpose of the app.
+
 **Commit Message Template:**
 
 ```
@@ -505,6 +581,45 @@ feat(integration): connect recording and import to UI
 - [ ] Coverage >80%
 - [ ] Platform-specific tests isolated
 
+**❌ CODE REVIEW FINDINGS (Task 9):**
+
+**Test Failures - Missing Expo Module Mocks:**
+> **Consider:** When you run `npm test`, two test suites fail with "Cannot find module 'expo-av'". What's causing this error?
+>
+> **Think about:** Looking at `jest.setup.js`, you only have mocks for `expo` and `expo-status-bar`. The Phase 4 implementation uses:
+> - `expo-av` (in NativeAudioRecorder, audioUtils.native.ts)
+> - `expo-document-picker` (in NativeFileImporter)
+> - `expo-file-system` (in multiple files)
+> - `expo-media-library` (in permissions.native.ts)
+> - `expo-linking` (in permissions.native.ts)
+>
+> **Reflect:** Should you add these modules to jest.setup.js to make tests pass?
+
+**Test Coverage Below Threshold:**
+> **Think about:** Coverage dropped from 55.95% (Phase 3) to 42.74% (Phase 4). What happened?
+>
+> **Consider:** ~1,484 lines of new code were added in Phase 4, but where are the tests for:
+> - `WebAudioRecorder.ts` (298 lines)?
+> - `NativeAudioRecorder.ts` (238 lines)?
+> - `WebFileImporter.ts` (188 lines)?
+> - `NativeFileImporter.ts` (235 lines)?
+>
+> **Reflect:** The task specification says to create test files like `__tests__/unit/services/WebAudioRecorder.test.ts`. Do they exist?
+
+**Evidence:**
+```bash
+$ npm test
+FAIL __tests__/App.test.tsx
+FAIL __tests__/integration/screens/MainScreen.test.tsx
+  Cannot find module 'expo-av'
+
+$ npm run test:coverage
+Coverage: 42.74% statements (target: 80%)
+
+$ Glob("__tests__/unit/services/WebAudioRecorder.test.ts")
+No files found
+```
+
 **Commit Message Template:**
 
 ```
@@ -578,6 +693,30 @@ docs(audio): document recording and import features
 ---
 
 ## Phase Verification
+
+**⚠️ CODE QUALITY ISSUES:**
+
+**Formatting and Linting:**
+> **Consider:** When you run `npm run format:check`, 3 files fail:
+> - `__tests__/integration/screens/MainScreen.test.tsx`
+> - `__tests__/unit/services/AudioError.test.ts`
+> - `__tests__/unit/services/AudioService.test.ts`
+>
+> **Reflect:** Running `npm run format` will fix these. Should you do that before committing?
+>
+> **Think about:** There are also linting warnings about `@typescript-eslint/no-unused-vars` and `@typescript-eslint/no-require-imports`. Should these be fixed?
+
+**Evidence:**
+```bash
+$ npm run format:check
+Code style issues found in 3 files.
+
+$ npm run lint
+  2:29  error  'waitFor' is defined but never used
+ 74:33  error  A `require()` style import is forbidden
+```
+
+---
 
 ### How to Verify Phase 4 is Complete
 
