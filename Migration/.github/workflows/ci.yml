@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Run linter
+        working-directory: ./Migration
+        run: npm run lint
+
+      - name: Check TypeScript
+        working-directory: ./Migration
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        working-directory: ./Migration
+        run: npm test -- --coverage --maxWorkers=2
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./Migration/coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  prettier:
+    name: Check Code Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Check formatting
+        working-directory: ./Migration
+        run: npm run format:check
+
+  build-web:
+    name: Build Web
+    runs-on: ubuntu-latest
+    needs: [test, prettier]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Build web
+        working-directory: ./Migration
+        run: npm run build:web
+        env:
+          NODE_ENV: production
+
+      - name: Upload web build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: Migration/web-build/
+          retention-days: 7

@@ -1,0 +1,70 @@
+name: Deploy Web
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: Migration/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./Migration
+        run: npm ci
+
+      - name: Run tests
+        working-directory: ./Migration
+        run: npm test
+
+      - name: Build web
+        working-directory: ./Migration
+        run: npm run build:web
+        env:
+          NODE_ENV: production
+          APP_ENV: production
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./Migration
+          vercel-args: '--prod'
+
+      # Alternative: Deploy to Netlify
+      # - name: Deploy to Netlify
+      #   uses: netlify/actions/cli@master
+      #   with:
+      #     args: deploy --prod --dir=Migration/web-build
+      #   env:
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+  notify:
+    name: Notify Deployment
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: success()
+
+    steps:
+      - name: Send success notification
+        run: |
+          echo "Deployment successful!"
+          # Add Slack/Discord/Email notification here if desired
