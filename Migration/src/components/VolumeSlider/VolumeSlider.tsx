@@ -24,6 +24,7 @@ export const VolumeSlider: React.FC<VolumeSliderProps> = ({
     <View style={styles.container}>
       <Text style={styles.label}>Volume: {Math.round(value)}</Text>
       <Slider
+        testID="slider"
         style={styles.slider}
         minimumValue={0}
         maximumValue={100}

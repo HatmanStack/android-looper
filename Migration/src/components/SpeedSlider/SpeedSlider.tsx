@@ -50,6 +50,7 @@ export const SpeedSlider: React.FC<SpeedSliderProps> = ({
     <View style={styles.container}>
       <Text style={styles.label}>Speed: {displayValue}x</Text>
       <Slider
+        testID="slider"
         style={styles.slider}
         minimumValue={SPEED_MIN}
         maximumValue={SPEED_MAX}
