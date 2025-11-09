@@ -16,13 +16,13 @@ import { ActionButton } from '@components/ActionButton';
 import { SaveModal } from '@components/SaveModal';
 import type { Track } from '../../types';
 import { styles } from './MainScreen.styles';
-import { registerMockServices } from '../../services/audio/mock';
+import { initializeAudioServices } from '../../services/audio/initialize';
 import { getAudioService } from '../../services/audio/AudioServiceFactory';
 import { AudioService } from '../../services/audio/AudioService';
 import { AudioError } from '../../services/audio/AudioError';
 
-// Register mock services on module load
-registerMockServices();
+// Initialize audio services for current platform
+initializeAudioServices();
 
 export const MainScreen: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
