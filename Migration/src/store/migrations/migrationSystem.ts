@@ -26,8 +26,11 @@ export function runMigrations<TState>(
 
   try {
     // Parse versioned state
+    // Check for 'version' property to distinguish versioned from non-versioned data
     const versionedState: VersionedState<TState> =
-      typeof persistedData === 'object' && persistedData !== null
+      typeof persistedData === 'object' &&
+      persistedData !== null &&
+      'version' in persistedData
         ? persistedData
         : { version: 0, state: persistedData };
 
