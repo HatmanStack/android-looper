@@ -44,7 +44,14 @@ export const SpeedSlider: React.FC<SpeedSliderProps> = ({
   };
 
   const sliderValue = speedToSliderValue(value);
-  const displayValue = value.toFixed(2);
+
+  // Format display value
+  // Match Android behavior: if formatted value is "2.44" or higher, display "2.50"
+  // Android code: if (holder.equals("2.44")) speedText.setText("2.50")
+  let displayValue = value.toFixed(2);
+  if (parseFloat(displayValue) >= 2.44) {
+    displayValue = '2.50';
+  }
 
   return (
     <View style={styles.container}>
