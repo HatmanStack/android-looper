@@ -5,6 +5,10 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
+    "jsx": "react-native",
+    "types": ["jest", "@types/react", "@types/react-native"],
+    "lib": ["ES2015", "DOM"],
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
