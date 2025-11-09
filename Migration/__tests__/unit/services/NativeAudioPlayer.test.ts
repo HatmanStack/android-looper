@@ -8,9 +8,23 @@ import { Audio } from 'expo-av';
 // expo-av is already mocked in jest.setup.js
 // We just need to access the mocked functions
 
+// Mock sound type with required methods
+interface MockSound {
+  getStatusAsync: jest.Mock;
+  unloadAsync: jest.Mock;
+  playAsync: jest.Mock;
+  pauseAsync: jest.Mock;
+  stopAsync: jest.Mock;
+  setPositionAsync: jest.Mock;
+  setRateAsync: jest.Mock;
+  setVolumeAsync: jest.Mock;
+  setIsLoopingAsync: jest.Mock;
+  setOnPlaybackStatusUpdate: jest.Mock;
+}
+
 describe('NativeAudioPlayer', () => {
   let player: NativeAudioPlayer;
-  let mockSound: any;
+  let mockSound: MockSound;
 
   beforeEach(() => {
     jest.clearAllMocks();

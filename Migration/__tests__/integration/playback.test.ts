@@ -13,6 +13,11 @@ import { BaseAudioPlayer } from '../../src/services/audio/BaseAudioPlayer';
 // Mock WebAudioPlayer
 jest.mock('../../src/services/audio/WebAudioPlayer');
 
+// Mock types for test configuration
+type MockRecorder = Pick<AudioServiceConfig['recorder'], 'isRecording' | 'stop' | 'cleanup'>;
+type MockMixer = Pick<AudioServiceConfig['mixer'], 'cleanup' | 'isMixing'>;
+type MockFileManager = Pick<AudioServiceConfig['fileManager'], 'cleanup' | 'cleanupTempFiles'>;
+
 describe('Playback Integration Tests', () => {
   let audioService: AudioService;
   const mockTrackUri1 = 'blob:test-track-1';
@@ -25,7 +30,7 @@ describe('Playback Integration Tests', () => {
     // Setup WebAudioPlayer mock
     (WebAudioPlayer as jest.MockedClass<typeof WebAudioPlayer>).mockImplementation(() => {
       let playing = false;
-      const mockPlayer: any = {
+      const mockPlayer = {
         load: jest.fn().mockResolvedValue(undefined),
         play: jest.fn().mockImplementation(async () => {
           playing = true;
@@ -62,16 +67,16 @@ describe('Playback Integration Tests', () => {
         isRecording: jest.fn().mockReturnValue(false),
         stop: jest.fn().mockResolvedValue('mock-uri'),
         cleanup: jest.fn().mockResolvedValue(undefined),
-      } as any,
+      } as unknown as MockRecorder,
       playerFactory: () => new WebAudioPlayer() as unknown as BaseAudioPlayer,
       mixer: {
         cleanup: jest.fn().mockResolvedValue(undefined),
         isMixing: jest.fn().mockReturnValue(false),
-      } as any,
+      } as unknown as MockMixer,
       fileManager: {
         cleanup: jest.fn().mockResolvedValue(undefined),
         cleanupTempFiles: jest.fn().mockResolvedValue(undefined),
-      } as any,
+      } as unknown as MockFileManager,
     };
 
     audioService = new AudioService(mockConfig);

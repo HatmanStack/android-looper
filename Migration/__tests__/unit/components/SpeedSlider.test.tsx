@@ -38,9 +38,7 @@ describe('SpeedSlider', () => {
       // 102 / 41 = 2.487804... which would normally format to 2.49
       // But should display as 2.50 to match Android
       const onValueChange = jest.fn();
-      const { getByTestId, getByText } = render(
-        <SpeedSlider value={1.0} onValueChange={onValueChange} />
-      );
+      const { getByTestId } = render(<SpeedSlider value={1.0} onValueChange={onValueChange} />);
 
       const slider = getByTestId('slider');
       fireEvent(slider, 'valueChange', 102);

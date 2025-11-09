@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import { Alert } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { MainScreen } from '../../../src/screens/MainScreen/MainScreen';
 

@@ -3,7 +3,6 @@
  */
 
 import { WebAudioPlayer } from '../../../src/services/audio/WebAudioPlayer';
-import { AudioErrorCode } from '../../../src/types/audio';
 
 // Mock Web Audio API
 const mockAudioContext = {
@@ -41,7 +40,7 @@ const mockGainNode = {
 };
 
 // Setup global mocks
-global.AudioContext = jest.fn(() => mockAudioContext) as any;
+global.AudioContext = jest.fn(() => mockAudioContext) as unknown as typeof AudioContext;
 global.fetch = jest.fn();
 
 describe('WebAudioPlayer', () => {
